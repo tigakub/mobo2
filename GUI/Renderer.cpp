@@ -15,90 +15,8 @@ namespace mobo
     GLfloat uvData[] = { 0.0, 1.0,    1.0, 1.0,    0.5, 0.0 };
     GLint uvDataSize = 6;
 
-    const string vtxShaderSource(
-    R"(
-        #version 330 core
-
-        layout(location = 0) in vec4 iVtxPos;
-        layout(location = 1) in vec4 iVtxClr;
-        layout(location = 2) in vec2 iVtxUV;
-
-        out vec4 fVtxClr;
-        out vec2 fVtxUV;
-
-        void main() {
-            gl_Position = iVtxPos;
-            fVtxClr = iVtxClr;
-            fVtxUV = iVtxUV;
-        }
-    )");
-
-    const string frgShaderSource(
-    R"(
-        #version 330 core
-
-        uniform sampler2D tex;
-
-        in vec4 fVtxClr;
-        in vec2 fVtxUV;
-
-        out vec4 oColor;
-
-        void main() {
-            oColor = texture(tex, fVtxUV);
-        }
-    )");
-
     void Renderer::init()
     {
-        /*
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glDisable(GL_ALPHA_TEST);
-        glDepthFunc(GL_LESS);
-        glClearColor(0.0, 0.0, 0.0, 1.0);
-        glClearDepth(1.0f);
-        */
-        /*
-        auto vtxShader = glCreateShader(GL_VERTEX_SHADER);
-        auto frgShader = glCreateShader(GL_FRAGMENT_SHADER);
-        
-        const GLchar* vtxSrcPtr = vtxShaderSource.c_str();
-        const GLchar* frgSrcPtr = frgShaderSource.c_str();
-        GLint vtxSrcSize = vtxShaderSource.size(), frgSrcSize = frgShaderSource.size();
-
-        glShaderSource(vtxShader, 1, &vtxSrcPtr, &vtxSrcSize);
-        glCompileShader(vtxShader);
-        GLint compileStatus;
-        glGetShaderiv(vtxShader, GL_COMPILE_STATUS, &compileStatus);
-        if(compileStatus != GL_TRUE) {
-            cerr << "Failed to compile vertex shader" << endl;
-        }
-
-        glShaderSource(frgShader, 1, &frgSrcPtr, &frgSrcSize);
-        glCompileShader(frgShader);
-        glGetShaderiv(frgShader, GL_COMPILE_STATUS, &compileStatus);
-        if(compileStatus != GL_TRUE) {
-            cerr << "Failed to compile fragment shader" << endl;
-        }
-
-        prog = glCreateProgram();
-        glAttachShader(prog, vtxShader);
-        glAttachShader(prog, frgShader);
-        glLinkProgram(prog);
-        GLint linkStatus;
-        glGetProgramiv(prog, GL_LINK_STATUS, &linkStatus);
-        if(linkStatus != GL_TRUE) {
-            cerr << "Failed to link program" << endl;
-        }
-
-        glDeleteShader(frgShader);
-        glDeleteShader(vtxShader);
-
-        glUseProgram(prog);
-        */
-
         #ifdef TRACE
         cout << "Generating VBOs" << endl;
         #endif
@@ -184,8 +102,6 @@ namespace mobo
 
     void Renderer::render()
     {
-        // glUseProgram(prog);
-
         #ifdef TRACE
         cout << "Rendering" << endl;
         #endif
@@ -208,10 +124,5 @@ namespace mobo
         #ifdef TRACE
         cout << "Render Complete" << endl;
         #endif
-
-        // glUseProgram(0);
-
-        //glFinish();
-        //glutSwapBuffers();
     }
 }

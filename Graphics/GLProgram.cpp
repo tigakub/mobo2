@@ -8,7 +8,7 @@ using namespace std;
 namespace mobo
 {
 
-    DEFINE_TYPE_SUB(GLProgram, "d7ea0fc4-5596-4312-ba92-e781281d3c8a", { &GLPipeline::_type })
+    DERIVE_TYPE(GLProgram, "d7ea0fc4-5596-4312-ba92-e781281d3c8a", { &GLPipeline::_type })
 
     GLProgram::GLProgram()
     : GLPipeline(), programHandle(glCreateProgram())

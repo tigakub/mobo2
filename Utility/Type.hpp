@@ -73,7 +73,7 @@ namespace mobo
 #define DECLARE_TYPE public: static const Type _type; virtual const Type& type() const { return _type; }
 
 #define DEFINE_TYPE(CLASS, ID) const Type CLASS::_type(ID);
-#define DEFINE_TYPE_SUB(CLASS, ID, SUBS) const Type CLASS::_type(ID, vector<const Type*>SUBS);
+#define DERIVE_TYPE(CLASS, ID, SUBS) const Type CLASS::_type(ID, vector<const Type*>SUBS);
 
 
 #endif

@@ -10,9 +10,9 @@ using namespace std;
 namespace mobo
 {
 
-    DEFINE_TYPE_SUB(GLShader, "c25e6c00-6725-402b-a7d2-25a587b34d3f", { &Node::_type })
-    DEFINE_TYPE_SUB(GLVertexShader, "a7f4feeb-439e-4915-907e-b162eadb566c", { &GLShader::_type })
-    DEFINE_TYPE_SUB(GLFragmentShader, "3b61940a-d5c9-42c9-986d-ac54d34651d8", { &GLShader::_type })
+    DERIVE_TYPE(GLShader, "c25e6c00-6725-402b-a7d2-25a587b34d3f", { &Node::_type })
+    DERIVE_TYPE(GLVertexShader, "a7f4feeb-439e-4915-907e-b162eadb566c", { &GLShader::_type })
+    DERIVE_TYPE(GLFragmentShader, "3b61940a-d5c9-42c9-986d-ac54d34651d8", { &GLShader::_type })
 
     GLShader::GLShader(GLenum iShaderType)
     : Node(), shaderHandle(glCreateShader(iShaderType))

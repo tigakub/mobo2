@@ -6,7 +6,7 @@ using namespace std;
 
 namespace mobo
 {
-    DEFINE_TYPE_SUB(GLPipeline, "18f6e06f-1af9-4c09-a674-1e16ea159777", { &Node::_type })
+    DERIVE_TYPE(GLPipeline, "18f6e06f-1af9-4c09-a674-1e16ea159777", { &Node::_type })
 
     GLPipeline::GLPipeline()
     : Node()

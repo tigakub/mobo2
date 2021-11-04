@@ -6,7 +6,7 @@ using namespace std;
 
 namespace mobo
 {
-    DEFINE_TYPE_SUB(GLPipelineStart, "cafab51b-4cd9-4c8a-aae0-5c8610fdcbf7", { &GLPipeline::_type })
+    DERIVE_TYPE(GLPipelineStart, "cafab51b-4cd9-4c8a-aae0-5c8610fdcbf7", { &GLPipeline::_type })
 
     GLPipelineStart::GLPipelineStart()
     : GLPipeline()

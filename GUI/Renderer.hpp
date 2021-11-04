@@ -1,11 +1,11 @@
 #ifndef __RENDERER_HPP__
 #define __RENDERER_HPP__
 
+#include "MovingAverage.hpp"
+
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
-
-#include "MovingAverage.hpp"
 
 #include <GL/freeglut.h>
 #include <GL/gl.h>
