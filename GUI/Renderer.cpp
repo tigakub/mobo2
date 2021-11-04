@@ -1,10 +1,6 @@
 #include "Renderer.hpp"
 
 #include "lodepng.h"
-#include <string>
-#include <iostream>
-
-using namespace std;
 
 namespace mobo
 {
@@ -16,7 +12,8 @@ namespace mobo
     GLint uvDataSize = 6;
 
     void Renderer::init()
-    {
+    {   
+        /*
         #ifdef TRACE
         cout << "Generating VBOs" << endl;
         #endif
@@ -32,8 +29,9 @@ namespace mobo
         glBufferData(GL_ARRAY_BUFFER, uvDataSize * sizeof(GLfloat), uvData, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        */
 
-        #ifdef TRACE
+        #ifdef DEBUG_OPENGL
         cout << "Loading textures" << endl;
         #endif
 
@@ -73,21 +71,6 @@ namespace mobo
         cout << "Channels per pixel: " << lodepng_get_channels(&color) << endl;
         cout << "Can have alpha: " << lodepng_can_have_alpha(&color) << endl;
         */
-
-        #ifdef TRACE
-        cout << "Binding buffers" << endl;
-        #endif
-
-        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, NULL);
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-        glEnableVertexAttribArray(2);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     Renderer::~Renderer()
@@ -102,7 +85,7 @@ namespace mobo
 
     void Renderer::render()
     {
-        #ifdef TRACE
+        #ifdef DEBUG_OPENGL
         cout << "Rendering" << endl;
         #endif
 
@@ -121,7 +104,7 @@ namespace mobo
         glBindSampler(0, 0);
         glBindTexture(GL_TEXTURE_2D, 0);
         
-        #ifdef TRACE
+        #ifdef DEBUG_OPENGL
         cout << "Render Complete" << endl;
         #endif
     }

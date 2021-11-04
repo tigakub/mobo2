@@ -1,22 +1,22 @@
-#ifndef __GLPROGRAM_HPP__
-#define __GLPROGRAM_HPP__
+#ifndef __GLGEOMETRY_HPP__
+#define __GLGEOMETRY_HPP__
 
 #include "Debug.hpp"
 
 #include "Context.hpp"
 #include "GLPipeline.hpp"
-#include "GLShader.hpp"
+#include "GLBufferNode.hpp"
 
 namespace mobo
 {
     class GLContext;
 
-    class GLProgram : public GLPipeline
+    class GLGeometry : public GLPipeline
     {
         DECLARE_TYPE
         public:
-            GLProgram();
-            virtual ~GLProgram();
+            GLGeometry();
+            virtual ~GLGeometry();
 
             virtual bool update(Context& iCtx);
             virtual bool submit(Context& iCtx);
@@ -24,9 +24,7 @@ namespace mobo
 
             virtual bool activate();
             virtual bool deactivate();
-
-        protected:
-            GLint programHandle;
+            
     };
 }
 

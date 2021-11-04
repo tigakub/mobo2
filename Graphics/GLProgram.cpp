@@ -28,7 +28,7 @@ namespace mobo
         GLVertexShader* vtxShader = getInput<GLVertexShader>(1);
         GLFragmentShader* frgShader = getInput<GLFragmentShader>(2);
         if(vtxShader && frgShader) {
-            #ifdef TRACE
+            #ifdef DEBUG_OPENGL
             cout << "Linking program ... ";
             #endif
             vtxShader->attach(programHandle);
@@ -37,11 +37,11 @@ namespace mobo
             GLint status;
             glGetProgramiv(programHandle, GL_LINK_STATUS, &status);
             if(status) {
-                #ifdef TRACE
+                #ifdef DEBUG_OPENGL
                 cout << "success" << endl;
                 #endif
                 return status;
-            #ifdef TRACE
+            #ifdef DEBUG_OPENGL
             } else {
                 cout << "failure" << endl;
             #endif
@@ -52,32 +52,49 @@ namespace mobo
 
     bool GLProgram::submit(Context& iCtx)
     {
-        #ifdef TRACE
+        #ifdef DEBUG_OPENGL
         cout << "GLProgram::submit" << endl;
         #endif
         GLContext& ctx = static_cast<GLContext&>(iCtx);
         ctx.pushProgram(this);
         activate();
+        return true;
     }
 
     bool GLProgram::retract(Context& iCtx)
     {
-        #ifdef TRACE
+        #ifdef DEBUG_OPENGL
         cout << "GLProgram::retract" << endl;
         #endif
+        deactivate();
+        #ifdef DEBUG_OPENGL
+        cout << "GLProgram::deactivated" << endl;
+        #endif
         GLContext& ctx = static_cast<GLContext&>(iCtx);
+        #ifdef DEBUG_OPENGL
+        cout << "GLProgram::context" << endl;
+        #endif
         GLProgram* prev = ctx.popProgram();
+        #ifdef DEBUG_OPENGL
+        cout << "GLProgram::popProgram" << endl;
+        #endif
         if(prev) prev->activate();
+        #ifdef DEBUG_OPENGL
+        cout << "GLProgram::retracted" << endl;
+        #endif
+        return true;
     }
 
     bool GLProgram::activate()
     {
         glUseProgram(programHandle);
+        return true;
     }
 
     bool GLProgram::deactivate()
     {
         glUseProgram(0);
+        return true;
     }
 
 }

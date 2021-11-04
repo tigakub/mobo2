@@ -4,6 +4,8 @@
 #include <cstdint> // for uint32_t
 #include <type_traits> // for enable_if
 
+#include <iostream>
+
 using namespace std;
 
 namespace mobo
@@ -65,17 +67,19 @@ namespace mobo
                 }
             }
 
-        protected:
             virtual void blit(const T* iSrc, uint32_t iSize) {
                 resizeIfNeeded(iSize);
                 T* dst = map();
-                uint32_t n = iSize;
-                while(n--) {
-                    dst[n] = iSrc[n];
+                if(dst) {
+                    uint32_t n = iSize;
+                    while(n--) {
+                        dst[n] = iSrc[n];
+                    }
                 }
                 unmap();
             }
 
+        protected:
             virtual void blit(const BufferT<T>& iSrc) {
                 resizeIfNeeded(iSrc.elementCount);
                 const T* src = iSrc.map();
@@ -84,7 +88,6 @@ namespace mobo
             }
 
             virtual void setSize(uint32_t iSize) {
-                Buffer::setSize(iSize);
                 elementCount = iSize;
             }
 
@@ -113,7 +116,7 @@ namespace mobo
             
             virtual Buffer& operator=(const Buffer& iSrc) {
                 if(dynamic_cast<const BufferT<T>*>(&iSrc)) {
-                    blit(dynamic_cast<const BufferT<T>&>(iSrc));
+                    BufferT<T>::blit(dynamic_cast<const BufferT<T>&>(iSrc));
                 }
                 return *this;
             }

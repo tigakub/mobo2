@@ -1,6 +1,8 @@
 #ifndef __GLSHADER_HPP__
 #define __GLSHADER_HPP__
 
+#include "Debug.hpp"
+
 #include "Context.hpp"
 #include "Node.hpp"
 #include "Type.hpp"

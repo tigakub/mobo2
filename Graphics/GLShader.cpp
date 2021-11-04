@@ -42,15 +42,15 @@ namespace mobo
         auto input = inputs[0];
         StringNode* srcNode = getInput<StringNode>(0);
         if(srcNode) {
-            #ifdef TRACE
+            #ifdef DEBUG_OPENGL
             cout << "Compiling shader ... ";
             #endif
             if(compileFromString(srcNode->getValue())) {
-                #ifdef TRACE
+                #ifdef DEBUG_OPENGL
                 cout << "success" << endl;
                 #endif
                 return true;
-            #ifdef TRACE
+            #ifdef DEBUG_OPENGL
             } else {
                 cout << "failure" << endl;
             #endif

@@ -1,6 +1,8 @@
 #ifndef __GLPIPELINESTART_HPP__
 #define __GLPIPELINESTART_HPP__
 
+#include "Debug.hpp"
+
 #include "GLPipeline.hpp"
 
 namespace mobo

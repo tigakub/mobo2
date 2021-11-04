@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+..//Debug.hpp
+string
+-
+sstream
+-
+iostream
+-
+iomanip
+-
+
 ..//MovingAverage.hpp
 
 ../GUI/App.hpp
@@ -27,6 +37,8 @@ cstdint
 -
 
 ../GUI/Renderer.hpp
+Debug.hpp
+../GUI/Debug.hpp
 MovingAverage.hpp
 ../GUI/MovingAverage.hpp
 GL/freeglut.h
@@ -92,13 +104,43 @@ vector
 type_traits
 -
 
+../Graphics/GLBuffer.hpp
+Debug.hpp
+../Graphics/Debug.hpp
+Buffer.hpp
+../Graphics/Buffer.hpp
+GL/freeglut.h
+-
+GL/gl.h
+-
+GL/glu.h
+-
+typeinfo
+-
+iostream
+-
+
+../Graphics/GLBufferNode.hpp
+Debug.hpp
+../Graphics/Debug.hpp
+Math.hpp
+../Graphics/Math.hpp
+GLBuffer.hpp
+../Graphics/GLBuffer.hpp
+Node.hpp
+../Graphics/Node.hpp
+
 ../Graphics/GLContext.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 GLShader.hpp
 ../Graphics/GLShader.hpp
 GLProgram.hpp
 ../Graphics/GLProgram.hpp
+GLGeometry.hpp
+../Graphics/GLGeometry.hpp
 GL/freeglut.h
 -
 GL/gl.h
@@ -108,7 +150,19 @@ GL/glu.h
 vector
 -
 
+../Graphics/GLGeometry.hpp
+Debug.hpp
+../Graphics/Debug.hpp
+Context.hpp
+../Graphics/Context.hpp
+GLPipeline.hpp
 ../Graphics/GLPipeline.hpp
+GLBufferNode.hpp
+../Graphics/GLBufferNode.hpp
+
+../Graphics/GLPipeline.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Node.hpp
 ../Graphics/Node.hpp
 GL/freeglut.h
@@ -119,6 +173,8 @@ GL/glu.h
 -
 
 ../Graphics/GLProgram.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 GLPipeline.hpp
@@ -127,6 +183,8 @@ GLShader.hpp
 ../Graphics/GLShader.hpp
 
 ../Graphics/GLShader.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 Node.hpp
@@ -140,6 +198,16 @@ GL/gl.h
 GL/glu.h
 -
 string
+-
+
+../Math/Math.hpp
+
+../Utility/Buffer.hpp
+cstdint
+-
+type_traits
+-
+iostream
 -
 
 ../Utility/Flags.hpp

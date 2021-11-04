@@ -4,6 +4,9 @@
 #include "GLPipelineStart.hpp"
 #include "GLShader.hpp"
 #include "StringNode.hpp"
+#include "HostBufferNode.hpp"
+#include "GLBufferNode.hpp"
+#include "GLGeometry.hpp"
 
 #include <iostream>
 #include <iomanip>
@@ -141,6 +144,10 @@ namespace mobo
         }
     )");
 
+    const GLfloat vtxData[] = { -1.0, -1.0, 0.0, 1.0,    1.0, -1.0, 0.0, 1.0,    0.0, 1.0, 0.0, 1.0 };
+    const GLfloat clrData[] = { 1.0, 0.0, 0.0, 1.0,    0.0, 1.0, 0.0, 1.0,    0.0, 0.0, 1.0, 1.0 };
+    const GLfloat uvData[] = { 0.0, 1.0,    1.0, 1.0,    0.5, 0.0 };
+
     Win::Win(App& iApp)
     : app(iApp), winId(glutCreateWindow("")),
       mouseButtonState(0), renderer(nullptr), needsDisplay(false),
@@ -168,14 +175,34 @@ namespace mobo
         program->linkTo(1, *vtxShader);
         program->linkTo(2, *frgShader);
 
+        GLV4BufferNode* vtxBuf = new GLV4BufferNode();
+        GLV4BufferNode* clrBuf = new GLV4BufferNode();
+        GLV2BufferNode* uvBuf = new GLV2BufferNode();
+
+        vtxBuf->blit((const vec<GLfloat,4>*) vtxData, 3);
+        clrBuf->blit((const vec<GLfloat,4>*) clrData, 3);
+        uvBuf->blit((const vec<GLfloat,2>*) uvData, 3);
+
+        GLGeometry* geom = new GLGeometry();
+        geom->linkTo(0, *program);
+        geom->linkTo(1, *vtxBuf);
+        geom->linkTo(2, *clrBuf);
+        geom->linkTo(3, *uvBuf);
+
         GLPipeline *pipelineNode = new GLPipeline();
         cout << "pipelineNode " << pipelineNode->nodeId.toString() << endl;
-        pipelineNode->linkTo(0, *program);
+        pipelineNode->linkTo(0, *geom);
 
         ctx.addNode(pipelineNode);
         ctx.addNode(vtxShaderSrc);
         ctx.addNode(frgShaderSrc);
         ctx.addNode(program);
+        /*
+        ctx.addNode(vtxBuf);
+        ctx.addNode(clrBuf);
+        ctx.addNode(uvBuf);
+        ctx.addNode(geom);
+        */
         ctx.setRoot(pipelineNode->nodeId);
 
         glutSetWindow(winId);

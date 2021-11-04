@@ -8,7 +8,7 @@
 namespace mobo
 {
     extern const Type HOSTBUFFERTYPE;
-    
+
     template <class T>
     class HostBufferNodeT : public Node, public HostBufferT<T>
     {
@@ -17,8 +17,10 @@ namespace mobo
             : Node(), HostBufferT<T>() { }
             HostBufferNodeT(const BufferT<T>& iBuffer)
             : Node(), HostBufferT<T>(iBuffer) { }
+            /*
             HostBufferNodeT(const HostBufferNodeT<T>& iBuffer)
             : Node(), HostBufferT<T>(iBuffer) { }
+            */
             HostBufferNodeT(HostBufferT<T>&& iBuffer)
             : Node(), HostBufferT<T>(move(iBuffer)) { }
             HostBufferNodeT(HostBufferNodeT<T>&& iBuffer)
@@ -35,8 +37,10 @@ namespace mobo
             : HostBufferNodeT<vec<float, S>>(iBuffer) { }
             HostVertexBufferNodeT(HostBufferT<vec<float, S>>&& iBuffer)
             : HostBufferNodeT<vec<float, S>>(move(iBuffer)) { }
+            /*
             HostVertexBufferNodeT(const HostVertexBufferNodeT<S>& iBuffer)
             : HostBufferNodeT<vec<float, S>>(iBuffer) { }
+            */
             HostVertexBufferNodeT(HostVertexBufferNodeT<S>&& iBuffer)
             : HostBufferNodeT<vec<float, S>>(move(iBuffer)) { }
     };
@@ -51,8 +55,10 @@ namespace mobo
             : HostVertexBufferNodeT<2>(iBuffer) { }
             HostV2BufferNode(HostBufferT<vec<float, 2>>&& iBuffer)
             : HostVertexBufferNodeT<2>(iBuffer) { }
+            /*
             HostV2BufferNode(const HostV2BufferNode& iBuffer)
             : HostVertexBufferNodeT<2>(iBuffer) { }
+            */
             HostV2BufferNode(HostV2BufferNode&& iBuffer)
             : HostVertexBufferNodeT<2>(move(iBuffer)) { }
     };
@@ -67,8 +73,10 @@ namespace mobo
             : HostVertexBufferNodeT<3>(iBuffer) { }
             HostV3BufferNode(HostBufferT<vec<float, 3>>&& iBuffer)
             : HostVertexBufferNodeT<3>(move(iBuffer)) { }
+            /*
             HostV3BufferNode(const HostV3BufferNode& iBuffer)
             : HostVertexBufferNodeT<3>(iBuffer) { }
+            */
             HostV3BufferNode(HostV3BufferNode&& iBuffer)
             : HostVertexBufferNodeT<3>(move(iBuffer)) { }
     };
@@ -83,8 +91,10 @@ namespace mobo
             : HostVertexBufferNodeT<4>(iBuffer) { }
             HostV4BufferNode(HostBufferT<vec<float, 4>>&& iBuffer)
             : HostVertexBufferNodeT<4>(move(iBuffer)) { }
+            /*
             HostV4BufferNode(const HostV4BufferNode& iBuffer)
             : HostVertexBufferNodeT<4>(iBuffer) { }
+            */
             HostV4BufferNode(HostV4BufferNode&& iBuffer)
             : HostVertexBufferNodeT<4>(move(iBuffer)) { }
     };
@@ -99,8 +109,10 @@ namespace mobo
             : HostBufferNodeT<int>(iBuffer) { }
             HostIndexBufferNode(HostBufferT<int>&& iBuffer)
             : HostBufferNodeT<int>(move(iBuffer)) { }
+            /*
             HostIndexBufferNode(const HostIndexBufferNode& iBuffer)
             : HostBufferNodeT<int>(iBuffer) { }
+            */
             HostIndexBufferNode(HostIndexBufferNode&& iBuffer)
             : HostBufferNodeT<int>(move(iBuffer)) { }
     };

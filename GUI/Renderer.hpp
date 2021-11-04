@@ -1,6 +1,8 @@
 #ifndef __RENDERER_HPP__
 #define __RENDERER_HPP__
 
+#include "Debug.hpp"
+
 #include "MovingAverage.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
@@ -21,7 +23,7 @@ namespace mobo
     class Renderer
     {
         public:
-            Renderer() : prog(0) { }
+            Renderer() { }
             virtual ~Renderer();
 
             void didReshape(int w, int h);
@@ -30,8 +32,6 @@ namespace mobo
             virtual void render();
 
         protected:
-            GLint prog;
-            GLuint vbo[3];
             GLuint tex;
             GLuint samp;
 

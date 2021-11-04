@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+..//Debug.hpp
+string
+-
+sstream
+-
+iostream
+-
+iomanip
+-
+
 ..//MovingAverage.hpp
 
 ../Graph/Context.hpp
@@ -13,6 +23,14 @@ uuid.hpp
 ../Graph/uuid.hpp
 SmartPtr.hpp
 ../Graph/SmartPtr.hpp
+Node.hpp
+../Graph/Node.hpp
+
+../Graph/HostBufferNode.hpp
+Math.hpp
+../Graph/Math.hpp
+Buffer.hpp
+../Graph/Buffer.hpp
 Node.hpp
 ../Graph/Node.hpp
 
@@ -54,13 +72,43 @@ Node.hpp
 string
 -
 
+../Graphics/GLBuffer.hpp
+Debug.hpp
+../Graphics/Debug.hpp
+Buffer.hpp
+../Graphics/Buffer.hpp
+GL/freeglut.h
+-
+GL/gl.h
+-
+GL/glu.h
+-
+typeinfo
+-
+iostream
+-
+
+../Graphics/GLBufferNode.hpp
+Debug.hpp
+../Graphics/Debug.hpp
+Math.hpp
+../Graphics/Math.hpp
+GLBuffer.hpp
+../Graphics/GLBuffer.hpp
+Node.hpp
+../Graphics/Node.hpp
+
 ../Graphics/GLContext.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 GLShader.hpp
 ../Graphics/GLShader.hpp
 GLProgram.hpp
 ../Graphics/GLProgram.hpp
+GLGeometry.hpp
+../Graphics/GLGeometry.hpp
 GL/freeglut.h
 -
 GL/gl.h
@@ -70,7 +118,19 @@ GL/glu.h
 vector
 -
 
+../Graphics/GLGeometry.hpp
+Debug.hpp
+../Graphics/Debug.hpp
+Context.hpp
+../Graphics/Context.hpp
+GLPipeline.hpp
 ../Graphics/GLPipeline.hpp
+GLBufferNode.hpp
+../Graphics/GLBufferNode.hpp
+
+../Graphics/GLPipeline.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Node.hpp
 ../Graphics/Node.hpp
 GL/freeglut.h
@@ -81,10 +141,14 @@ GL/glu.h
 -
 
 ../Graphics/GLPipelineStart.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 GLPipeline.hpp
 ../Graphics/GLPipeline.hpp
 
 ../Graphics/GLProgram.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 GLPipeline.hpp
@@ -93,6 +157,8 @@ GLShader.hpp
 ../Graphics/GLShader.hpp
 
 ../Graphics/GLShader.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 Node.hpp
@@ -106,6 +172,16 @@ GL/gl.h
 GL/glu.h
 -
 string
+-
+
+../Math/Math.hpp
+
+../Utility/Buffer.hpp
+cstdint
+-
+type_traits
+-
+iostream
 -
 
 ../Utility/Flags.hpp
@@ -201,12 +277,10 @@ Renderer.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
 lodepng.h
 /home/tigakub/Documents/Robotics/mobo2/GUI/lodepng.h
-string
--
-iostream
--
 
 /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
+Debug.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/Debug.hpp
 MovingAverage.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/MovingAverage.hpp
 GL/freeglut.h
@@ -229,6 +303,12 @@ GLShader.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLShader.hpp
 StringNode.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/StringNode.hpp
+HostBufferNode.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/HostBufferNode.hpp
+GLBufferNode.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/GLBufferNode.hpp
+GLGeometry.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/GLGeometry.hpp
 iostream
 -
 iomanip

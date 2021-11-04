@@ -1,6 +1,8 @@
 #ifndef __GLBUFFERNODE_HPP__
 #define __GLBUFFERNODE_HPP__
 
+#include "Debug.hpp"
+
 #include "Math.hpp"
 #include "GLBuffer.hpp"
 #include "Node.hpp"

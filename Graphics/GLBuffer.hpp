@@ -1,6 +1,8 @@
 #ifndef __GLBUFFER_HPP__
 #define __GLBUFFER_HPP__
 
+#include "Debug.hpp"
+
 #include "Buffer.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
@@ -32,6 +34,11 @@ namespace mobo
             virtual ~GLBufferT()
             {
                 if(bufferHandle) glDeleteBuffers(1, &bufferHandle);
+            }
+
+            void bind(GLenum iTarget)
+            {
+                glBindBuffer(iTarget, bufferHandle);
             }
 
             void setUsage(GLenum iUsage, bool iReallocate = true)
@@ -74,18 +81,22 @@ namespace mobo
                     return *this;
                 } catch(const bad_cast& e) {
                 }
+                #ifdef DEBUG_OPENGL
                 cerr << "Failed to copy buffer" << endl;
+                #endif
                 return *this;
             }
 
             virtual void unmap()
             {
-                glUnmapNamedBuffer(bufferHandle);
+                glUnmapBuffer(GL_ARRAY_BUFFER);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
 
             virtual void unmap() const
             {
-                glUnmapNamedBuffer(bufferHandle);
+                glUnmapBuffer(GL_ARRAY_BUFFER);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
 
         protected:
@@ -93,7 +104,9 @@ namespace mobo
             {
                 GLuint newBuffer;
                 glGenBuffers(1, &newBuffer);
-                glNamedBufferData(newBuffer, iSize * GLBufferT<T>::elementSize(), nullptr, usage);
+                glBindBuffer(GL_ARRAY_BUFFER, newBuffer);
+                glBufferData(GL_ARRAY_BUFFER, iSize * GLBufferT<T>::elementSize(), nullptr, usage);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
                 if(bufferHandle) {
                     if(iPreserve) {
                         glBindBuffer(GL_COPY_READ_BUFFER, bufferHandle);
@@ -110,12 +123,18 @@ namespace mobo
 
             virtual const void* rawMap() const
             {
-                glMapNamedBuffer(bufferHandle, GL_READ_ONLY);
+                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY);
+                if(!ptr) cout << gluErrorString(glGetError()) << endl;
+                return ptr;
             }
 
             virtual void* rawMap()
             {
-                glMapNamedBuffer(bufferHandle, GL_READ_WRITE);
+                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
+                if(!ptr) cout << gluErrorString(glGetError()) << endl;
+                return ptr;
             }
 
         protected:

@@ -1,6 +1,8 @@
 #ifndef __GLPIPELINE_HPP__
 #define __GLPIPELINE_HPP__
 
+#include "Debug.hpp"
+
 #include "Node.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
