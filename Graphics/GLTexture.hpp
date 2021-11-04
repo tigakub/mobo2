@@ -22,10 +22,10 @@ namespace mobo
     class GLContext;
 
     template <int iTarget>
-    class GLTextureT : Node
+    class GLTextureT : public Node
     {
         public:
-            GLTextureT() : Node() textureHandle(0) { glGenTextures(1, &textureHandle); }
+            GLTextureT() : Node(), textureHandle(0) { glGenTextures(1, &textureHandle); }
             virtual ~GLTextureT() { if(textureHandle) glDeleteTextures(1, &textureHandle); }
 
         protected:

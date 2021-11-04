@@ -88,6 +88,10 @@ namespace mobo
     bool GLProgram::activate()
     {
         glUseProgram(programHandle);
+
+        GLint texLoc = glGetUniformLocation(programHandle, "tex");
+        glUniform1i(texLoc, 0);
+
         return true;
     }
 

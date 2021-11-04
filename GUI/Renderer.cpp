@@ -74,9 +74,7 @@ namespace mobo
     }
 
     Renderer::~Renderer()
-    {
-        if(prog) glDeleteProgram(prog);
-    }
+    { }
 
     void Renderer::didReshape(int w, int h)
     {
@@ -88,9 +86,6 @@ namespace mobo
         #ifdef DEBUG_OPENGL
         cout << "Rendering" << endl;
         #endif
-
-        GLint texLoc = glGetUniformLocation(prog, "tex");
-        glUniform1i(texLoc, 0);
 
         glActiveTexture(GL_TEXTURE0);
         glEnable(GL_TEXTURE_2D);
