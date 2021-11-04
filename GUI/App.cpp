@@ -83,7 +83,6 @@ namespace mobo
 
     bool App::run()
     {
-
         alive = true;
         while(alive) {
             glutMainLoopEvent();

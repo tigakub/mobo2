@@ -24,12 +24,7 @@ int main(int argc, char**argv)
     App app(argc, argv);
     Win* newWin = app.newWindow(100, 100, 2048, 1024);
 
-    Renderer* rend = new Renderer();
-    newWin->setRenderer(rend);
-
     app.run();
 
-    delete rend;
-    
     return 0;
 }

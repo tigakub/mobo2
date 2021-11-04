@@ -4,6 +4,8 @@
 #include "App.hpp"
 #include "Renderer.hpp"
 
+#include "GLContext.hpp"
+
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
@@ -51,11 +53,20 @@ namespace mobo
             virtual bool render();
             virtual bool renderOverlay() { return true; }
 
+            virtual float calculateFrameRate();
+            
             App& app;
             int winId;
             uint32_t mouseButtonState;
             Renderer* renderer;
             float needsDisplay;
+            time_point<steady_clock> timestamp;
+            float emaWindow;
+            float fpsWMA;
+            float fpsEMA;
+            MovingAverage fpsAVG;
+
+            GLContext ctx;
     };
 
 }

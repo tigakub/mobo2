@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/tigakub/Documents/OpenGL/lodepng/lodepng.cpp" "/home/tigakub/Documents/OpenGL/build/lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o"
-  "/home/tigakub/Documents/OpenGL/lodepng/lodepng_fuzzer.cpp" "/home/tigakub/Documents/OpenGL/build/lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o"
-  "/home/tigakub/Documents/OpenGL/lodepng/lodepng_unittest.cpp" "/home/tigakub/Documents/OpenGL/build/lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o"
-  "/home/tigakub/Documents/OpenGL/lodepng/lodepng_util.cpp" "/home/tigakub/Documents/OpenGL/build/lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o"
-  "/home/tigakub/Documents/OpenGL/lodepng/pngdetail.cpp" "/home/tigakub/Documents/OpenGL/build/lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_fuzzer.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_unittest.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/lodepng/pngdetail.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -31,9 +31,12 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../"
+  "../Graph"
+  "../Graphics"
   "../GUI"
-  "../Math"
   "../lodepng"
+  "../Math"
+  "../Utility"
   )
 
 # Targets to which this target links.

@@ -1,4 +1,4 @@
-# Install script for directory: /home/tigakub/Documents/OpenGL/GUI
+# Install script for directory: /home/tigakub/Documents/Robotics/mobo2/GUI
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

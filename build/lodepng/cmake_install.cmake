@@ -1,4 +1,4 @@
-# Install script for directory: /home/tigakub/Documents/OpenGL/lodepng
+# Install script for directory: /home/tigakub/Documents/Robotics/mobo2/lodepng
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

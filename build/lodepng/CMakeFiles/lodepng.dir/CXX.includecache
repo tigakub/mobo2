@@ -6,9 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.cpp
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.cpp
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 limits.h
 -
 stdio.h
@@ -16,7 +16,7 @@ stdio.h
 stdlib.h
 -
 
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 string.h
 -
 vector
@@ -24,23 +24,23 @@ vector
 string
 -
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 iostream
 -
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_fuzzer.cpp
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_fuzzer.cpp
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 cstdint
 -
 
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_unittest.cpp
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_unittest.cpp
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 lodepng_util.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_util.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.h
 cmath
 -
 map
@@ -60,27 +60,27 @@ stdio.h
 stdlib.h
 -
 
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_util.cpp
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.cpp
 lodepng_util.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_util.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.h
 iostream
 -
 stdlib.h
 -
 
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_util.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.h
 string
 -
 vector
 -
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 
-/home/tigakub/Documents/OpenGL/lodepng/pngdetail.cpp
+/home/tigakub/Documents/Robotics/mobo2/lodepng/pngdetail.cpp
 lodepng.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.h
 lodepng_util.h
-/home/tigakub/Documents/OpenGL/lodepng/lodepng_util.h
+/home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.h
 iostream
 -
 iomanip

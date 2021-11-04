@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++11
 
 CXX_DEFINES = -DBUILD_EASYLOGGINGPP -DBUILD_SHARED_LIBS -DCHECK_FOR_UPDATES -DCOM_MULTITHREADED -DCURL_STATICLIB -DEASYLOGGINGPP_ASYNC -DELPP_NO_DEFAULT_LOG_FILE -DELPP_THREAD_SAFE -DHWM_OVER_XU -DRS2_USE_V4L2_BACKEND -DSQLITE_HAVE_ISNAN -DUNICODE
 
-CXX_INCLUDES = -I/home/tigakub/Documents/OpenGL -I/home/tigakub/Documents/OpenGL/GUI -I/home/tigakub/Documents/OpenGL/Math -I/home/tigakub/Documents/OpenGL/lodepng 
+CXX_INCLUDES = -I/home/tigakub/Documents/Robotics/mobo2 -I/home/tigakub/Documents/Robotics/mobo2/Graph -I/home/tigakub/Documents/Robotics/mobo2/Graphics -I/home/tigakub/Documents/Robotics/mobo2/GUI -I/home/tigakub/Documents/Robotics/mobo2/lodepng -I/home/tigakub/Documents/Robotics/mobo2/Math -I/home/tigakub/Documents/Robotics/mobo2/Utility 
 

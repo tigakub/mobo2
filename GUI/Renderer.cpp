@@ -51,6 +51,7 @@ namespace mobo
 
     void Renderer::init()
     {
+        /*
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -58,7 +59,8 @@ namespace mobo
         glDepthFunc(GL_LESS);
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClearDepth(1.0f);
-
+        */
+        /*
         auto vtxShader = glCreateShader(GL_VERTEX_SHADER);
         auto frgShader = glCreateShader(GL_FRAGMENT_SHADER);
         
@@ -95,7 +97,12 @@ namespace mobo
         glDeleteShader(vtxShader);
 
         glUseProgram(prog);
-        
+        */
+
+        #ifdef TRACE
+        cout << "Generating VBOs" << endl;
+        #endif
+
         glGenBuffers(3, vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
         glBufferData(GL_ARRAY_BUFFER, vtxDataSize * sizeof(GLfloat), vtxData, GL_STATIC_DRAW);
@@ -108,7 +115,11 @@ namespace mobo
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        string imageFilename("BearInRed.png");
+        #ifdef TRACE
+        cout << "Loading textures" << endl;
+        #endif
+
+        string imageFilename("../Burst.png");
         unsigned imgWidth, imgHeight;
         vector<unsigned char> buffer;
         lodepng::load_file(buffer, imageFilename.c_str());
@@ -144,7 +155,11 @@ namespace mobo
         cout << "Channels per pixel: " << lodepng_get_channels(&color) << endl;
         cout << "Can have alpha: " << lodepng_can_have_alpha(&color) << endl;
         */
-       
+
+        #ifdef TRACE
+        cout << "Binding buffers" << endl;
+        #endif
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
         glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, NULL);
         glEnableVertexAttribArray(0);
@@ -169,7 +184,11 @@ namespace mobo
 
     void Renderer::render()
     {
-        glUseProgram(prog);
+        // glUseProgram(prog);
+
+        #ifdef TRACE
+        cout << "Rendering" << endl;
+        #endif
 
         GLint texLoc = glGetUniformLocation(prog, "tex");
         glUniform1i(texLoc, 0);
@@ -185,35 +204,14 @@ namespace mobo
 
         glBindSampler(0, 0);
         glBindTexture(GL_TEXTURE_2D, 0);
-        glUseProgram(0);
-
-        glFinish();
         
-        glutSwapBuffers();
-    }
+        #ifdef TRACE
+        cout << "Render Complete" << endl;
+        #endif
 
-    float Renderer::calculateFrameRate()
-    {
-        auto newTime = steady_clock::now();
-        if(timestamp != time_point<steady_clock>(seconds(0))) {
-            duration<float, micro> period(newTime - timestamp);
-            float newFPS = seconds(1) / period;
-            fpsAVG.push_back(newFPS);
-            fpsWMA = fpsAVG.wma();
-            
-            if(emaWindow == 0) {
-                fpsEMA = newFPS;
-            } else {
-                float k = 2.0f / (emaWindow + 1.0f);
-                fpsEMA = newFPS * k + fpsEMA * (1.0 - k);
-            }
-            if(emaWindow < 15) emaWindow++;
+        // glUseProgram(0);
 
-        } else {
-            fpsWMA = 0.0;
-            fpsEMA = 0.0;
-        }
-        timestamp = newTime;
-        return fpsEMA;
+        //glFinish();
+        //glutSwapBuffers();
     }
 }

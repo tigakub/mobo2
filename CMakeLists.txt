@@ -17,11 +17,14 @@ set(LIBS "/home/$ENV{USER}/Documents/librealsense/build/librealsense2.so" "/home
 
 add_definitions(-DBUILD_EASYLOGGINGPP -DBUILD_SHARED_LIBS -DCHECK_FOR_UPDATES -DCOM_MULTITHREADED -DCURL_STATICLIB -DEASYLOGGINGPP_ASYNC -DELPP_NO_DEFAULT_LOG_FILE -DELPP_THREAD_SAFE -DHWM_OVER_XU -DRS2_USE_V4L2_BACKEND -DSQLITE_HAVE_ISNAN -DUNICODE)
 
+add_subdirectory(Graph)
+add_subdirectory(Graphics)
 add_subdirectory(GUI)
 add_subdirectory(Math)
 add_subdirectory(lodepng)
+add_subdirectory(Utility)
 
 add_executable(mobo main.cpp)
 
 target_include_directories(mobo PUBLIC "${LIBREALSENSE_BASE}/build" "${LIBREALSENSE_BASE}/include" "${LIBREALSENSE_BASE}/third-party/glfw/include" /usr/local/cuda/include)
-target_link_libraries(mobo PUBLIC GUI Math lodepng "${LIBS}")
+target_link_libraries(mobo PUBLIC GUI Graphics Graph Math lodepng Utility "${LIBS}")

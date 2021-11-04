@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/tigakub/Documents/OpenGL/GUI/App.cpp" "/home/tigakub/Documents/OpenGL/build/GUI/CMakeFiles/GUI.dir/App.cpp.o"
-  "/home/tigakub/Documents/OpenGL/GUI/EventHandler.cpp" "/home/tigakub/Documents/OpenGL/build/GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o"
-  "/home/tigakub/Documents/OpenGL/GUI/Renderer.cpp" "/home/tigakub/Documents/OpenGL/build/GUI/CMakeFiles/GUI.dir/Renderer.cpp.o"
-  "/home/tigakub/Documents/OpenGL/GUI/Win.cpp" "/home/tigakub/Documents/OpenGL/build/GUI/CMakeFiles/GUI.dir/Win.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/GUI/App.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/App.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/Renderer.cpp.o"
+  "/home/tigakub/Documents/Robotics/mobo2/GUI/Win.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/Win.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -30,9 +30,12 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../"
+  "../Graph"
+  "../Graphics"
   "../GUI"
-  "../Math"
   "../lodepng"
+  "../Math"
+  "../Utility"
   )
 
 # Targets to which this target links.

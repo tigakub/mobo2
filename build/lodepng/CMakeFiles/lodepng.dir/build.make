@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tigakub/Documents/OpenGL
+CMAKE_SOURCE_DIR = /home/tigakub/Documents/Robotics/mobo2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tigakub/Documents/OpenGL/build
+CMAKE_BINARY_DIR = /home/tigakub/Documents/Robotics/mobo2/build
 
 # Include any dependencies generated for this target.
 include lodepng/CMakeFiles/lodepng.dir/depend.make
@@ -59,16 +59,16 @@ include lodepng/CMakeFiles/lodepng.dir/flags.make
 
 lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o: lodepng/CMakeFiles/lodepng.dir/flags.make
 lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o: ../lodepng/lodepng.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng.cpp.o -c /home/tigakub/Documents/OpenGL/lodepng/lodepng.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.cpp
 
 lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lodepng.dir/lodepng.cpp.i"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/OpenGL/lodepng/lodepng.cpp > CMakeFiles/lodepng.dir/lodepng.cpp.i
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.cpp > CMakeFiles/lodepng.dir/lodepng.cpp.i
 
 lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lodepng.dir/lodepng.cpp.s"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/OpenGL/lodepng/lodepng.cpp -o CMakeFiles/lodepng.dir/lodepng.cpp.s
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng.cpp -o CMakeFiles/lodepng.dir/lodepng.cpp.s
 
 lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o.requires:
 
@@ -83,16 +83,16 @@ lodepng/CMakeFiles/lodepng.dir/lodepng.cpp.o.provides.build: lodepng/CMakeFiles/
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o: lodepng/CMakeFiles/lodepng.dir/flags.make
 lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o: ../lodepng/lodepng_fuzzer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o -c /home/tigakub/Documents/OpenGL/lodepng/lodepng_fuzzer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_fuzzer.cpp
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.i"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/OpenGL/lodepng/lodepng_fuzzer.cpp > CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.i
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_fuzzer.cpp > CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.i
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.s"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/OpenGL/lodepng/lodepng_fuzzer.cpp -o CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.s
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_fuzzer.cpp -o CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.s
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o.requires:
 
@@ -107,16 +107,16 @@ lodepng/CMakeFiles/lodepng.dir/lodepng_fuzzer.cpp.o.provides.build: lodepng/CMak
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o: lodepng/CMakeFiles/lodepng.dir/flags.make
 lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o: ../lodepng/lodepng_unittest.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o -c /home/tigakub/Documents/OpenGL/lodepng/lodepng_unittest.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_unittest.cpp
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lodepng.dir/lodepng_unittest.cpp.i"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/OpenGL/lodepng/lodepng_unittest.cpp > CMakeFiles/lodepng.dir/lodepng_unittest.cpp.i
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_unittest.cpp > CMakeFiles/lodepng.dir/lodepng_unittest.cpp.i
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lodepng.dir/lodepng_unittest.cpp.s"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/OpenGL/lodepng/lodepng_unittest.cpp -o CMakeFiles/lodepng.dir/lodepng_unittest.cpp.s
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_unittest.cpp -o CMakeFiles/lodepng.dir/lodepng_unittest.cpp.s
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o.requires:
 
@@ -131,16 +131,16 @@ lodepng/CMakeFiles/lodepng.dir/lodepng_unittest.cpp.o.provides.build: lodepng/CM
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o: lodepng/CMakeFiles/lodepng.dir/flags.make
 lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o: ../lodepng/lodepng_util.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng_util.cpp.o -c /home/tigakub/Documents/OpenGL/lodepng/lodepng_util.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/lodepng_util.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.cpp
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lodepng.dir/lodepng_util.cpp.i"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/OpenGL/lodepng/lodepng_util.cpp > CMakeFiles/lodepng.dir/lodepng_util.cpp.i
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.cpp > CMakeFiles/lodepng.dir/lodepng_util.cpp.i
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lodepng.dir/lodepng_util.cpp.s"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/OpenGL/lodepng/lodepng_util.cpp -o CMakeFiles/lodepng.dir/lodepng_util.cpp.s
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/lodepng/lodepng_util.cpp -o CMakeFiles/lodepng.dir/lodepng_util.cpp.s
 
 lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o.requires:
 
@@ -155,16 +155,16 @@ lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o.provides.build: lodepng/CMakeF
 
 lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o: lodepng/CMakeFiles/lodepng.dir/flags.make
 lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o: ../lodepng/pngdetail.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/pngdetail.cpp.o -c /home/tigakub/Documents/OpenGL/lodepng/pngdetail.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lodepng.dir/pngdetail.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/lodepng/pngdetail.cpp
 
 lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lodepng.dir/pngdetail.cpp.i"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/OpenGL/lodepng/pngdetail.cpp > CMakeFiles/lodepng.dir/pngdetail.cpp.i
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/lodepng/pngdetail.cpp > CMakeFiles/lodepng.dir/pngdetail.cpp.i
 
 lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lodepng.dir/pngdetail.cpp.s"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/OpenGL/lodepng/pngdetail.cpp -o CMakeFiles/lodepng.dir/pngdetail.cpp.s
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/lodepng/pngdetail.cpp -o CMakeFiles/lodepng.dir/pngdetail.cpp.s
 
 lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o.requires:
 
@@ -195,9 +195,9 @@ lodepng/liblodepng.a: lodepng/CMakeFiles/lodepng.dir/lodepng_util.cpp.o
 lodepng/liblodepng.a: lodepng/CMakeFiles/lodepng.dir/pngdetail.cpp.o
 lodepng/liblodepng.a: lodepng/CMakeFiles/lodepng.dir/build.make
 lodepng/liblodepng.a: lodepng/CMakeFiles/lodepng.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tigakub/Documents/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library liblodepng.a"
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && $(CMAKE_COMMAND) -P CMakeFiles/lodepng.dir/cmake_clean_target.cmake
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lodepng.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library liblodepng.a"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && $(CMAKE_COMMAND) -P CMakeFiles/lodepng.dir/cmake_clean_target.cmake
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lodepng.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 lodepng/CMakeFiles/lodepng.dir/build: lodepng/liblodepng.a
@@ -213,10 +213,10 @@ lodepng/CMakeFiles/lodepng.dir/requires: lodepng/CMakeFiles/lodepng.dir/pngdetai
 .PHONY : lodepng/CMakeFiles/lodepng.dir/requires
 
 lodepng/CMakeFiles/lodepng.dir/clean:
-	cd /home/tigakub/Documents/OpenGL/build/lodepng && $(CMAKE_COMMAND) -P CMakeFiles/lodepng.dir/cmake_clean.cmake
+	cd /home/tigakub/Documents/Robotics/mobo2/build/lodepng && $(CMAKE_COMMAND) -P CMakeFiles/lodepng.dir/cmake_clean.cmake
 .PHONY : lodepng/CMakeFiles/lodepng.dir/clean
 
 lodepng/CMakeFiles/lodepng.dir/depend:
-	cd /home/tigakub/Documents/OpenGL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tigakub/Documents/OpenGL /home/tigakub/Documents/OpenGL/lodepng /home/tigakub/Documents/OpenGL/build /home/tigakub/Documents/OpenGL/build/lodepng /home/tigakub/Documents/OpenGL/build/lodepng/CMakeFiles/lodepng.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tigakub/Documents/Robotics/mobo2 /home/tigakub/Documents/Robotics/mobo2/lodepng /home/tigakub/Documents/Robotics/mobo2/build /home/tigakub/Documents/Robotics/mobo2/build/lodepng /home/tigakub/Documents/Robotics/mobo2/build/lodepng/CMakeFiles/lodepng.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : lodepng/CMakeFiles/lodepng.dir/depend
 

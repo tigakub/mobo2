@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tigakub/Documents/OpenGL
+CMAKE_SOURCE_DIR = /home/tigakub/Documents/Robotics/mobo2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tigakub/Documents/OpenGL/build
+CMAKE_BINARY_DIR = /home/tigakub/Documents/Robotics/mobo2/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/tigakub/Documents/OpenGL/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/tigakub/Documents/OpenGL/build/CMakeFiles /home/tigakub/Documents/OpenGL/build/Math/CMakeFiles/progress.marks
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f CMakeFiles/Makefile2 Math/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tigakub/Documents/OpenGL/build/CMakeFiles 0
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles /home/tigakub/Documents/Robotics/mobo2/build/Math/CMakeFiles/progress.marks
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f CMakeFiles/Makefile2 Math/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f CMakeFiles/Makefile2 Math/clean
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f CMakeFiles/Makefile2 Math/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f CMakeFiles/Makefile2 Math/preinstall
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f CMakeFiles/Makefile2 Math/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f CMakeFiles/Makefile2 Math/preinstall
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f CMakeFiles/Makefile2 Math/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/tigakub/Documents/OpenGL/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 Math/CMakeFiles/Math.dir/rule:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f CMakeFiles/Makefile2 Math/CMakeFiles/Math.dir/rule
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f CMakeFiles/Makefile2 Math/CMakeFiles/Math.dir/rule
 .PHONY : Math/CMakeFiles/Math.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ Math: Math/CMakeFiles/Math.dir/rule
 
 # fast build rule for target.
 Math/fast:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/build
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/build
 .PHONY : Math/fast
 
 MovingAverage.o: MovingAverage.cpp.o
@@ -131,7 +131,7 @@ MovingAverage.o: MovingAverage.cpp.o
 
 # target to build an object file
 MovingAverage.cpp.o:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/MovingAverage.cpp.o
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/MovingAverage.cpp.o
 .PHONY : MovingAverage.cpp.o
 
 MovingAverage.i: MovingAverage.cpp.i
@@ -140,7 +140,7 @@ MovingAverage.i: MovingAverage.cpp.i
 
 # target to preprocess a source file
 MovingAverage.cpp.i:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/MovingAverage.cpp.i
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/MovingAverage.cpp.i
 .PHONY : MovingAverage.cpp.i
 
 MovingAverage.s: MovingAverage.cpp.s
@@ -149,7 +149,7 @@ MovingAverage.s: MovingAverage.cpp.s
 
 # target to generate assembly for a file
 MovingAverage.cpp.s:
-	cd /home/tigakub/Documents/OpenGL/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/MovingAverage.cpp.s
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/MovingAverage.cpp.s
 .PHONY : MovingAverage.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/tigakub/Documents/OpenGL/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

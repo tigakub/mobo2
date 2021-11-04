@@ -7,4 +7,18 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../GUI/EventHandler.hpp
  ../GUI/Renderer.hpp
  ../GUI/Win.hpp
- /home/tigakub/Documents/OpenGL/main.cpp
+ ../Graph/Context.hpp
+ ../Graph/Link.hpp
+ ../Graph/Node.hpp
+ ../Graphics/GLContext.hpp
+ ../Graphics/GLPipeline.hpp
+ ../Graphics/GLProgram.hpp
+ ../Graphics/GLShader.hpp
+ ../Utility/Flags.hpp
+ ../Utility/RefCtr.hpp
+ ../Utility/SmartPtr.hpp
+ ../Utility/Timestamp.hpp
+ ../Utility/Type.hpp
+ ../Utility/Typed.hpp
+ ../Utility/uuid.hpp
+ /home/tigakub/Documents/Robotics/mobo2/main.cpp

@@ -1,4 +1,4 @@
-# Install script for directory: /home/tigakub/Documents/OpenGL
+# Install script for directory: /home/tigakub/Documents/Robotics/mobo2
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,9 +39,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/tigakub/Documents/OpenGL/build/GUI/cmake_install.cmake")
-  include("/home/tigakub/Documents/OpenGL/build/Math/cmake_install.cmake")
-  include("/home/tigakub/Documents/OpenGL/build/lodepng/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/Graph/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/Graphics/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/GUI/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/Math/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/lodepng/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/Utility/cmake_install.cmake")
 
 endif()
 
@@ -53,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/tigakub/Documents/OpenGL/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/tigakub/Documents/Robotics/mobo2/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
