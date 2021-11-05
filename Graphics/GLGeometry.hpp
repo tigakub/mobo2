@@ -6,6 +6,7 @@
 #include "Context.hpp"
 #include "GLPipeline.hpp"
 #include "GLBufferNode.hpp"
+#include "GLProgram.hpp"
 
 namespace mobo
 {

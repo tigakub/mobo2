@@ -114,6 +114,20 @@ namespace mobo
         if(programHandle) glDeleteProgram(programHandle);
     }
 
+    const GLProgram::UniformInfo& GLProgram::getUniformInfo(const string& iName) const
+    {
+        auto i = uniformInfo.find(iName);
+        if(i == uniformInfo.end()) throw;
+        return i->second;
+    }
+
+    const GLProgram::AttribInfo& GLProgram::getAttribInfo(const string& iName) const
+    {
+        auto i = attribInfo.find(iName);
+        if(i == attribInfo.end()) throw;
+        return i->second;
+    }
+    /*
     const unordered_map<string, GLProgram::UniformInfo>& GLProgram::getUniformInfo() const
     {
         return uniformInfo;
@@ -123,7 +137,7 @@ namespace mobo
     {
         return attribInfo;
     }
-    
+    */
     bool GLProgram::update(Context& iCtx)
     {
         GLint status;

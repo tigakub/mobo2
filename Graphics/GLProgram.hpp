@@ -80,11 +80,12 @@ namespace mobo
             GLProgram();
             virtual ~GLProgram();
 
-            UniformInfo& getUniformInfo(const string& iName);
-            AttribInfo& getAttribInfo(const string& iName);
-            
+            const UniformInfo& getUniformInfo(const string&) const;
+            const AttribInfo& getAttribInfo(const string&) const;
+            /*
             const unordered_map<string, UniformInfo>& getUniformInfo() const;
             const unordered_map<string, AttribInfo>& getAttribInfo() const;
+            */
 
             virtual bool update(Context& iCtx);
             virtual bool submit(Context& iCtx);

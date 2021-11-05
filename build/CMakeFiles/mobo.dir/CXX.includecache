@@ -159,6 +159,8 @@ GLPipeline.hpp
 ../Graphics/GLPipeline.hpp
 GLBufferNode.hpp
 ../Graphics/GLBufferNode.hpp
+GLProgram.hpp
+../Graphics/GLProgram.hpp
 
 ../Graphics/GLPipeline.hpp
 Debug.hpp
