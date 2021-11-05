@@ -28,8 +28,12 @@ namespace mobo
             GLTextureT() : Node(), textureHandle(0) { glGenTextures(1, &textureHandle); }
             virtual ~GLTextureT() { if(textureHandle) glDeleteTextures(1, &textureHandle); }
 
+            void setUnifName(const string& iName) { uniformName = iName; }
+            const string& unifName() const { return uniformName; }
+
         protected:
             GLuint textureHandle;
+            string uniformName;
     };
 
     class GL2DTexture : public GLTextureT<GL_TEXTURE_2D>

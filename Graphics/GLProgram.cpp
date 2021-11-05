@@ -173,11 +173,11 @@ namespace mobo
                     uInfo.location = glGetUniformLocation(programHandle, nameBuf);
                     uniformInfo[uInfo.name] = uInfo;
                     cout << "Uniform:" << endl;
-                    cout << "\tName:  "    << uInfo.name << endl; 
-                    cout << "\tIndex: "    << i << endl;
+                    cout << "\tName:     " << uInfo.name << endl; 
+                    cout << "\tIndex:    " << i << endl;
                     cout << "\tLocation: " << uInfo.location << endl;
-                    cout << "\tSize:  "    << uInfo.size << endl;
-                    cout << "\tType:  "    << uInfo.typeName << endl;
+                    cout << "\tSize:     " << uInfo.size << endl;
+                    cout << "\tType:     " << uInfo.typeName << endl;
                 }
 
                 glGetProgramiv(programHandle, GL_ACTIVE_ATTRIBUTES, &n);
