@@ -35,11 +35,17 @@ namespace mobo
             virtual ~Node();
 
             void addInput(const Type&);
+
             template <class T, typename enable_if<is_base_of<Node,T>::value, bool>::type E = true> T* getInput(int iIndex)
             {
+                if(iIndex >= inputs.size()) {
+                    iIndex -= inputs.size();
+                    return dynamic_cast<T*>(dinputs[iIndex].src.ptr);
+                }
                 return dynamic_cast<T*>(inputs[iIndex].src.ptr);
             }
 
+            void addLinkTo(Node& iNewLink);
             bool linkTo(int i, Node& iNode);
             void unlink(int i);
             
@@ -56,6 +62,7 @@ namespace mobo
 
             uuid nodeId;
             vector<Link<Node>> inputs;
+            vector<Link<Node>> dinputs;
     };
 };
 

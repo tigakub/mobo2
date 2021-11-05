@@ -28,9 +28,25 @@ namespace mobo
         inputs.push_back(Link<Node>(iType));
     }
 
+    void Node::addLinkTo(Node& iNode)
+    {
+        dinputs.push_back(Link<Node>(iNode.type()));
+    }
+
     bool Node::linkTo(int i, Node& iNode)
     {
         if(i >= inputs.size()) return false;
+        if(i >= inputs.size()) {
+            i -= inputs.size();
+            if(i >= dinputs.size()) return false;
+            if(dinputs[i].type().isBaseOf(iNode.type())) {
+                #ifdef TRACE
+                cout << "Linking " << nodeId.toString() << " to " << iNode.nodeId.toString() << endl;
+                #endif
+                dinputs[i].src = &iNode;
+                return true;
+            }
+        }
         if(inputs[i].type().isBaseOf(iNode.type())) {
             #ifdef TRACE
             cout << "Linking " << nodeId.toString() << " to " << iNode.nodeId.toString() << endl;
