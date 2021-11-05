@@ -43,16 +43,16 @@ namespace mobo
         StringNode* srcNode = getInput<StringNode>(0);
         if(srcNode) {
             #ifdef DEBUG_OPENGL
-            cout << "Compiling shader ... ";
+            //cout << "Compiling shader ... ";
             #endif
             if(compileFromString(srcNode->getValue())) {
                 #ifdef DEBUG_OPENGL
-                cout << "success" << endl;
+                //cout << "success" << endl;
                 #endif
                 return true;
             #ifdef DEBUG_OPENGL
             } else {
-                cout << "failure" << endl;
+                //cout << "failure" << endl;
             #endif
             }
         }

@@ -42,11 +42,13 @@ namespace mobo
 
     void Context::update()
     {
-        time_point<steady_clock> timestamp = steady_clock::now();
+        timestamp = steady_clock::now();
 
+        /*
         for(auto i : roots) {
             i.second->updateIfNeeded(*this, timestamp);
         }
+        */
     }
 
     void Context::submit()
@@ -71,6 +73,11 @@ namespace mobo
 
     void Context::finalize()
     {
+    }
+
+    const time_point<steady_clock>& Context::getTimestamp() const
+    {
+        return timestamp;
     }
 
 }

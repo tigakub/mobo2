@@ -24,7 +24,11 @@ namespace mobo
 
             virtual bool activate();
             virtual bool deactivate();
-            
+
+        protected:
+            GLProgram::AttribInfo vtxInfo;
+            GLProgram::AttribInfo clrInfo;
+            GLProgram::AttribInfo uvInfo;
     };
 }
 

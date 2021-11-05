@@ -17,14 +17,14 @@ namespace mobo
     bool GLPipeline::submit(Context& iCtx)
     {
         #ifdef DEBUG_OPENGL
-        cout << "GLPipeline::submit" << endl;
+        //cout << "GLPipeline::submit" << endl;
         #endif
     }
 
     bool GLPipeline::retract(Context& iCtx)
     {
         #ifdef DEBUG_OPENGL
-        cout << "GLPipeline::retract" << endl;
+        //cout << "GLPipeline::retract" << endl;
         #endif
     }
 }

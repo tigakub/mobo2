@@ -8,6 +8,6 @@
 
 using namespace std;
 
-// #define DEBUG_OPENGL
+#define DEBUG_OPENGL
 
 #endif

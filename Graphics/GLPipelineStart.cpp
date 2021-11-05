@@ -21,7 +21,7 @@ namespace mobo
     bool GLPipelineStart::submit(Context& iCtx)
     {
         #ifdef DEBUG_OPENGL
-        cout << "GLPipelineStart::submit" << endl;
+        //cout << "GLPipelineStart::submit" << endl;
         #endif
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
@@ -36,7 +36,7 @@ namespace mobo
     bool GLPipelineStart::retract(Context& iCtx)
     {
         #ifdef DEBUG_OPENGL
-        cout << "GLPipelineStart::retract" << endl;
+        //cout << "GLPipelineStart::retract" << endl;
         #endif
         return true;
     }

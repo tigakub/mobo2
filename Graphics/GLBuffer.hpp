@@ -26,7 +26,7 @@ namespace mobo
     {
         public:
             GLBufferT()
-            : BufferT<T>(), bufferHandle(0), usage(GL_STATIC_DRAW)
+            : BufferT<T>(), bufferHandle(0), usage(GL_STATIC_DRAW), attributeName()
             {
                 glGenBuffers(1, &bufferHandle);
             }
@@ -34,6 +34,16 @@ namespace mobo
             virtual ~GLBufferT()
             {
                 if(bufferHandle) glDeleteBuffers(1, &bufferHandle);
+            }
+
+            void setAttribName(const string &iName)
+            {
+                attributeName = iName;
+            }
+
+            const string& attribName() const
+            {
+                return attributeName;
             }
 
             void bind(GLenum iTarget)
@@ -140,6 +150,7 @@ namespace mobo
         protected:
             GLuint bufferHandle;
             GLenum usage;
+            string attributeName;
     };
 
 }

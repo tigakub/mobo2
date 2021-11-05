@@ -43,6 +43,7 @@ namespace mobo
 
     void Node::updateIfNeeded(Context &iCtx, const time_point<steady_clock>& iTimestamp)
     {
+        /*
         int i = inputs.size();
         while(i--) {
             Node* inputNode = getInput<Node>(i);
@@ -53,7 +54,7 @@ namespace mobo
                 inputNode->updateIfNeeded(iCtx, iTimestamp);
             }
         }
-
+        */
         if(iTimestamp > timestamp()) {
             if(nodeFlags.test(UPDATE_FLAG)) {
                 update(iCtx);
@@ -75,6 +76,7 @@ namespace mobo
         #ifdef TRACE
         cout << "Deep submit " << nodeId.toString() << endl;
         #endif
+        updateIfNeeded(iCtx, iCtx.getTimestamp());
         submit(iCtx);
         return true;
     }

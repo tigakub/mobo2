@@ -111,7 +111,8 @@ namespace mobo
         win->dispatchEvent(Event(Event::RENDEROVERLAY)); 
     }
 
-    const string vtxShaderText(R"(
+    const string vtxShaderText(
+    R"(
         #version 330 core
 
         layout(location = 0) in vec4 iVtxPos;
@@ -140,7 +141,7 @@ namespace mobo
         out vec4 oColor;
 
         void main() {
-            oColor = texture(tex, fVtxUV);
+            oColor = texture(tex, fVtxUV) * fVtxClr;
         }
     )");
 
@@ -178,6 +179,10 @@ namespace mobo
         GLV4BufferNode* vtxBuf = new GLV4BufferNode();
         GLV4BufferNode* clrBuf = new GLV4BufferNode();
         GLV2BufferNode* uvBuf = new GLV2BufferNode();
+
+        vtxBuf->setAttribName("iVtxPos");
+        clrBuf->setAttribName("iVtxClr");
+        uvBuf->setAttribName("iVtxUV");
 
         vtxBuf->blit((const vec<GLfloat,4>*) vtxData, 3);
         clrBuf->blit((const vec<GLfloat,4>*) clrData, 3);

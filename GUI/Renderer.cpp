@@ -30,7 +30,7 @@ namespace mobo
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         */
-
+        
         #ifdef DEBUG_OPENGL
         cout << "Loading textures" << endl;
         #endif
@@ -84,7 +84,7 @@ namespace mobo
     void Renderer::render()
     {
         #ifdef DEBUG_OPENGL
-        cout << "Rendering" << endl;
+        //cout << "Rendering" << endl;
         #endif
 
         glActiveTexture(GL_TEXTURE0);
@@ -100,7 +100,7 @@ namespace mobo
         glBindTexture(GL_TEXTURE_2D, 0);
         
         #ifdef DEBUG_OPENGL
-        cout << "Render Complete" << endl;
+        //cout << "Render Complete" << endl;
         #endif
     }
 }

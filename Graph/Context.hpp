@@ -26,7 +26,10 @@ namespace mobo
             virtual void initialize();
             virtual void finalize();
 
+            const time_point<steady_clock>& getTimestamp() const;
+
         protected:
+            time_point<steady_clock> timestamp;
             uuidMap<SmartPtr<Node>> nodes;
             uuidMap<SmartPtr<Node>> roots;
     };
