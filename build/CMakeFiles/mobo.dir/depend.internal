@@ -15,9 +15,11 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../Graphics/GLBufferNode.hpp
  ../Graphics/GLContext.hpp
  ../Graphics/GLGeometry.hpp
+ ../Graphics/GLMaterial.hpp
  ../Graphics/GLPipeline.hpp
  ../Graphics/GLProgram.hpp
  ../Graphics/GLShader.hpp
+ ../Graphics/GLTexture.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
  ../Utility/Flags.hpp
@@ -27,4 +29,5 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
  ../Utility/uuid.hpp
+ ../lodepng/lodepng.h
  /home/tigakub/Documents/Robotics/mobo2/main.cpp

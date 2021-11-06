@@ -7,6 +7,7 @@
 #include "GLShader.hpp"
 #include "GLProgram.hpp"
 #include "GLGeometry.hpp"
+#include "GLMaterial.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
@@ -40,9 +41,14 @@ namespace mobo
             GLGeometry* currentGeometry() { if(geometryStack.size()) return static_cast<GLGeometry*>(geometryStack.back()); return nullptr; }
             GLGeometry* popGeometry() { geometryStack.pop_back(); return currentGeometry(); }
 
+            void pushMaterial(GLMaterial* iMaterial) { materialStack.push_back(iMaterial); }
+            GLMaterial* currentMaterial() { if(materialStack.size()) return static_cast<GLMaterial*>(materialStack.back()); return nullptr; }
+            GLMaterial* popMaterial() { materialStack.pop_back(); return currentMaterial(); }
+
         protected:
             vector<SmartPtr<GLProgram>> programStack;
             vector<SmartPtr<GLGeometry>> geometryStack;
+            vector<SmartPtr<GLMaterial>> materialStack;
     };
 
 }

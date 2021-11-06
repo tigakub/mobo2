@@ -25,11 +25,11 @@ namespace mobo
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context& iCtx);
 
-            virtual bool activate();
-            virtual bool deactivate();
+            virtual void activate();
+            virtual void deactivate();
 
         protected:
-            unordered_map<GLint, GLProgram::UniformInfo> uniformInfo;
+            vector<GLProgram::UniformInfo> uniformInfo;
     };
 }
 

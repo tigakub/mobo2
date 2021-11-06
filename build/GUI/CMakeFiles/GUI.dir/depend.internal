@@ -11,9 +11,11 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ../Graphics/GLBufferNode.hpp
  ../Graphics/GLContext.hpp
  ../Graphics/GLGeometry.hpp
+ ../Graphics/GLMaterial.hpp
  ../Graphics/GLPipeline.hpp
  ../Graphics/GLProgram.hpp
  ../Graphics/GLShader.hpp
+ ../Graphics/GLTexture.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
  ../Utility/Flags.hpp
@@ -23,6 +25,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
  ../Utility/uuid.hpp
+ ../lodepng/lodepng.h
  /home/tigakub/Documents/Robotics/mobo2/GUI/App.cpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/App.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.hpp
@@ -49,10 +52,12 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Graphics/GLBufferNode.hpp
  ../Graphics/GLContext.hpp
  ../Graphics/GLGeometry.hpp
+ ../Graphics/GLMaterial.hpp
  ../Graphics/GLPipeline.hpp
  ../Graphics/GLPipelineStart.hpp
  ../Graphics/GLProgram.hpp
  ../Graphics/GLShader.hpp
+ ../Graphics/GLTexture.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
  ../Utility/Flags.hpp
@@ -62,6 +67,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
  ../Utility/uuid.hpp
+ ../lodepng/lodepng.h
  /home/tigakub/Documents/Robotics/mobo2/GUI/App.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp

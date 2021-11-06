@@ -30,7 +30,7 @@ namespace mobo
 
     void Node::addLinkTo(Node& iNode)
     {
-        dinputs.push_back(Link<Node>(iNode.type()));
+        dinputs.push_back(Link<Node>(&iNode));
     }
 
     bool Node::linkTo(int i, Node& iNode)

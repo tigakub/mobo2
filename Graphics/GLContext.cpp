@@ -7,7 +7,7 @@ using namespace std;
 namespace mobo
 {
     GLContext::GLContext()
-    : Context()
+    : Context(), programStack(), geometryStack(), materialStack()
     { }
 
     void GLContext::initialize()

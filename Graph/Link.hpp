@@ -12,6 +12,7 @@ namespace mobo
     class Link : public Typed
     {
         public:
+            Link(T* iNode) : srcType(iNode->type()), src(iNode) { }
             Link(const Type& iType) : srcType(iType), src() { }
             Link(Link<T>&& iLink) : srcType(iLink.srcType), src(move(iLink.src)) { }
             Link(const Link<T>& iLink) : srcType(iLink.srcType), src(iLink.src) { }

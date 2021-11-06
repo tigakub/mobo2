@@ -31,6 +31,7 @@ namespace mobo
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         */
         
+        /*
         #ifdef DEBUG_OPENGL
         cout << "Loading textures" << endl;
         #endif
@@ -60,6 +61,7 @@ namespace mobo
         glSamplerParameteri(samp, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glSamplerParameteri(samp, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glSamplerParameterf(samp, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+        */
 
         /*
         auto info = state.info_png;
@@ -86,19 +88,20 @@ namespace mobo
         #ifdef DEBUG_OPENGL
         //cout << "Rendering" << endl;
         #endif
-
+        /*
         glActiveTexture(GL_TEXTURE0);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, tex);
         glBindSampler(0, samp);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        */
 
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        /*
         glBindSampler(0, 0);
         glBindTexture(GL_TEXTURE_2D, 0);
-        
+        */
         #ifdef DEBUG_OPENGL
         //cout << "Render Complete" << endl;
         #endif

@@ -30,10 +30,31 @@ namespace mobo
         public:
             class UniformInfo : public RefCtr {
                 public:
-                    UniformInfo() : RefCtr() { }
+                    UniformInfo()
+                    : RefCtr(), size(0), type(0), location(0), name(),
+                      typeName(), tex(0), target(0), sampler(0) { }
+
                     UniformInfo(const UniformInfo& i)
-                    : RefCtr(), size(i.size), type(i.type), location(i.location), name(i.name), typeName(i.typeName)
+                    : RefCtr(), size(i.size), type(i.type), location(i.location), 
+                      name(i.name), typeName(i.typeName), tex(i.tex), target(i.target),
+                      sampler(i.sampler)
                     { }
+
+                    UniformInfo(UniformInfo&& i)
+                    : RefCtr(), size(i.size), type(i.type), location(i.location),
+                      name(move(i.name)), typeName(move(i.typeName)), tex(i.tex), target(i.target),
+                      sampler(i.sampler)
+                    {
+                        i.sampler = 0;
+                    }
+
+                    virtual ~UniformInfo() {
+                        if(sampler) glDeleteSamplers(1, &sampler);
+                    }
+
+                    virtual void generateSampler() {
+                        if(!sampler) glGenSamplers(1, &sampler);
+                    }
 
                     UniformInfo& operator=(const UniformInfo& i) {
                         size = i.size;
@@ -41,15 +62,20 @@ namespace mobo
                         location = i.location;
                         name = i.name;
                         typeName = i.typeName;
+                        tex = i.tex;
+                        target = i.target;
+                        sampler = i.sampler;
                         return *this;
                     }
                     
-                    bool available;
                     GLsizei size;
                     GLenum type;
                     GLint location;
                     string name;
                     string typeName;
+                    GLuint tex;
+                    GLenum target;
+                    GLuint sampler;
             };
 
             class AttribInfo : public RefCtr {

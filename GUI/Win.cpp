@@ -7,6 +7,8 @@
 #include "HostBufferNode.hpp"
 #include "GLBufferNode.hpp"
 #include "GLGeometry.hpp"
+#include "GLTexture.hpp"
+#include "GLMaterial.hpp"
 
 #include <iostream>
 #include <iomanip>
@@ -194,14 +196,28 @@ namespace mobo
         geom->linkTo(2, *clrBuf);
         geom->linkTo(3, *uvBuf);
 
+        GL2DTexture* tex = new GL2DTexture();
+        tex->setUnifName("tex");
+        tex->loadFromPNG("../Burst.png");
+
+        GLMaterial* material = new GLMaterial();
+        material->linkTo(0, *geom);
+        material->addLinkTo(*tex);
+
         GLPipeline *pipelineNode = new GLPipeline();
         cout << "pipelineNode " << pipelineNode->nodeId.toString() << endl;
-        pipelineNode->linkTo(0, *geom);
+        pipelineNode->linkTo(0, *material);
 
         ctx.addNode(pipelineNode);
         ctx.addNode(vtxShaderSrc);
         ctx.addNode(frgShaderSrc);
         ctx.addNode(program);
+        ctx.addNode(vtxBuf);
+        ctx.addNode(clrBuf);
+        ctx.addNode(uvBuf);
+        ctx.addNode(geom);
+        ctx.addNode(tex);
+        ctx.addNode(material);
         /*
         ctx.addNode(vtxBuf);
         ctx.addNode(clrBuf);

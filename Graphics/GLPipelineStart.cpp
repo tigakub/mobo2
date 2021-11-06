@@ -15,6 +15,13 @@ namespace mobo
 
     bool GLPipelineStart::update(Context& iCtx)
     {
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDisable(GL_ALPHA_TEST);
+        glDepthFunc(GL_LESS);
+        glClearColor(0.5, 0.0, 1.0, 1.0);
+        glClearDepth(1.0f);
         return true;
     }
 
@@ -23,13 +30,7 @@ namespace mobo
         #ifdef DEBUG_OPENGL
         //cout << "GLPipelineStart::submit" << endl;
         #endif
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glDisable(GL_ALPHA_TEST);
-        glDepthFunc(GL_LESS);
-        glClearColor(0.5, 0.0, 1.0, 1.0);
-        glClearDepth(1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         return true;
     }
 

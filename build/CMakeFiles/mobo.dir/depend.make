@@ -14,9 +14,11 @@ CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLBuffer.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLBufferNode.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLContext.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLGeometry.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLMaterial.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLPipeline.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLProgram.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLShader.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLTexture.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Math/Math.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Buffer.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Flags.hpp
@@ -26,5 +28,6 @@ CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Timestamp.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Type.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Typed.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/uuid.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../lodepng/lodepng.h
 CMakeFiles/mobo.dir/main.cpp.o: ../main.cpp
 

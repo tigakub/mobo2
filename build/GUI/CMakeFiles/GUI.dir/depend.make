@@ -10,9 +10,11 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLBuffer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLContext.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLGeometry.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLMaterial.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLPipeline.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLProgram.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLShader.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLTexture.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Math/Math.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Buffer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Flags.hpp
@@ -22,6 +24,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Timestamp.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Type.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Typed.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/uuid.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../lodepng/lodepng.h
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/App.cpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/App.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/EventHandler.hpp
@@ -48,10 +51,12 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLBuffer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLContext.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLGeometry.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLMaterial.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLPipeline.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLPipelineStart.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLProgram.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLShader.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTexture.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Math/Math.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Buffer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Flags.hpp
@@ -61,6 +66,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Timestamp.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Type.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Typed.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/uuid.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../lodepng/lodepng.h
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/App.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/EventHandler.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/Renderer.hpp
