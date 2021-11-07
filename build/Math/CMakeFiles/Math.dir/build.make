@@ -57,9 +57,33 @@ include Math/CMakeFiles/Math.dir/progress.make
 # Include the compile flags for this target's objects.
 include Math/CMakeFiles/Math.dir/flags.make
 
+Math/CMakeFiles/Math.dir/Math.cpp.o: Math/CMakeFiles/Math.dir/flags.make
+Math/CMakeFiles/Math.dir/Math.cpp.o: ../Math/Math.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Math/CMakeFiles/Math.dir/Math.cpp.o"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/Math && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Math.dir/Math.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/Math/Math.cpp
+
+Math/CMakeFiles/Math.dir/Math.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Math.dir/Math.cpp.i"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/Math && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/Math/Math.cpp > CMakeFiles/Math.dir/Math.cpp.i
+
+Math/CMakeFiles/Math.dir/Math.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Math.dir/Math.cpp.s"
+	cd /home/tigakub/Documents/Robotics/mobo2/build/Math && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/Math/Math.cpp -o CMakeFiles/Math.dir/Math.cpp.s
+
+Math/CMakeFiles/Math.dir/Math.cpp.o.requires:
+
+.PHONY : Math/CMakeFiles/Math.dir/Math.cpp.o.requires
+
+Math/CMakeFiles/Math.dir/Math.cpp.o.provides: Math/CMakeFiles/Math.dir/Math.cpp.o.requires
+	$(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/Math.cpp.o.provides.build
+.PHONY : Math/CMakeFiles/Math.dir/Math.cpp.o.provides
+
+Math/CMakeFiles/Math.dir/Math.cpp.o.provides.build: Math/CMakeFiles/Math.dir/Math.cpp.o
+
+
 Math/CMakeFiles/Math.dir/MovingAverage.cpp.o: Math/CMakeFiles/Math.dir/flags.make
 Math/CMakeFiles/Math.dir/MovingAverage.cpp.o: ../Math/MovingAverage.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Math/CMakeFiles/Math.dir/MovingAverage.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Math/CMakeFiles/Math.dir/MovingAverage.cpp.o"
 	cd /home/tigakub/Documents/Robotics/mobo2/build/Math && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Math.dir/MovingAverage.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/Math/MovingAverage.cpp
 
 Math/CMakeFiles/Math.dir/MovingAverage.cpp.i: cmake_force
@@ -83,15 +107,17 @@ Math/CMakeFiles/Math.dir/MovingAverage.cpp.o.provides.build: Math/CMakeFiles/Mat
 
 # Object files for target Math
 Math_OBJECTS = \
+"CMakeFiles/Math.dir/Math.cpp.o" \
 "CMakeFiles/Math.dir/MovingAverage.cpp.o"
 
 # External object files for target Math
 Math_EXTERNAL_OBJECTS =
 
+Math/libMath.a: Math/CMakeFiles/Math.dir/Math.cpp.o
 Math/libMath.a: Math/CMakeFiles/Math.dir/MovingAverage.cpp.o
 Math/libMath.a: Math/CMakeFiles/Math.dir/build.make
 Math/libMath.a: Math/CMakeFiles/Math.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libMath.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libMath.a"
 	cd /home/tigakub/Documents/Robotics/mobo2/build/Math && $(CMAKE_COMMAND) -P CMakeFiles/Math.dir/cmake_clean_target.cmake
 	cd /home/tigakub/Documents/Robotics/mobo2/build/Math && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Math.dir/link.txt --verbose=$(VERBOSE)
 
@@ -100,6 +126,7 @@ Math/CMakeFiles/Math.dir/build: Math/libMath.a
 
 .PHONY : Math/CMakeFiles/Math.dir/build
 
+Math/CMakeFiles/Math.dir/requires: Math/CMakeFiles/Math.dir/Math.cpp.o.requires
 Math/CMakeFiles/Math.dir/requires: Math/CMakeFiles/Math.dir/MovingAverage.cpp.o.requires
 
 .PHONY : Math/CMakeFiles/Math.dir/requires

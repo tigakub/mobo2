@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/tigakub/Documents/Robotics/mobo2/Math/Math.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/Math/CMakeFiles/Math.dir/Math.cpp.o"
   "/home/tigakub/Documents/Robotics/mobo2/Math/MovingAverage.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/Math/CMakeFiles/Math.dir/MovingAverage.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

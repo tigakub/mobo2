@@ -6,9 +6,27 @@
 
 #IncludeRegexTransform: 
 
-..//MovingAverage.hpp
+/home/tigakub/Documents/Robotics/mobo2/Math/Math.cpp
+Math.hpp
+/home/tigakub/Documents/Robotics/mobo2/Math/Math.hpp
+
+/home/tigakub/Documents/Robotics/mobo2/Math/Math.hpp
+math.h
+-
+float.h
+-
+type_traits
+-
+iomanip
+-
+string
+-
+iostream
+-
 
 /home/tigakub/Documents/Robotics/mobo2/Math/MovingAverage.cpp
 MovingAverage.hpp
+/home/tigakub/Documents/Robotics/mobo2/Math/MovingAverage.hpp
+
 /home/tigakub/Documents/Robotics/mobo2/Math/MovingAverage.hpp
 

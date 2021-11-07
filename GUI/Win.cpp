@@ -9,6 +9,7 @@
 #include "GLGeometry.hpp"
 #include "GLTexture.hpp"
 #include "GLMaterial.hpp"
+#include "GLDraw.hpp"
 
 #include <iostream>
 #include <iomanip>
@@ -121,11 +122,15 @@ namespace mobo
         layout(location = 1) in vec4 iVtxClr;
         layout(location = 2) in vec2 iVtxUV;
 
+        uniform mat4 project;
+        uniform mat4 camera;
+        uniform mat4 modelview;
+
         out vec4 fVtxClr;
         out vec2 fVtxUV;
 
         void main() {
-            gl_Position = iVtxPos;
+            gl_Position = project * camera * modelview * iVtxPos;
             fVtxClr = iVtxClr;
             fVtxUV = iVtxUV;
         }
@@ -153,7 +158,7 @@ namespace mobo
 
     Win::Win(App& iApp)
     : app(iApp), winId(glutCreateWindow("")),
-      mouseButtonState(0), renderer(nullptr), needsDisplay(false),
+      mouseButtonState(0), needsDisplay(false),
       timestamp(time_point<steady_clock>(seconds(0))), emaWindow(0.0), fpsWMA(0.0), fpsEMA(0.0), fpsAVG(30),
       ctx()
     {
@@ -204,11 +209,14 @@ namespace mobo
         material->linkTo(0, *geom);
         material->addLinkTo(*tex);
 
+        GLDraw* drawNode = new GLDraw();
+        drawNode->linkTo(0, *material);
+
         GLPipeline *pipelineNode = new GLPipeline();
         cout << "pipelineNode " << pipelineNode->nodeId.toString() << endl;
-        pipelineNode->linkTo(0, *material);
+        pipelineNode->linkTo(0, *drawNode);
 
-        ctx.addNode(pipelineNode);
+        ctx.addNode(startNode);
         ctx.addNode(vtxShaderSrc);
         ctx.addNode(frgShaderSrc);
         ctx.addNode(program);
@@ -218,12 +226,8 @@ namespace mobo
         ctx.addNode(geom);
         ctx.addNode(tex);
         ctx.addNode(material);
-        /*
-        ctx.addNode(vtxBuf);
-        ctx.addNode(clrBuf);
-        ctx.addNode(uvBuf);
-        ctx.addNode(geom);
-        */
+        ctx.addNode(drawNode);
+        ctx.addNode(pipelineNode);
         ctx.setRoot(pipelineNode->nodeId);
 
         glutSetWindow(winId);
@@ -248,22 +252,10 @@ namespace mobo
 
         glutDisplayFunc(_render);
         glutOverlayDisplayFunc(_renderOverlay);
-
-        /*
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glClearColor(0.0, 0.0, 0.0, 1.0);
-        glClearDepth(1.0f);
-        */
     }
 
     Win::~Win()
     {
-        if(renderer) {
-            delete renderer;
-            renderer = nullptr;
-        }
-
         if(winId) {
             glutSetWindow(winId);
             glutSetWindowData(nullptr);
@@ -298,9 +290,7 @@ namespace mobo
 
     bool Win::didReshape(int w, int h)
     {
-        if(renderer) {
-            renderer->didReshape(w, h);
-        }
+        ctx.setViewport(rect<GLint, GLsizei>(0, 0, w, h));
         app.yieldToUI();
         return true;
     }
@@ -345,11 +335,7 @@ namespace mobo
 
     void Win::postDisplay()
     {
-        if(!renderer) {
-            Renderer* rend = new Renderer();
-            setRenderer(rend);
-            ctx.update();
-        }
+        ctx.update();
 
         if(!needsDisplay) {
             glutSetWindow(winId);
@@ -386,16 +372,10 @@ namespace mobo
     bool Win::render()
     {
         ctx.submit();
-        if(renderer) {
-            renderer->render();
-            float fpsEMA = calculateFrameRate();
-            stringstream fpsSStream;
-            fpsSStream << "FPS: " << setprecision(2) << fpsEMA;
-            setTitle(fpsSStream.str());
-        } else {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glutSwapBuffers();
-        }
+        float fpsEMA = calculateFrameRate();
+        stringstream fpsSStream;
+        fpsSStream << "FPS: " << setprecision(2) << fpsEMA;
+        setTitle(fpsSStream.str());
         ctx.retract();
         needsDisplay = false;
         return true;

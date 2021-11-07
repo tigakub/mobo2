@@ -143,6 +143,8 @@ GLGeometry.hpp
 ../Graphics/GLGeometry.hpp
 GLMaterial.hpp
 ../Graphics/GLMaterial.hpp
+Math.hpp
+../Graphics/Math.hpp
 GL/freeglut.h
 -
 GL/gl.h
@@ -249,6 +251,18 @@ string
 -
 
 ../Math/Math.hpp
+math.h
+-
+float.h
+-
+type_traits
+-
+iomanip
+-
+string
+-
+iostream
+-
 
 ../Utility/Buffer.hpp
 cstdint

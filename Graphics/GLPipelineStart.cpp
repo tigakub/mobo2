@@ -1,4 +1,6 @@
 #include "GLPipelineStart.hpp"
+#include "GLContext.hpp"
+#include "Math.hpp"
 
 #include <iostream>
 
@@ -39,6 +41,7 @@ namespace mobo
         #ifdef DEBUG_OPENGL
         //cout << "GLPipelineStart::retract" << endl;
         #endif
+        GLContext& ctx = static_cast<GLContext&>(iCtx);
         return true;
     }
 }

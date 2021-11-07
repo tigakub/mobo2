@@ -48,7 +48,6 @@ namespace mobo
             virtual bool mouseEntered() { return true; }
             virtual bool mouseExited() { return true; }
 
-            void setRenderer(Renderer* iRenderer) { renderer = iRenderer; if(renderer) renderer->init(); }
             void postDisplay();
             virtual bool render();
             virtual bool renderOverlay() { return true; }
@@ -58,7 +57,6 @@ namespace mobo
             App& app;
             int winId;
             uint32_t mouseButtonState;
-            Renderer* renderer;
             float needsDisplay;
             time_point<steady_clock> timestamp;
             float emaWindow;

@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Math.dir/Math.cpp.o"
   "CMakeFiles/Math.dir/MovingAverage.cpp.o"
   "libMath.pdb"
   "libMath.a"

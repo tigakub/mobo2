@@ -51,6 +51,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Graphics/GLBuffer.hpp
  ../Graphics/GLBufferNode.hpp
  ../Graphics/GLContext.hpp
+ ../Graphics/GLDraw.hpp
  ../Graphics/GLGeometry.hpp
  ../Graphics/GLMaterial.hpp
  ../Graphics/GLPipeline.hpp

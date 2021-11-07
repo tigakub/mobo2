@@ -50,6 +50,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/StringNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLBuffer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLContext.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLDraw.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLGeometry.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLMaterial.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLPipeline.hpp

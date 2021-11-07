@@ -1,2 +1,2 @@
-/usr/bin/ar qc libMath.a  CMakeFiles/Math.dir/MovingAverage.cpp.o
+/usr/bin/ar qc libMath.a  CMakeFiles/Math.dir/Math.cpp.o CMakeFiles/Math.dir/MovingAverage.cpp.o
 /usr/bin/ranlib libMath.a

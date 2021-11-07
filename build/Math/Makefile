@@ -125,6 +125,33 @@ Math/fast:
 	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/build
 .PHONY : Math/fast
 
+Math.o: Math.cpp.o
+
+.PHONY : Math.o
+
+# target to build an object file
+Math.cpp.o:
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/Math.cpp.o
+.PHONY : Math.cpp.o
+
+Math.i: Math.cpp.i
+
+.PHONY : Math.i
+
+# target to preprocess a source file
+Math.cpp.i:
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/Math.cpp.i
+.PHONY : Math.cpp.i
+
+Math.s: Math.cpp.s
+
+.PHONY : Math.s
+
+# target to generate assembly for a file
+Math.cpp.s:
+	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f Math/CMakeFiles/Math.dir/build.make Math/CMakeFiles/Math.dir/Math.cpp.s
+.PHONY : Math.cpp.s
+
 MovingAverage.o: MovingAverage.cpp.o
 
 .PHONY : MovingAverage.o
@@ -161,6 +188,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Math"
+	@echo "... Math.o"
+	@echo "... Math.i"
+	@echo "... Math.s"
 	@echo "... MovingAverage.o"
 	@echo "... MovingAverage.i"
 	@echo "... MovingAverage.s"

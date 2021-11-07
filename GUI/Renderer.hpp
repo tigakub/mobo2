@@ -26,8 +26,6 @@ namespace mobo
             Renderer() { }
             virtual ~Renderer();
 
-            void didReshape(int w, int h);
-
             virtual void init();
             virtual void render();
 
