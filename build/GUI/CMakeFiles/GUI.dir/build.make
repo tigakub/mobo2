@@ -105,33 +105,9 @@ GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o.provides: GUI/CMakeFiles/GUI.dir/Event
 GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o.provides.build: GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o
 
 
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: GUI/CMakeFiles/GUI.dir/flags.make
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: ../GUI/Renderer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object GUI/CMakeFiles/GUI.dir/Renderer.cpp.o"
-	cd /home/tigakub/Documents/Robotics/mobo2/build/GUI && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/GUI.dir/Renderer.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp
-
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GUI.dir/Renderer.cpp.i"
-	cd /home/tigakub/Documents/Robotics/mobo2/build/GUI && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp > CMakeFiles/GUI.dir/Renderer.cpp.i
-
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GUI.dir/Renderer.cpp.s"
-	cd /home/tigakub/Documents/Robotics/mobo2/build/GUI && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp -o CMakeFiles/GUI.dir/Renderer.cpp.s
-
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.requires:
-
-.PHONY : GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.requires
-
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.provides: GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.requires
-	$(MAKE) -f GUI/CMakeFiles/GUI.dir/build.make GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.provides.build
-.PHONY : GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.provides
-
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.provides.build: GUI/CMakeFiles/GUI.dir/Renderer.cpp.o
-
-
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: GUI/CMakeFiles/GUI.dir/flags.make
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/Win.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object GUI/CMakeFiles/GUI.dir/Win.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object GUI/CMakeFiles/GUI.dir/Win.cpp.o"
 	cd /home/tigakub/Documents/Robotics/mobo2/build/GUI && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/GUI.dir/Win.cpp.o -c /home/tigakub/Documents/Robotics/mobo2/GUI/Win.cpp
 
 GUI/CMakeFiles/GUI.dir/Win.cpp.i: cmake_force
@@ -157,7 +133,6 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o.provides.build: GUI/CMakeFiles/GUI.dir/Win.cpp.
 GUI_OBJECTS = \
 "CMakeFiles/GUI.dir/App.cpp.o" \
 "CMakeFiles/GUI.dir/EventHandler.cpp.o" \
-"CMakeFiles/GUI.dir/Renderer.cpp.o" \
 "CMakeFiles/GUI.dir/Win.cpp.o"
 
 # External object files for target GUI
@@ -165,11 +140,10 @@ GUI_EXTERNAL_OBJECTS =
 
 GUI/libGUI.a: GUI/CMakeFiles/GUI.dir/App.cpp.o
 GUI/libGUI.a: GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o
-GUI/libGUI.a: GUI/CMakeFiles/GUI.dir/Renderer.cpp.o
 GUI/libGUI.a: GUI/CMakeFiles/GUI.dir/Win.cpp.o
 GUI/libGUI.a: GUI/CMakeFiles/GUI.dir/build.make
 GUI/libGUI.a: GUI/CMakeFiles/GUI.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libGUI.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tigakub/Documents/Robotics/mobo2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libGUI.a"
 	cd /home/tigakub/Documents/Robotics/mobo2/build/GUI && $(CMAKE_COMMAND) -P CMakeFiles/GUI.dir/cmake_clean_target.cmake
 	cd /home/tigakub/Documents/Robotics/mobo2/build/GUI && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GUI.dir/link.txt --verbose=$(VERBOSE)
 
@@ -180,7 +154,6 @@ GUI/CMakeFiles/GUI.dir/build: GUI/libGUI.a
 
 GUI/CMakeFiles/GUI.dir/requires: GUI/CMakeFiles/GUI.dir/App.cpp.o.requires
 GUI/CMakeFiles/GUI.dir/requires: GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o.requires
-GUI/CMakeFiles/GUI.dir/requires: GUI/CMakeFiles/GUI.dir/Renderer.cpp.o.requires
 GUI/CMakeFiles/GUI.dir/requires: GUI/CMakeFiles/GUI.dir/Win.cpp.o.requires
 
 .PHONY : GUI/CMakeFiles/GUI.dir/requires

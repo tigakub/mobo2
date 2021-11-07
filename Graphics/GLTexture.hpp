@@ -25,6 +25,7 @@ namespace mobo
     class GLTexture : public Node
     {
         DECLARE_TYPE
+        
         public:
             GLTexture()
             : Node(), textureHandle(0), uniformName() {

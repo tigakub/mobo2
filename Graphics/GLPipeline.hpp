@@ -25,7 +25,6 @@ namespace mobo
 
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context &iCtx);
-
     };
 }
 

@@ -6,7 +6,6 @@ CMakeFiles/mobo.dir/main.cpp.o
  ..//MovingAverage.hpp
  ../GUI/App.hpp
  ../GUI/EventHandler.hpp
- ../GUI/Renderer.hpp
  ../GUI/Win.hpp
  ../Graph/Context.hpp
  ../Graph/Link.hpp
@@ -25,6 +24,7 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../Utility/Flags.hpp
  ../Utility/RefCtr.hpp
  ../Utility/SmartPtr.hpp
+ ../Utility/Streamer.hpp
  ../Utility/Timestamp.hpp
  ../Utility/Type.hpp
  ../Utility/Typed.hpp

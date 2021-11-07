@@ -10,7 +10,11 @@
 #include "GLTexture.hpp"
 #include "GLMaterial.hpp"
 #include "GLDraw.hpp"
+#include "GLTransform.hpp"
 
+#include <jsoncpp/json/json.h>
+
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -19,100 +23,6 @@ using namespace std;
 
 namespace mobo
 {
-    void _didMove(int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::DIDMOVE, 0, x, y));
-    }
-
-    void _didReshape(int w, int h)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::DIDRESHAPE, 0, w, h));
-    }
-
-    void _willClose()
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::WILLCLOSE));
-    }
-
-    void _keyDown(unsigned char k, int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::KEYDOWN, k, x, y));
-    }
-
-    void _keyUp(unsigned char k, int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::KEYUP, k, x, y));
-    }
-
-    void _specialDown(int k, int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::SPECIALDOWN, k, x, y));
-    }
-
-    void _specialUp(int k, int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::SPECIALUP, k, x, y));
-    }
-
-    void _mouseMove(int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::MOUSEMOVE, 0, x, y));
-    }
-
-    void _mouse(int b, int d, int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        uint32_t button = 0;
-        switch(b) {
-            case GLUT_LEFT_BUTTON:
-                button = Win::PRIMARY_BUTTON; break;
-            case GLUT_RIGHT_BUTTON:
-                button = Win::SECONDARY_BUTTON; break;
-            case GLUT_MIDDLE_BUTTON:
-                button = Win::TERTIARY_BUTTON; break;
-            default: break;
-        }
-        d ? ((win->mouseButtonState |= button) && win->dispatchEvent(Event(Event::MOUSEDOWN, button, x, y)))
-        : ((win->mouseButtonState &= ~button) && win->dispatchEvent(Event(Event::MOUSEUP, button, x, y)));
-    }
-
-    void _mouseDrag(int x, int y)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::MOUSEDRAG, 0, x, y));
-    }
-
-    void _mouseSense(int d)
-    {
-        Win* win = (Win*) glutGetWindowData();
-        switch(d) {
-            case GLUT_ENTERED:
-                win->dispatchEvent(Event(Event::MOUSEENTERED)); break;
-            case GLUT_LEFT:
-                win->dispatchEvent(Event(Event::MOUSEEXITED)); break;
-            default: break;
-        }
-    }
-
-    void _render()
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::RENDER));
-    }
-
-    void _renderOverlay()
-    {
-        Win* win = (Win*) glutGetWindowData();
-        win->dispatchEvent(Event(Event::RENDEROVERLAY)); 
-    }
 
     const string vtxShaderText(
     R"(
@@ -156,12 +66,34 @@ namespace mobo
     const GLfloat clrData[] = { 1.0, 0.0, 0.0, 1.0,    0.0, 1.0, 0.0, 1.0,    0.0, 0.0, 1.0, 1.0 };
     const GLfloat uvData[] = { 0.0, 1.0,    1.0, 1.0,    0.5, 0.0 };
 
+    void _didMove(int x, int y);
+    void _didReshape(int w, int h);
+    void _willClose();
+    void _keyDown(unsigned char k, int x, int y);
+    void _keyUp(unsigned char k, int x, int y);
+    void _specialDown(int k, int x, int y);
+    void _specialUp(int k, int x, int y);
+    void _mouseMove(int x, int y);
+    void _mouse(int b, int d, int x, int y);
+    void _mouseDrag(int x, int y);
+    void _mouseSense(int d);
+    void _render();
+    void _renderOverlay();
+
     Win::Win(App& iApp)
     : app(iApp), winId(glutCreateWindow("")),
       mouseButtonState(0), needsDisplay(false),
       timestamp(time_point<steady_clock>(seconds(0))), emaWindow(0.0), fpsWMA(0.0), fpsEMA(0.0), fpsAVG(30),
       ctx()
     {
+        /*
+        ifstream fs("../test.json", ifstream::in);
+        fs >> root;
+        Json::Value node = root.get("node", "");
+        Json::Value id = node.get("id", "");
+        cout << id.asString() << endl;
+        */
+
         GLPipelineStart *startNode = new GLPipelineStart();
         cout << "startNode " << startNode->nodeId.toString() << endl;
 
@@ -209,8 +141,11 @@ namespace mobo
         material->linkTo(0, *geom);
         material->addLinkTo(*tex);
 
+        GLTransform* xfm = new GLTransform();
+        xfm->linkTo(0, *material);
+
         GLDraw* drawNode = new GLDraw();
-        drawNode->linkTo(0, *material);
+        drawNode->linkTo(0, *xfm);
 
         GLPipeline *pipelineNode = new GLPipeline();
         cout << "pipelineNode " << pipelineNode->nodeId.toString() << endl;
@@ -227,8 +162,11 @@ namespace mobo
         ctx.addNode(tex);
         ctx.addNode(material);
         ctx.addNode(drawNode);
+        ctx.addNode(xfm);
         ctx.addNode(pipelineNode);
         ctx.setRoot(pipelineNode->nodeId);
+
+        cout << "\nJson: \n" << ctx.serialize() << endl << endl;
 
         glutSetWindow(winId);
         glutSetWindowData((void*) this);
@@ -381,4 +319,98 @@ namespace mobo
         return true;
     }
 
+    void _didMove(int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::DIDMOVE, 0, x, y));
+    }
+
+    void _didReshape(int w, int h)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::DIDRESHAPE, 0, w, h));
+    }
+
+    void _willClose()
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::WILLCLOSE));
+    }
+
+    void _keyDown(unsigned char k, int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::KEYDOWN, k, x, y));
+    }
+
+    void _keyUp(unsigned char k, int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::KEYUP, k, x, y));
+    }
+
+    void _specialDown(int k, int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::SPECIALDOWN, k, x, y));
+    }
+
+    void _specialUp(int k, int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::SPECIALUP, k, x, y));
+    }
+
+    void _mouseMove(int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::MOUSEMOVE, 0, x, y));
+    }
+
+    void _mouse(int b, int d, int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        uint32_t button = 0;
+        switch(b) {
+            case GLUT_LEFT_BUTTON:
+                button = Win::PRIMARY_BUTTON; break;
+            case GLUT_RIGHT_BUTTON:
+                button = Win::SECONDARY_BUTTON; break;
+            case GLUT_MIDDLE_BUTTON:
+                button = Win::TERTIARY_BUTTON; break;
+            default: break;
+        }
+        d ? ((win->mouseButtonState |= button) && win->dispatchEvent(Event(Event::MOUSEDOWN, button, x, y)))
+        : ((win->mouseButtonState &= ~button) && win->dispatchEvent(Event(Event::MOUSEUP, button, x, y)));
+    }
+
+    void _mouseDrag(int x, int y)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::MOUSEDRAG, 0, x, y));
+    }
+
+    void _mouseSense(int d)
+    {
+        Win* win = (Win*) glutGetWindowData();
+        switch(d) {
+            case GLUT_ENTERED:
+                win->dispatchEvent(Event(Event::MOUSEENTERED)); break;
+            case GLUT_LEFT:
+                win->dispatchEvent(Event(Event::MOUSEEXITED)); break;
+            default: break;
+        }
+    }
+
+    void _render()
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::RENDER));
+    }
+
+    void _renderOverlay()
+    {
+        Win* win = (Win*) glutGetWindowData();
+        win->dispatchEvent(Event(Event::RENDEROVERLAY)); 
+    }
 }

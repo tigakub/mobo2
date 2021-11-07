@@ -6,7 +6,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/tigakub/Documents/Robotics/mobo2/GUI/App.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/App.cpp.o"
   "/home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o"
-  "/home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/Renderer.cpp.o"
   "/home/tigakub/Documents/Robotics/mobo2/GUI/Win.cpp" "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/Win.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

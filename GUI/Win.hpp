@@ -2,7 +2,7 @@
 #define __WIN_HPP__
 
 #include "App.hpp"
-#include "Renderer.hpp"
+#include "MovingAverage.hpp"
 
 #include "GLContext.hpp"
 

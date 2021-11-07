@@ -4,6 +4,7 @@
 
 namespace mobo
 {
+    DERIVE_TYPE(GLDraw, "6ba4bafa-5cfd-4b51-9987-c5763cd68411", {&GLPipeline::_type});
 
     GLDraw::GLDraw()
     : GLPipeline()

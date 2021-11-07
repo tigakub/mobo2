@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <cstdint> // for uint64_t
+#include <jsoncpp/json/json.h>
 
 using namespace std;
 
@@ -70,10 +71,9 @@ namespace mobo
 
 }
 
-#define DECLARE_TYPE public: static const Type _type; virtual const Type& type() const { return _type; }
+#define DECLARE_TYPE public: static const Type _type; virtual const Type& type() const { return _type; } static const string _jsonType; virtual const string& jsonType() const { return _jsonType; }
 
-#define DEFINE_TYPE(CLASS, ID) const Type CLASS::_type(ID);
-#define DERIVE_TYPE(CLASS, ID, SUBS) const Type CLASS::_type(ID, vector<const Type*>SUBS);
-
+#define DEFINE_TYPE(CLASS, ID) const Type CLASS::_type(ID); const string CLASS::_jsonType(#CLASS);
+#define DERIVE_TYPE(CLASS, ID, SUBS) const Type CLASS::_type(ID, vector<const Type*>SUBS); const string CLASS::_jsonType(#CLASS);
 
 #endif

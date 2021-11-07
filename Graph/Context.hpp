@@ -4,6 +4,7 @@
 #include "uuid.hpp"
 #include "SmartPtr.hpp"
 #include "Node.hpp"
+#include "Streamer.hpp"
 
 namespace mobo
 {
@@ -12,6 +13,9 @@ namespace mobo
         public:
             Context();
             virtual ~Context();
+
+            virtual Json::Value serialize() const;
+            virtual void deserialize(Json::Value& root);
 
             void addNode(Node* iNode);
 

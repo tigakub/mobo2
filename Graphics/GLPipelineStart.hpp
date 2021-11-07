@@ -18,7 +18,6 @@ namespace mobo
             virtual bool update(Context& iCtx);
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context &iCtx);
-
     };
 }
 

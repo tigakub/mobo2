@@ -21,6 +21,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ../Utility/Flags.hpp
  ../Utility/RefCtr.hpp
  ../Utility/SmartPtr.hpp
+ ../Utility/Streamer.hpp
  ../Utility/Timestamp.hpp
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
@@ -29,17 +30,10 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  /home/tigakub/Documents/Robotics/mobo2/GUI/App.cpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/App.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.hpp
- /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/Win.hpp
 GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o
  /home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.cpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.hpp
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o
- ..//Debug.hpp
- ..//MovingAverage.hpp
- ../lodepng/lodepng.h
- /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp
- /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ..//Debug.hpp
  ..//MovingAverage.hpp
@@ -59,11 +53,13 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Graphics/GLProgram.hpp
  ../Graphics/GLShader.hpp
  ../Graphics/GLTexture.hpp
+ ../Graphics/GLTransform.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
  ../Utility/Flags.hpp
  ../Utility/RefCtr.hpp
  ../Utility/SmartPtr.hpp
+ ../Utility/Streamer.hpp
  ../Utility/Timestamp.hpp
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
@@ -71,6 +67,5 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../lodepng/lodepng.h
  /home/tigakub/Documents/Robotics/mobo2/GUI/App.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/EventHandler.hpp
- /home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/Win.cpp
  /home/tigakub/Documents/Robotics/mobo2/GUI/Win.hpp

@@ -18,7 +18,7 @@ namespace mobo
         GLProgram *programNode = ctx.currentProgram();
         if(programNode) {
             for(auto link : dinputs) {
-                GLTexture* node = static_cast<GLTexture*>(link.src.ptr);
+                GLTexture* node = static_cast<GLTexture*>(link.src.deref());
                 if(node) {
                     const string& uniformName = node->unifName();
                     try {

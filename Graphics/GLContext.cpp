@@ -24,7 +24,7 @@ namespace mobo
         mat4<GLfloat> projMat(PERSPECTIVE, left, right, bottom, top, near, far);
         mat4<GLfloat> camMat(TRANSLATION, 0.0, 0.0, 3.0);
         camMat *= mat4<GLfloat>(ROTATION, -0.0625 * M_PI, 0.0, 1.0, 0.0);
-        mat4<GLfloat> mvMat(ROTATION, 0.25 * M_PI, 0.0, 1.0, 0.0);
+        mat4<GLfloat> mvMat(IDENTITY);
         pushProjectionMatrix(projMat);
         pushCameraMatrix(camMat.reciprocal());
         pushModelviewMatrix(mvMat);

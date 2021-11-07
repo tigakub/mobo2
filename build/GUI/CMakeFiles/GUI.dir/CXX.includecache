@@ -25,6 +25,8 @@ SmartPtr.hpp
 ../Graph/SmartPtr.hpp
 Node.hpp
 ../Graph/Node.hpp
+Streamer.hpp
+../Graph/Streamer.hpp
 
 ../Graph/HostBufferNode.hpp
 Math.hpp
@@ -59,11 +61,17 @@ Flags.hpp
 ../Graph/Flags.hpp
 Link.hpp
 ../Graph/Link.hpp
+Streamer.hpp
+../Graph/Streamer.hpp
 chrono
 -
 vector
 -
 type_traits
+-
+functional
+-
+jsoncpp/json/json.h
 -
 
 ../Graph/StringNode.hpp
@@ -236,6 +244,22 @@ iostream
 string
 -
 
+../Graphics/GLTransform.hpp
+Node.hpp
+../Graphics/Node.hpp
+Context.hpp
+../Graphics/Context.hpp
+Math.hpp
+../Graphics/Math.hpp
+GLPipeline.hpp
+../Graphics/GLPipeline.hpp
+GL/freeglut.h
+-
+GL/gl.h
+-
+GL/glu.h
+-
+
 ../Math/Math.hpp
 math.h
 -
@@ -272,6 +296,14 @@ RefCtr.hpp
 type_traits
 -
 
+../Utility/Streamer.hpp
+uuid.hpp
+../Utility/uuid.hpp
+SmartPtr.hpp
+../Utility/SmartPtr.hpp
+jsoncpp/json/json.h
+-
+
 ../Utility/Timestamp.hpp
 uuid.hpp
 ../Utility/uuid.hpp
@@ -284,6 +316,8 @@ string
 vector
 -
 cstdint
+-
+jsoncpp/json/json.h
 -
 
 ../Utility/Typed.hpp
@@ -346,26 +380,6 @@ EventHandler.hpp
 cstdint
 -
 
-/home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.cpp
-Renderer.hpp
-/home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
-lodepng.h
-/home/tigakub/Documents/Robotics/mobo2/GUI/lodepng.h
-
-/home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
-Debug.hpp
-/home/tigakub/Documents/Robotics/mobo2/GUI/Debug.hpp
-MovingAverage.hpp
-/home/tigakub/Documents/Robotics/mobo2/GUI/MovingAverage.hpp
-GL/freeglut.h
--
-GL/gl.h
--
-GL/glu.h
--
-chrono
--
-
 /home/tigakub/Documents/Robotics/mobo2/GUI/Win.cpp
 Win.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/Win.hpp
@@ -389,6 +403,12 @@ GLMaterial.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLMaterial.hpp
 GLDraw.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLDraw.hpp
+GLTransform.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/GLTransform.hpp
+jsoncpp/json/json.h
+-
+fstream
+-
 iostream
 -
 iomanip
@@ -399,8 +419,8 @@ sstream
 /home/tigakub/Documents/Robotics/mobo2/GUI/Win.hpp
 App.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/App.hpp
-Renderer.hpp
-/home/tigakub/Documents/Robotics/mobo2/GUI/Renderer.hpp
+MovingAverage.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/MovingAverage.hpp
 GLContext.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLContext.hpp
 GL/freeglut.h

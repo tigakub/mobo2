@@ -1,7 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/GUI.dir/App.cpp.o"
   "CMakeFiles/GUI.dir/EventHandler.cpp.o"
-  "CMakeFiles/GUI.dir/Renderer.cpp.o"
   "CMakeFiles/GUI.dir/Win.cpp.o"
   "libGUI.pdb"
   "libGUI.a"

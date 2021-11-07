@@ -36,25 +36,11 @@ chrono
 cstdint
 -
 
-../GUI/Renderer.hpp
-Debug.hpp
-../GUI/Debug.hpp
-MovingAverage.hpp
-../GUI/MovingAverage.hpp
-GL/freeglut.h
--
-GL/gl.h
--
-GL/glu.h
--
-chrono
--
-
 ../GUI/Win.hpp
 App.hpp
 ../GUI/App.hpp
-Renderer.hpp
-../GUI/Renderer.hpp
+MovingAverage.hpp
+../GUI/MovingAverage.hpp
 GLContext.hpp
 ../GUI/GLContext.hpp
 GL/freeglut.h
@@ -71,6 +57,8 @@ SmartPtr.hpp
 ../Graph/SmartPtr.hpp
 Node.hpp
 ../Graph/Node.hpp
+Streamer.hpp
+../Graph/Streamer.hpp
 
 ../Graph/Link.hpp
 RefCtr.hpp
@@ -97,11 +85,17 @@ Flags.hpp
 ../Graph/Flags.hpp
 Link.hpp
 ../Graph/Link.hpp
+Streamer.hpp
+../Graph/Streamer.hpp
 chrono
 -
 vector
 -
 type_traits
+-
+functional
+-
+jsoncpp/json/json.h
 -
 
 ../Graphics/GLBuffer.hpp
@@ -286,6 +280,14 @@ RefCtr.hpp
 type_traits
 -
 
+../Utility/Streamer.hpp
+uuid.hpp
+../Utility/uuid.hpp
+SmartPtr.hpp
+../Utility/SmartPtr.hpp
+jsoncpp/json/json.h
+-
+
 ../Utility/Timestamp.hpp
 uuid.hpp
 ../Utility/uuid.hpp
@@ -298,6 +300,8 @@ string
 vector
 -
 cstdint
+-
+jsoncpp/json/json.h
 -
 
 ../Utility/Typed.hpp

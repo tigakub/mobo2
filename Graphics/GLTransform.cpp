@@ -3,9 +3,10 @@
 
 namespace mobo
 {
+    DERIVE_TYPE(GLTransform, "4877ad80-c68d-43b3-a5a9-3583efa364f4", {&GLPipeline::_type});
 
     GLTransform::GLTransform()
-    : Node() { }
+    : GLPipeline(), matrix(ROTATION, 0.125 * M_PI, 0.0, 1.0, 0.0) { }
 
     bool GLTransform::submit(Context& iCtx)
     {
@@ -16,7 +17,7 @@ namespace mobo
         return true;
     }
 
-    bool retract(Context& iCtx)
+    bool GLTransform::retract(Context& iCtx)
     {
         GLContext& ctx = static_cast<GLContext&>(iCtx);
         ctx.popModelviewMatrix();

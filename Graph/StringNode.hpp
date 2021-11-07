@@ -15,6 +15,8 @@ namespace mobo
 
         public:
             StringNode(const string& iValue = "") : Node(), value(iValue) { }
+            virtual void serializeSelf(Json::Value &jsonSelf) const;
+            virtual void desereializeSelf(const Json::Value &jsonSelf);
 
             const string& getValue() { return value; }
 

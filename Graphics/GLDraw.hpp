@@ -17,6 +17,8 @@ namespace mobo
 
     class GLDraw : public GLPipeline
     {
+        DECLARE_TYPE
+
         public:
             GLDraw();
 
@@ -24,7 +26,6 @@ namespace mobo
             virtual bool retract(Context &iCtx);
 
             virtual void draw();
-
    };
 
 }

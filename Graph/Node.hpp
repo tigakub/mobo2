@@ -8,10 +8,14 @@
 #include "Timestamp.hpp"
 #include "Flags.hpp"
 #include "Link.hpp"
+#include "Streamer.hpp"
 
 #include <chrono>
 #include <vector>
 #include <type_traits> // for enable_if
+#include <functional>
+
+#include <jsoncpp/json/json.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -20,8 +24,14 @@ namespace mobo
 {
     class Context;
 
-    class Node : public RefCtr, public Typed, Timestamp
+    class Node : public RefCtr, public Typed, public Streamer, Timestamp
     {
+        public:
+            static Node* generate(const string& iClassName);
+            
+        protected:
+            static unordered_map<string, function<Node*(void)>> _generators;
+
         public:
             enum {
                 UPDATE_FLAG = 1,
@@ -34,15 +44,20 @@ namespace mobo
             Node(uint64_t iRef = 0);
             virtual ~Node();
 
+            virtual Json::Value serialize() const;
+            virtual void serializeSelf(Json::Value& self) const;
+            virtual void deserialize(const Json::Value& self, uuidMap<Streamer*>& history, uuidMap<ForwardReference>& forwardReferences);
+            virtual void deserializeSelf(const Json::Value& self) const;
+
             void addInput(const Type&);
 
             template <class T, typename enable_if<is_base_of<Node,T>::value, bool>::type E = true> T* getInput(int iIndex)
             {
                 if(iIndex >= inputs.size()) {
                     iIndex -= inputs.size();
-                    return dynamic_cast<T*>(dinputs[iIndex].src.ptr);
+                    return dynamic_cast<T*>(dinputs[iIndex].src.deref());
                 }
-                return dynamic_cast<T*>(inputs[iIndex].src.ptr);
+                return dynamic_cast<T*>(inputs[iIndex].src.deref());
             }
 
             void addLinkTo(Node& iNewLink);

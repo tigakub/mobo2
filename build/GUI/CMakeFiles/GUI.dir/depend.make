@@ -20,6 +20,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Buffer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Flags.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/RefCtr.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/SmartPtr.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Streamer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Timestamp.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Type.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Typed.hpp
@@ -28,17 +29,10 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o: ../lodepng/lodepng.h
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/App.cpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/App.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/EventHandler.hpp
-GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/Renderer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../GUI/Win.hpp
 
 GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o: ../GUI/EventHandler.cpp
 GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o: ../GUI/EventHandler.hpp
-
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: ../Debug.hpp
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: ../MovingAverage.hpp
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: ../lodepng/lodepng.h
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: ../GUI/Renderer.cpp
-GUI/CMakeFiles/GUI.dir/Renderer.cpp.o: ../GUI/Renderer.hpp
 
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Debug.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../MovingAverage.hpp
@@ -58,11 +52,13 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLPipelineStart.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLProgram.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLShader.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTexture.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTransform.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Math/Math.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Buffer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Flags.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/RefCtr.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/SmartPtr.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Streamer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Timestamp.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Type.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Typed.hpp
@@ -70,7 +66,6 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/uuid.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../lodepng/lodepng.h
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/App.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/EventHandler.hpp
-GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/Renderer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/Win.cpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../GUI/Win.hpp
 

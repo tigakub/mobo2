@@ -14,7 +14,28 @@ namespace mobo
 
     Context::~Context()
     { }
+
+    Json::Value Context::serialize() const
+    {
+        Json::Value jsonThis(Json::arrayValue);
+        for(auto node : nodes) {
+            jsonThis.append(move(node.second->serialize()));
+        }
+        return jsonThis;
+    }
     
+    void Context::deserialize(Json::Value& root)
+    {
+        uuidMap<Streamer*> history;
+        uuidMap<ForwardReference> forwardReferences;
+        for(auto i = root.begin(); i != root.end(); i++) {
+            Json::Value& jsonObject = *i;
+            Node* newNode = Node::generate(jsonObject["type"].asString());
+            newNode->deserialize(jsonObject, history, forwardReferences);
+            nodes[newNode->nodeId] = newNode;
+        }
+    }
+
     void Context::addNode(Node* iNode)
     {
         nodes[iNode->nodeId] = iNode;

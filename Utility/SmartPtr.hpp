@@ -10,6 +10,18 @@ using namespace std;
 namespace mobo
 {
 
+    class ForwardReference
+    {
+        public:
+            ForwardReference(void* iPtr) : ptrRef(&iPtr) { }
+            ForwardReference(const ForwardReference& iRef) : ptrRef(iRef.ptrRef) { }
+
+            virtual void resolve(void* iPtr) { *ptrRef = iPtr; }
+
+        protected:
+            void** ptrRef;
+    };
+
     template <class T, typename enable_if<is_base_of<RefCtr, T>::value, bool>::type E = true>
     class SmartPtr
     {
@@ -38,6 +50,11 @@ namespace mobo
                 return *this;
             }
 
+            ForwardReference forwardReference() { return ForwardReference(ptr); }
+
+            T* deref() { return ptr; }
+            const T* deref() const { return ptr; }
+
             T* operator->() { return ptr; }
             const T* operator->() const { return ptr; }
 
@@ -46,6 +63,7 @@ namespace mobo
 
             operator bool() const { return ptr != nullptr; }
 
+        protected:
             T* ptr;
     };
 }

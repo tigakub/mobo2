@@ -2,14 +2,47 @@
 #include "Node.hpp"
 #include "Link.hpp"
 
+#include "NodeHeaders.hpp"
+
 #include <algorithm> // For reverse()
 
 #include <iostream>
 
 using namespace std;
 
+#define generator(CLASS) _generators[#CLASS] = [](void) { return new CLASS(); }
+
 namespace mobo
 {
+    unordered_map<string, function<Node*(void)>> Node::_generators;
+    Node* Node::generate(const string& iClassName)
+    {
+        if(_generators.size() == 0) {
+            generator(HostV2BufferNode);
+            generator(HostV3BufferNode);
+            generator(HostV4BufferNode);
+            generator(HostIndexBufferNode);
+            generator(StringNode);
+            generator(GLV2BufferNode);
+            generator(GLV3BufferNode);
+            generator(GLV4BufferNode);
+            generator(GLIndexBufferNode);
+            generator(GLDraw);
+            generator(GLGeometry);
+            generator(GLMaterial);
+            generator(GLPipeline);
+            generator(GLPipelineStart);
+            generator(GLProgram);
+            generator(GLVertexShader);
+            generator(GLFragmentShader);
+            generator(GL2DTexture);
+            generator(GLRectTexture);
+            generator(GLTransform);
+        }
+        if(_generators.find(iClassName) == _generators.end()) return nullptr;
+        return _generators[iClassName]();
+    }
+
     DEFINE_TYPE(Node, "d8ce3630-2919-447c-9f7e-630bd647ff35")
 
     Node::Node(uint64_t iRef)
@@ -22,6 +55,82 @@ namespace mobo
     Node::~Node()
     {
     }
+
+    Json::Value Node::serialize() const
+    {
+        Json::Value jsonSelf(Json::objectValue);
+        Json::Value jsonNodeId(nodeId.toString());
+        Json::Value jsonNodeType(jsonType());
+        Json::Value jsonInputs(Json::arrayValue);
+        Json::Value jsonDInputs(Json::arrayValue);
+        jsonSelf["nodeId"] = jsonNodeId;
+        jsonSelf["type"] = jsonNodeType;
+        for(auto l : inputs) {
+            if(l.src) {
+                jsonInputs.append(move(Json::Value(l.src.deref()->nodeId.toString())));
+            } else {
+                jsonInputs.append(move(Json::Value(Json::nullValue)));
+            }
+        }
+        for(auto l : dinputs) {
+            if(l.src) {
+                jsonDInputs.append(move(Json::Value(l.src.deref()->nodeId.toString())));
+            } else {
+                jsonDInputs.append(move(Json::Value(Json::nullValue)));
+            }
+        }
+        jsonSelf["inputs"] = jsonInputs;
+        jsonSelf["dinputs"] = jsonDInputs;
+        serializeSelf(jsonSelf);
+        return jsonSelf;
+    }
+
+    void Node::serializeSelf(Json::Value& jsonSelf) const
+    { }
+
+    void Node::deserialize(const Json::Value& jsonSelf, uuidMap<Streamer*>& history, uuidMap<ForwardReference>& forwardReferences)
+    {
+        nodeId = jsonSelf["nodeId"].asString();
+        history[nodeId] = this;
+        for(auto i = forwardReferences.find(nodeId); i != forwardReferences.end(); i = forwardReferences.find(nodeId)) {
+            i->second.resolve(this);
+            forwardReferences.erase(i);
+        }
+        const Json::Value& jsonInputs = jsonSelf["inputs"];
+        const Json::Value& jsonDInputs = jsonSelf["dinputs"];
+        
+        int inputIndex = 0;
+        for(auto i = jsonInputs.begin(); i != jsonInputs.end() && inputIndex < inputs.size(); i++, inputIndex++) {
+            if(!i->isNull()) {
+                const Json::Value& jsonNodeRef = *i;
+                uuid newNodeId(jsonNodeRef.asString());
+                auto j = history.find(newNodeId);
+                if(j == history.end()) {
+                    forwardReferences.emplace(make_pair(newNodeId, inputs[inputIndex].src.forwardReference()));
+                } else {
+                    inputs[inputIndex].src = dynamic_cast<Node*>(j->second);
+                }
+            }
+        }
+
+        for(auto i = jsonDInputs.begin(); i != jsonDInputs.end(); i++) {
+            const Json::Value& jsonNodeRef = *i;
+            uuid newNodeId(jsonNodeRef.asString());
+            auto j = history.find(newNodeId);
+            if(j == history.end()) {
+                dinputs.push_back(Link<Node>(nullptr));
+                Link<Node>& linkRef = dinputs.back();
+                forwardReferences.emplace(make_pair(newNodeId, linkRef.src.forwardReference()));
+            } else {
+                dinputs.push_back(Link<Node>(dynamic_cast<Node*>(j->second)));
+            }
+        }
+
+        deserializeSelf(jsonSelf);
+    }
+
+    void Node::deserializeSelf(const Json::Value& jsonSelf) const
+    { }
 
     void Node::addInput(const Type& iType)
     {

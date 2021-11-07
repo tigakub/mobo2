@@ -179,33 +179,6 @@ EventHandler.cpp.s:
 	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f GUI/CMakeFiles/GUI.dir/build.make GUI/CMakeFiles/GUI.dir/EventHandler.cpp.s
 .PHONY : EventHandler.cpp.s
 
-Renderer.o: Renderer.cpp.o
-
-.PHONY : Renderer.o
-
-# target to build an object file
-Renderer.cpp.o:
-	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f GUI/CMakeFiles/GUI.dir/build.make GUI/CMakeFiles/GUI.dir/Renderer.cpp.o
-.PHONY : Renderer.cpp.o
-
-Renderer.i: Renderer.cpp.i
-
-.PHONY : Renderer.i
-
-# target to preprocess a source file
-Renderer.cpp.i:
-	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f GUI/CMakeFiles/GUI.dir/build.make GUI/CMakeFiles/GUI.dir/Renderer.cpp.i
-.PHONY : Renderer.cpp.i
-
-Renderer.s: Renderer.cpp.s
-
-.PHONY : Renderer.s
-
-# target to generate assembly for a file
-Renderer.cpp.s:
-	cd /home/tigakub/Documents/Robotics/mobo2/build && $(MAKE) -f GUI/CMakeFiles/GUI.dir/build.make GUI/CMakeFiles/GUI.dir/Renderer.cpp.s
-.PHONY : Renderer.cpp.s
-
 Win.o: Win.cpp.o
 
 .PHONY : Win.o
@@ -248,9 +221,6 @@ help:
 	@echo "... EventHandler.o"
 	@echo "... EventHandler.i"
 	@echo "... EventHandler.s"
-	@echo "... Renderer.o"
-	@echo "... Renderer.i"
-	@echo "... Renderer.s"
 	@echo "... Win.o"
 	@echo "... Win.i"
 	@echo "... Win.s"

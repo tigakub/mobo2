@@ -4,6 +4,7 @@
 #include "Node.hpp"
 #include "Context.hpp"
 #include "Math.hpp"
+#include "GLPipeline.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
@@ -16,8 +17,10 @@
 namespace mobo
 {
 
-    class GLTransform : public Node
+    class GLTransform : public GLPipeline
     {
+        DECLARE_TYPE
+        
         public:
             GLTransform();
 
