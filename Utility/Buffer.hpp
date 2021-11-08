@@ -1,6 +1,8 @@
 #ifndef __BUFFER_HPP__
 #define __BUFFER_HPP__
 
+#include "DataSource.hpp"
+
 #include <cstdint> // for uint32_t
 #include <type_traits> // for enable_if
 
@@ -10,7 +12,7 @@ using namespace std;
 
 namespace mobo
 {
-    class Buffer
+    class Buffer : public DataSource
     {
         protected:
             Buffer() { }
@@ -23,15 +25,11 @@ namespace mobo
             virtual uint32_t byteSize() const { return size() * elementSize(); }
 
             virtual Buffer& operator=(const Buffer& iSrc) = 0;
-            virtual void unmap() = 0;
-            virtual void unmap() const = 0;
 
         protected:
             virtual void resizeIfNeeded(uint32_t iSize, bool iPreserve = false) = 0;
             virtual void resize(uint32_t iSize, bool iPreserve = false) = 0;
             virtual void setSize(uint32_t iSize) = 0;
-            virtual const void* rawMap() const = 0;
-            virtual void* rawMap() = 0;
     };
 
     template <class T>
@@ -142,6 +140,7 @@ namespace mobo
                 nativeBuffer = newBuffer;
             }
 
+        public:
             virtual const void* rawMap() const
             {
                 return (const void*) nativeBuffer;

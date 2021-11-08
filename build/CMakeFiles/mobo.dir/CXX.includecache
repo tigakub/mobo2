@@ -259,12 +259,18 @@ iostream
 -
 
 ../Utility/Buffer.hpp
+DataSource.hpp
+../Utility/DataSource.hpp
 cstdint
 -
 type_traits
 -
 iostream
 -
+
+../Utility/DataSource.hpp
+Node.hpp
+../Utility/Node.hpp
 
 ../Utility/Flags.hpp
 cstdint

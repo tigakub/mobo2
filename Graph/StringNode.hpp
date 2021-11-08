@@ -18,6 +18,7 @@ namespace mobo
             virtual void serializeSelf(Json::Value &jsonSelf) const;
             virtual void desereializeSelf(const Json::Value &jsonSelf);
 
+            void setValue(const string& iValue) { value = iValue; }
             const string& getValue() { return value; }
 
         protected:

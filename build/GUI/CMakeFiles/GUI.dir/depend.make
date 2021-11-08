@@ -17,6 +17,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLShader.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLTexture.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Math/Math.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Buffer.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/DataSource.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Flags.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/RefCtr.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/SmartPtr.hpp
@@ -37,6 +38,7 @@ GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o: ../GUI/EventHandler.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Debug.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../MovingAverage.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Context.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/FileNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/HostBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Link.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Node.hpp
@@ -55,6 +57,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTexture.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTransform.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Math/Math.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Buffer.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/DataSource.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Flags.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/RefCtr.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/SmartPtr.hpp

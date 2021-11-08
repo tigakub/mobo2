@@ -23,6 +23,10 @@ namespace mobo
             generator(HostV4BufferNode);
             generator(HostIndexBufferNode);
             generator(StringNode);
+            generator(BinaryFileInputNode);
+            generator(TextFileInputNode);
+            generator(BinaryFileOutputNode);
+            generator(TextFileOutputNode);
             generator(GLV2BufferNode);
             generator(GLV3BufferNode);
             generator(GLV4BufferNode);
@@ -198,6 +202,8 @@ namespace mobo
     {
         for(auto i : inputs)
             i.src && i.src->deepSubmit(iCtx);
+        for(auto i : dinputs)
+            i.src && i.src->deepSubmit(iCtx);
         #ifdef TRACE
         cout << "Deep submit " << nodeId.toString() << endl;
         #endif
@@ -208,6 +214,11 @@ namespace mobo
     bool Node::deepRetract(Context& iCtx)
     {
         retract(iCtx);
+        auto d = dinputs.rbegin();
+        while(d != dinputs.rend()) {
+            d->src && d->src->deepRetract(iCtx);
+            d++;
+        }
         auto i = inputs.rbegin();
         while(i != inputs.rend()) {
             i->src && i->src->deepRetract(iCtx);

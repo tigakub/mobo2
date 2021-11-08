@@ -130,7 +130,8 @@ namespace mobo
                 GLBufferT<T>::setSize(iSize);
                 bufferHandle = newBuffer;
             }
-
+        
+        public:
             virtual const void* rawMap() const
             {
                 glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);

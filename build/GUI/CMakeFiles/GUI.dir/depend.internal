@@ -18,6 +18,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ../Graphics/GLTexture.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
+ ../Utility/DataSource.hpp
  ../Utility/Flags.hpp
  ../Utility/RefCtr.hpp
  ../Utility/SmartPtr.hpp
@@ -38,6 +39,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ..//Debug.hpp
  ..//MovingAverage.hpp
  ../Graph/Context.hpp
+ ../Graph/FileNode.hpp
  ../Graph/HostBufferNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp
@@ -56,6 +58,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Graphics/GLTransform.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
+ ../Utility/DataSource.hpp
  ../Utility/Flags.hpp
  ../Utility/RefCtr.hpp
  ../Utility/SmartPtr.hpp

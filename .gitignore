@@ -31,4 +31,7 @@
 *.out
 *.app
 
+# Other Binary Files
+*.bin
+
 build/

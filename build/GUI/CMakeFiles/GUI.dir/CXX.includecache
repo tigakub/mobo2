@@ -28,6 +28,16 @@ Node.hpp
 Streamer.hpp
 ../Graph/Streamer.hpp
 
+../Graph/FileNode.hpp
+DataSource.hpp
+../Graph/DataSource.hpp
+StringNode.hpp
+../Graph/StringNode.hpp
+vector
+-
+string
+-
+
 ../Graph/HostBufferNode.hpp
 Math.hpp
 ../Graph/Math.hpp
@@ -275,12 +285,18 @@ iostream
 -
 
 ../Utility/Buffer.hpp
+DataSource.hpp
+../Utility/DataSource.hpp
 cstdint
 -
 type_traits
 -
 iostream
 -
+
+../Utility/DataSource.hpp
+Node.hpp
+../Utility/Node.hpp
 
 ../Utility/Flags.hpp
 cstdint
@@ -405,6 +421,8 @@ GLDraw.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLDraw.hpp
 GLTransform.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLTransform.hpp
+FileNode.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/FileNode.hpp
 jsoncpp/json/json.h
 -
 fstream

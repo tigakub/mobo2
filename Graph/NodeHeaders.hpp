@@ -1,5 +1,6 @@
 #include "HostBufferNode.hpp"
 #include "StringNode.hpp"
+#include "FileNode.hpp"
 #include "GLBufferNode.hpp"
 #include "GLDraw.hpp"
 #include "GLGeometry.hpp"

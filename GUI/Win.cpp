@@ -11,6 +11,7 @@
 #include "GLMaterial.hpp"
 #include "GLDraw.hpp"
 #include "GLTransform.hpp"
+#include "FileNode.hpp"
 
 #include <jsoncpp/json/json.h>
 
@@ -127,6 +128,30 @@ namespace mobo
         clrBuf->blit((const vec<GLfloat,4>*) clrData, 3);
         uvBuf->blit((const vec<GLfloat,2>*) uvData, 3);
 
+        HostV4BufferNode* hostVtxBuf = new HostV4BufferNode();
+        HostV4BufferNode* hostClrBuf = new HostV4BufferNode();
+        HostV2BufferNode* hostUVBuf = new HostV2BufferNode();
+
+        hostVtxBuf->blit((const vec<GLfloat,4>*) vtxData, 3);
+        hostClrBuf->blit((const vec<GLfloat,4>*) clrData, 3);
+        hostUVBuf->blit((const vec<GLfloat,2>*) uvData, 3);
+
+        StringNode *outputFilename = new StringNode("../vtxBuf.bin");
+        BinaryFileOutputNode* fileOutputNode = new BinaryFileOutputNode();
+        fileOutputNode->linkTo(0, *outputFilename);
+        fileOutputNode->linkTo(1, *hostVtxBuf);
+        fileOutputNode->update(ctx);
+
+        outputFilename->setValue("../clrBuf.bin");
+        fileOutputNode->linkTo(1, *hostClrBuf);
+        fileOutputNode->nodeFlags.set(Node::UPDATE_FLAG);
+        fileOutputNode->update(ctx);
+
+        outputFilename->setValue("../uvBuf.bin");
+        fileOutputNode->linkTo(1, *hostUVBuf);
+        fileOutputNode->nodeFlags.set(Node::UPDATE_FLAG);
+        fileOutputNode->update(ctx);
+
         GLGeometry* geom = new GLGeometry();
         geom->linkTo(0, *program);
         geom->linkTo(1, *vtxBuf);
@@ -166,7 +191,9 @@ namespace mobo
         ctx.addNode(pipelineNode);
         ctx.setRoot(pipelineNode->nodeId);
 
-        cout << "\nJson: \n" << ctx.serialize() << endl << endl;
+        ofstream jsonFile("../test.json", ofstream::out);
+        jsonFile << ctx.serialize();
+        jsonFile.close();
 
         glutSetWindow(winId);
         glutSetWindowData((void*) this);

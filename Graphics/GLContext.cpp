@@ -37,6 +37,7 @@ namespace mobo
         glFinish();
         glutSwapBuffers();
         popModelviewMatrix();
+        popCameraMatrix();
         popProjectionMatrix();
     }
 }

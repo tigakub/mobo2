@@ -40,6 +40,9 @@ namespace mobo
     class EventHandler
     {
         public:
+            EventHandler() { }
+            virtual ~EventHandler() { } 
+
             virtual bool dispatchEvent(const Event &);
 
             virtual bool idle() { return true; }

@@ -21,6 +21,7 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../Graphics/GLTexture.hpp
  ../Math/Math.hpp
  ../Utility/Buffer.hpp
+ ../Utility/DataSource.hpp
  ../Utility/Flags.hpp
  ../Utility/RefCtr.hpp
  ../Utility/SmartPtr.hpp
