@@ -87,7 +87,7 @@ namespace mobo
         while(alive) {
             glutMainLoopEvent();
             auto currentTime = steady_clock::now();
-            if((currentTime - yieldToUITime) < seconds(3)) {
+            if((currentTime - yieldToUITime) < seconds(1)) {
                 this_thread::sleep_for(milliseconds(60));
             }
         }

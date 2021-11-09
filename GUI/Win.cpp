@@ -126,20 +126,20 @@ namespace mobo
         vtxFile->linkTo(0, *vtxFilename);
         clrFile->linkTo(0, *clrFilename);
         uvFile->linkTo(0, *uvFilename); 
-
+        /*
         auto vtxHostBuf = new HostV4BufferNode();
         auto clrHostBuf = new HostV4BufferNode();
         auto uvHostBuf = new HostV2BufferNode();
         vtxHostBuf->linkTo(0, *vtxFile);
         clrHostBuf->linkTo(0, *clrFile);
         uvHostBuf->linkTo(0, *uvFile);
-
+        */
         auto vtxBuf = new GLV4BufferNode();
         auto clrBuf = new GLV4BufferNode();
         auto uvBuf = new GLV2BufferNode();
-        vtxBuf->linkTo(0, *vtxHostBuf);
-        clrBuf->linkTo(0, *clrHostBuf);
-        uvBuf->linkTo(0, *uvHostBuf);
+        vtxBuf->linkTo(0, *vtxFile);
+        clrBuf->linkTo(0, *clrFile);
+        uvBuf->linkTo(0, *uvFile);
 
         vtxBuf->setAttribName("iVtxPos");
         clrBuf->setAttribName("iVtxClr");

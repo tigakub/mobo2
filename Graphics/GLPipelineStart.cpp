@@ -22,7 +22,7 @@ namespace mobo
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDisable(GL_ALPHA_TEST);
         glDepthFunc(GL_LESS);
-        glClearColor(0.5, 0.0, 1.0, 1.0);
+        glClearColor(0.125, 0.0, 0.25, 1.0);
         glClearDepth(1.0f);
         return true;
     }
