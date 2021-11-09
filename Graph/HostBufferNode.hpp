@@ -4,27 +4,44 @@
 #include "Math.hpp"
 #include "Buffer.hpp"
 #include "Node.hpp"
+#include "DataSourceNode.hpp"
 
 namespace mobo
 {
-    extern const Type HOSTBUFFERTYPE;
+    class HostBufferNode : public DataSourceNode
+    {
+        DECLARE_TYPE
+
+        public:
+            HostBufferNode()
+            : DataSourceNode()
+            {
+                addInput(DataSourceNode::_type);
+            }
+    };
 
     template <class T>
-    class HostBufferNodeT : public Node, public HostBufferT<T>
+    class HostBufferNodeT : public HostBufferNode, public HostBufferT<T>
     {
         public:
             HostBufferNodeT()
-            : Node(), HostBufferT<T>() { }
+            : HostBufferNode(), HostBufferT<T>() { }
             HostBufferNodeT(const BufferT<T>& iBuffer)
-            : Node(), HostBufferT<T>(iBuffer) { }
+            : HostBufferNode(), HostBufferT<T>(iBuffer) { }
             /*
             HostBufferNodeT(const HostBufferNodeT<T>& iBuffer)
             : Node(), HostBufferT<T>(iBuffer) { }
             */
             HostBufferNodeT(HostBufferT<T>&& iBuffer)
-            : Node(), HostBufferT<T>(move(iBuffer)) { }
+            : HostBufferNode(), HostBufferT<T>(move(iBuffer)) { }
             HostBufferNodeT(HostBufferNodeT<T>&& iBuffer)
-            : Node(), HostBufferT<T>(move(iBuffer)) { }
+            : HostBufferNode(), HostBufferT<T>(move(iBuffer)) { }
+
+            virtual bool update(Context& iCtx) {
+                DataSource* ds = dynamic_cast<DataSource*>(getInput<DataSourceNode>(0));
+                if(ds) DataSourceT<T>::operator=(*ds);
+                return true;
+            }
     };
 
     template <int S>

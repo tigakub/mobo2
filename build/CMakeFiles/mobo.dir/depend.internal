@@ -8,6 +8,7 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../GUI/EventHandler.hpp
  ../GUI/Win.hpp
  ../Graph/Context.hpp
+ ../Graph/DataSourceNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp
  ../Graphics/GLBuffer.hpp

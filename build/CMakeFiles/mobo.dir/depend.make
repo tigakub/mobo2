@@ -7,6 +7,7 @@ CMakeFiles/mobo.dir/main.cpp.o: ../GUI/App.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../GUI/EventHandler.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../GUI/Win.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/Context.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../Graph/DataSourceNode.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/Link.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/Node.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLBuffer.hpp

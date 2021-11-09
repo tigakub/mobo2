@@ -116,18 +116,41 @@ namespace mobo
         program->linkTo(1, *vtxShader);
         program->linkTo(2, *frgShader);
 
-        GLV4BufferNode* vtxBuf = new GLV4BufferNode();
-        GLV4BufferNode* clrBuf = new GLV4BufferNode();
-        GLV2BufferNode* uvBuf = new GLV2BufferNode();
+        auto vtxFilename = new StringNode("../vtxBuf.bin");
+        auto clrFilename = new StringNode("../clrBuf.bin");
+        auto uvFilename = new StringNode("../uvBuf.bin");
+
+        auto vtxFile = new BinaryFileInputNode();
+        auto clrFile = new BinaryFileInputNode();
+        auto uvFile = new BinaryFileInputNode();
+        vtxFile->linkTo(0, *vtxFilename);
+        clrFile->linkTo(0, *clrFilename);
+        uvFile->linkTo(0, *uvFilename); 
+
+        auto vtxHostBuf = new HostV4BufferNode();
+        auto clrHostBuf = new HostV4BufferNode();
+        auto uvHostBuf = new HostV2BufferNode();
+        vtxHostBuf->linkTo(0, *vtxFile);
+        clrHostBuf->linkTo(0, *clrFile);
+        uvHostBuf->linkTo(0, *uvFile);
+
+        auto vtxBuf = new GLV4BufferNode();
+        auto clrBuf = new GLV4BufferNode();
+        auto uvBuf = new GLV2BufferNode();
+        vtxBuf->linkTo(0, *vtxHostBuf);
+        clrBuf->linkTo(0, *clrHostBuf);
+        uvBuf->linkTo(0, *uvHostBuf);
 
         vtxBuf->setAttribName("iVtxPos");
         clrBuf->setAttribName("iVtxClr");
         uvBuf->setAttribName("iVtxUV");
 
+        /*
         vtxBuf->blit((const vec<GLfloat,4>*) vtxData, 3);
         clrBuf->blit((const vec<GLfloat,4>*) clrData, 3);
         uvBuf->blit((const vec<GLfloat,2>*) uvData, 3);
-
+        */
+        /*
         HostV4BufferNode* hostVtxBuf = new HostV4BufferNode();
         HostV4BufferNode* hostClrBuf = new HostV4BufferNode();
         HostV2BufferNode* hostUVBuf = new HostV2BufferNode();
@@ -151,7 +174,7 @@ namespace mobo
         fileOutputNode->linkTo(1, *hostUVBuf);
         fileOutputNode->nodeFlags.set(Node::UPDATE_FLAG);
         fileOutputNode->update(ctx);
-
+        */
         GLGeometry* geom = new GLGeometry();
         geom->linkTo(0, *program);
         geom->linkTo(1, *vtxBuf);

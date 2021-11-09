@@ -1,7 +1,7 @@
 #ifndef __FILENODE_HPP__
 #define __FILENODE_HPP__
 
-#include "DataSource.hpp"
+#include "DataSourceNode.hpp"
 #include "StringNode.hpp"
 
 #include <vector>
@@ -11,12 +11,12 @@ using namespace std;
 
 namespace mobo
 {
-    class FileNode : public Node
+    class FileNode : public DataSourceNode
     {
         DECLARE_TYPE
 
         public:
-            FileNode() : Node() { addInput(StringNode::_type); }
+            FileNode() : DataSourceNode() { addInput(StringNode::_type); }
             virtual bool submit(Context& iCtx) { return true; }
             virtual bool retract(Context& iCtx) { return true; }
     };
@@ -30,9 +30,13 @@ namespace mobo
 
             virtual bool update(Context& iCtx);
 
-            virtual uint32_t byteSize() const { return buffer.size(); }
+            virtual uint32_t size() const { return buffer.size(); }
+            virtual uint32_t elementSize() const { return 1; }
             virtual const void* rawMap() const { return static_cast<const void*>(&buffer[0]); }
             virtual void* rawMap() { return static_cast<void*>(&buffer[0]); }
+
+        protected:
+            virtual void setSize(uint32_t, bool) { }
 
         protected:
             vector<unsigned char> buffer;
@@ -47,9 +51,13 @@ namespace mobo
 
             virtual bool update(Context& iCtx);
 
-            virtual uint32_t byteSize() const { return buffer.length(); }
+            virtual uint32_t size() const { return buffer.length(); }
+            virtual uint32_t elementSize() const { return 1; }
             virtual const void* rawMap() const { return static_cast<const void*>(&buffer[0]); }
             virtual void* rawMap() { return static_cast<void*>(&buffer[0]); }
+
+        protected:
+            virtual void setSize(uint32_t, bool) { }
 
         protected:
             string buffer;

@@ -6,20 +6,38 @@
 #include "Math.hpp"
 #include "GLBuffer.hpp"
 #include "Node.hpp"
+#include "DataSourceNode.hpp"
 
 using namespace std;
 
 namespace mobo
 {
+    class GLBufferNode : public DataSourceNode
+    {
+        DECLARE_TYPE
 
-    extern const Type GLBUFFERTYPE;
-    
+        public:
+            GLBufferNode()
+            : DataSourceNode()
+            {
+                addInput(DataSourceNode::_type);
+            }
+    };
+
     template <class T>
-    class GLBufferNodeT : public Node, public GLBufferT<T>
+    class GLBufferNodeT : public GLBufferNode, public GLBufferT<T>
     {
         public:
             GLBufferNodeT()
-            : Node(), GLBufferT<T>() { }
+            : GLBufferNode(), GLBufferT<T>() { }
+
+            virtual bool update(Context& iCtx) {
+                DataSource* ds = dynamic_cast<DataSource*>(getInput<DataSourceNode>(0));
+                if(ds) {
+                    DataSourceT<T>::operator=(*ds);
+                }
+                return true;
+            }
     };
 
     template <class V>

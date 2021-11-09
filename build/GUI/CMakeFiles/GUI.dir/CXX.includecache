@@ -28,9 +28,15 @@ Node.hpp
 Streamer.hpp
 ../Graph/Streamer.hpp
 
-../Graph/FileNode.hpp
+../Graph/DataSourceNode.hpp
+Node.hpp
+../Graph/Node.hpp
 DataSource.hpp
 ../Graph/DataSource.hpp
+
+../Graph/FileNode.hpp
+DataSourceNode.hpp
+../Graph/DataSourceNode.hpp
 StringNode.hpp
 ../Graph/StringNode.hpp
 vector
@@ -45,6 +51,8 @@ Buffer.hpp
 ../Graph/Buffer.hpp
 Node.hpp
 ../Graph/Node.hpp
+DataSourceNode.hpp
+../Graph/DataSourceNode.hpp
 
 ../Graph/Link.hpp
 RefCtr.hpp
@@ -115,6 +123,8 @@ GLBuffer.hpp
 ../Graphics/GLBuffer.hpp
 Node.hpp
 ../Graphics/Node.hpp
+DataSourceNode.hpp
+../Graphics/DataSourceNode.hpp
 
 ../Graphics/GLContext.hpp
 Debug.hpp
@@ -295,6 +305,8 @@ iostream
 -
 
 ../Utility/DataSource.hpp
+Debug.hpp
+../Utility/Debug.hpp
 Node.hpp
 ../Utility/Node.hpp
 

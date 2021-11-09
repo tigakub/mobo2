@@ -30,6 +30,17 @@ namespace mobo
             {
                 glGenBuffers(1, &bufferHandle);
             }
+            GLBufferT(const GLBufferT<T>& iSrc)
+            : BufferT<T>(), bufferHandle(0), usage(iSrc.usage), attributeName(iSrc.attributeName)
+            {
+                DataSourceT<T>::operator=(iSrc);
+            }
+            GLBufferT(GLBufferT<T>&& iSrc)
+            : BufferT<T>(), bufferHandle(iSrc.bufferHandle), usage(iSrc.usage), attributeName(move(iSrc.attributeName)) 
+            {
+                BufferT<T>::elementCount = iSrc.size();
+                iSrc.bufferHandle = 0;
+            }
 
             virtual ~GLBufferT()
             {
@@ -61,39 +72,19 @@ namespace mobo
                 }
             }
 
-            virtual Buffer& operator=(const Buffer& iSrc)
+            virtual DataSourceT<T>& operator=(const HostBufferT<T>& iSrc)
+            {
+                return DataSourceT<T>::operator=(dynamic_cast<const DataSource&>(iSrc));
+            }
+
+            virtual DataSourceT<T>& operator=(const GLBufferT<T>& iSrc)
             {
                 GLBufferT<T>::resizeIfNeeded(iSrc.size());
-                try {
-                    const GLBufferT<T>& src = dynamic_cast<const GLBufferT<T>&>(iSrc);
-
-                    glBindBuffer(GL_COPY_READ_BUFFER, src.bufferHandle);
-                    glBindBuffer(GL_COPY_WRITE_BUFFER, bufferHandle);
-                    glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, GLBufferT<T>::byteSize());
-                    glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
-                    glBindBuffer(GL_COPY_READ_BUFFER, 0);
-
-                    return *this;
-                } catch(const bad_cast& e) {
-                }
-
-                try {
-                    const HostBufferT<T>& src = dynamic_cast<const HostBufferT<T>&>(iSrc);
-                    const T* srcPtr = src.map();
-                    T* dstPtr = GLBufferT<T>::map();
-                    uint32_t n = GLBufferT<T>::size();
-                    while(n--) {
-                        dstPtr[n] = srcPtr[n];
-                    }
-                    GLBufferT<T>::unmap();
-                    src.unmap();
-
-                    return *this;
-                } catch(const bad_cast& e) {
-                }
-                #ifdef DEBUG_OPENGL
-                cerr << "Failed to copy buffer" << endl;
-                #endif
+                glBindBuffer(GL_COPY_READ_BUFFER, iSrc.bufferHandle);
+                glBindBuffer(GL_COPY_WRITE_BUFFER, bufferHandle);
+                glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, GLBufferT<T>::byteSize());
+                glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
+                glBindBuffer(GL_COPY_READ_BUFFER, 0);
                 return *this;
             }
 
@@ -110,7 +101,7 @@ namespace mobo
             }
 
         protected:
-            virtual void resize(uint32_t iSize, bool iPreserve = false)
+            virtual void setSize(uint32_t iSize, bool iPreserve = false)
             {
                 GLuint newBuffer;
                 glGenBuffers(1, &newBuffer);
@@ -127,7 +118,7 @@ namespace mobo
                     }
                     glDeleteBuffers(1, &bufferHandle);
                 }
-                GLBufferT<T>::setSize(iSize);
+                BufferT<T>::setSize(iSize);
                 bufferHandle = newBuffer;
             }
         

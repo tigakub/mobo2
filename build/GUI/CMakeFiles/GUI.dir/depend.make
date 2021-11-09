@@ -4,6 +4,7 @@
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Debug.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../MovingAverage.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Context.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/DataSourceNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Link.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Node.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLBuffer.hpp
@@ -38,6 +39,7 @@ GUI/CMakeFiles/GUI.dir/EventHandler.cpp.o: ../GUI/EventHandler.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Debug.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../MovingAverage.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Context.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/DataSourceNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/FileNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/HostBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Link.hpp

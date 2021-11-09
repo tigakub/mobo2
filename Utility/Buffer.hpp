@@ -12,80 +12,22 @@ using namespace std;
 
 namespace mobo
 {
-    class Buffer : public DataSource
-    {
-        protected:
-            Buffer() { }
-            Buffer(const Buffer& iSrc) { }
-            virtual ~Buffer() { }
-
-        public:
-            virtual uint32_t elementSize() const = 0;
-            virtual uint32_t size() const = 0;
-            virtual uint32_t byteSize() const { return size() * elementSize(); }
-
-            virtual Buffer& operator=(const Buffer& iSrc) = 0;
-
-        protected:
-            virtual void resizeIfNeeded(uint32_t iSize, bool iPreserve = false) = 0;
-            virtual void resize(uint32_t iSize, bool iPreserve = false) = 0;
-            virtual void setSize(uint32_t iSize) = 0;
-    };
-
     template <class T>
-    class BufferT : public Buffer
+    class BufferT : public DataSourceT<T>
     {
         public:
-            BufferT() : Buffer(), elementCount(0) { }
-            BufferT(const BufferT& iSrc)
-            : Buffer(iSrc), elementCount(0) {
-                blit(iSrc);
-            }
-
-            virtual const T* map() const {
-                return (const T*) rawMap();
-            }
-
-            virtual T* map() {
-                return (T*) rawMap();
-            }
-
-            virtual uint32_t elementSize() const {
-                return sizeof(T);
+            BufferT() : DataSourceT<T>(), elementCount(0) { }
+            BufferT(const BufferT<T>& iSrc)
+            : DataSourceT<T>(iSrc), elementCount(0) {
+                DataSourceT<T>::blit(iSrc);
             }
 
             virtual uint32_t size() const {
                 return elementCount;
             }
 
-            virtual void resizeIfNeeded(uint32_t iSize, bool iPreserve = false)
-            {
-                if(iSize > elementCount) {
-                    resize(iSize, iPreserve);
-                }
-            }
-
-            virtual void blit(const T* iSrc, uint32_t iSize) {
-                resizeIfNeeded(iSize);
-                T* dst = map();
-                if(dst) {
-                    uint32_t n = iSize;
-                    while(n--) {
-                        dst[n] = iSrc[n];
-                    }
-                }
-                unmap();
-            }
-
         protected:
-            virtual void blit(const BufferT<T>& iSrc) {
-                resizeIfNeeded(iSrc.elementCount);
-                const T* src = iSrc.map();
-                blit(src, iSrc.elementCount);
-                iSrc.unmap();
-            }
-
-            virtual void setSize(uint32_t iSize) {
+            virtual void setSize(uint32_t iSize, bool iPreserve = false) {
                 elementCount = iSize;
             }
 
@@ -111,23 +53,27 @@ namespace mobo
             virtual ~HostBufferT() {
                 if(nativeBuffer) delete [] nativeBuffer;
             }
-            
+            /*
             virtual Buffer& operator=(const Buffer& iSrc) {
                 if(dynamic_cast<const BufferT<T>*>(&iSrc)) {
-                    BufferT<T>::blit(dynamic_cast<const BufferT<T>&>(iSrc));
+                    blit<T>(iSrc);
                 }
                 return *this;
             }
+            */
+            virtual DataSourceT<T>& operator=(HostBufferT<T>&& iSrc) {
+                if(nativeBuffer) delete [] nativeBuffer;
+                nativeBuffer = iSrc.nativeBuffer;
+                BufferT<T>::elementCount = iSrc.elementCount;
+                iSrc.nativeBuffer = nullptr;
+                iSrc.elementCount = 0;
+                return *this;
+            }
             
-            virtual void unmap()
-            { }
-            
-            virtual void unmap() const
-            { }
-
         protected:
-            virtual void resize(uint32_t iSize, bool iPreserve = false)
+            virtual void setSize(uint32_t iSize, bool iPreserve = false)
             {
+                BufferT<T>::setSize(iSize, iPreserve);
                 T* newBuffer = new T[iSize];
                 if(nativeBuffer) {
                     if(iPreserve) {
@@ -136,7 +82,6 @@ namespace mobo
                     }
                     delete [] nativeBuffer;
                 }
-                BufferT<T>::setSize(iSize);
                 nativeBuffer = newBuffer;
             }
 

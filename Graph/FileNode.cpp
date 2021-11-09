@@ -1,6 +1,8 @@
 #include "FileNode.hpp"
 #include "HostBufferNode.hpp"
 
+#include "Debug.hpp"
+
 #include <iostream>
 #include <fstream>
 
@@ -8,7 +10,7 @@ using namespace std;
 
 namespace mobo
 {
-    DERIVE_TYPE(FileNode, "82de52c8-67eb-4712-b89a-db6b50d4024c", {&Node::_type})
+    DERIVE_TYPE(FileNode, "82de52c8-67eb-4712-b89a-db6b50d4024c", {&DataSourceNode::_type})
     DERIVE_TYPE(BinaryFileInputNode, "9acfc04f-b1f9-421c-95b4-16f52e46c88d", {&FileNode::_type})
     DERIVE_TYPE(TextFileInputNode, "84d485f6-469a-4f1b-968e-6a6bb37f350b", {&FileNode::_type})
     DERIVE_TYPE(BinaryFileOutputNode, "fb7eac00-7a75-4f48-a983-82e5f3384255", {&FileNode::_type})
@@ -49,18 +51,16 @@ namespace mobo
     BinaryFileOutputNode::BinaryFileOutputNode()
     : FileNode()
     {
-        addInput(HOSTBUFFERTYPE);
+        addInput(DataSourceNode::_type);
     }
 
     bool BinaryFileOutputNode::update(Context& iCtx)
     {
         StringNode* stringNode = getInput<StringNode>(0);
         if(stringNode) {
-            cout << "fuck1" << endl;
             const string& filepath = stringNode->getValue();
-            Buffer* dataNode = dynamic_cast<Buffer*>(getInput<Node>(1));
+            DataSource* dataNode = dynamic_cast<DataSource*>(getInput<DataSourceNode>(1));
             if(dataNode) {
-                cout << "fuck2" << endl;
                 ofstream fileStream(filepath, ios::binary);
                 uint32_t byteSize = dataNode->byteSize();
                 void* bufferPtr = dataNode->rawMap();
