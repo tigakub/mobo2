@@ -29,18 +29,12 @@ namespace mobo
 
     bool GLPipelineStart::submit(Context& iCtx)
     {
-        #ifdef DEBUG_OPENGL
-        //cout << "GLPipelineStart::submit" << endl;
-        #endif
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         return true;
     }
 
     bool GLPipelineStart::retract(Context& iCtx)
     {
-        #ifdef DEBUG_OPENGL
-        //cout << "GLPipelineStart::retract" << endl;
-        #endif
         GLContext& ctx = static_cast<GLContext&>(iCtx);
         return true;
     }

@@ -1,6 +1,7 @@
 #include "Context.hpp"
 #include "Node.hpp"
 #include "Link.hpp"
+#include "Debug.hpp"
 
 #include "NodeHeaders.hpp"
 
@@ -31,6 +32,7 @@ namespace mobo
             generator(GLV3BufferNode);
             generator(GLV4BufferNode);
             generator(GLIndexBufferNode);
+            generator(GLCamera);
             generator(GLDraw);
             generator(GLGeometry);
             generator(GLMaterial);
@@ -44,13 +46,16 @@ namespace mobo
             generator(GLTransform);
         }
         if(_generators.find(iClassName) == _generators.end()) return nullptr;
-        return _generators[iClassName]();
+        Node* obj = _generators[iClassName]();
+        obj->setClassName(iClassName);
+        cout << "Instantiated " << obj->getClassName() << endl;
+        return obj;
     }
 
     DEFINE_TYPE(Node, "d8ce3630-2919-447c-9f7e-630bd647ff35")
 
     Node::Node(uint64_t iRef)
-    : RefCtr(iRef), nodeId(uuid::generate()), inputs()
+    : RefCtr(iRef), className(), nodeId(uuid::generate()), inputs()
     {
         nodeFlags.set(UPDATE_FLAG);
         stampTime(steady_clock::now());
@@ -194,7 +199,14 @@ namespace mobo
     }
 
     void Node::unlink(int i) {
-        if(i >= inputs.size()) return;
+        if(i >= inputs.size()) {
+            i -= inputs.size();
+            if(i >= dinputs.size()) {
+                return;
+            }
+            dinputs.erase(dinputs.begin() + i);
+            return;
+        }
         inputs[i].src = nullptr;
     }
 
@@ -205,24 +217,32 @@ namespace mobo
         for(auto i : dinputs)
             i.src && i.src->deepSubmit(iCtx);
         #ifdef TRACE
-        cout << "Deep submit " << nodeId.toString() << endl;
+        cout << getClassName() << "::updateIfNeeded()" << endl;
         #endif
         updateIfNeeded(iCtx, iCtx.getTimestamp());
+        #ifdef TRACE
+        cout << getClassName() << "::submit()" << endl;
+        #endif
         submit(iCtx);
+        if(nodeFlags.test(ISOLATE)) {
+            for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
+                i->src && i->src->deepRetract(iCtx);
+            for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
+                i->src && i->src->deepRetract(iCtx);
+        }
         return true;
     }
     bool Node::deepRetract(Context& iCtx)
     {
+        #ifdef TRACE
+        cout << getClassName() << "::retract()" << endl;
+        #endif
         retract(iCtx);
-        auto d = dinputs.rbegin();
-        while(d != dinputs.rend()) {
-            d->src && d->src->deepRetract(iCtx);
-            d++;
-        }
-        auto i = inputs.rbegin();
-        while(i != inputs.rend()) {
-            i->src && i->src->deepRetract(iCtx);
-            i++;
+        if(!nodeFlags.test(ISOLATE)) {
+            for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
+                i->src && i->src->deepRetract(iCtx);
+            for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
+                i->src && i->src->deepRetract(iCtx);
         }
         return true;
     }

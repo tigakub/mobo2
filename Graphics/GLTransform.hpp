@@ -24,6 +24,9 @@ namespace mobo
         public:
             GLTransform();
 
+            virtual GLTransform& operator=(const mat4<GLfloat>& iMat) { matrix = iMat; return *this; }
+            virtual GLTransform& operator*=(const mat4<GLfloat>& iMat) { matrix *= iMat; return *this; }
+
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context& iCtx);
 

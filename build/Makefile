@@ -189,6 +189,19 @@ lodepng/fast:
 .PHONY : lodepng/fast
 
 #=============================================================================
+# Target rules for targets named RealSense
+
+# Build rule for target.
+RealSense: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RealSense
+.PHONY : RealSense
+
+# fast build rule for target.
+RealSense/fast:
+	$(MAKE) -f RealSense/CMakeFiles/RealSense.dir/build.make RealSense/CMakeFiles/RealSense.dir/build
+.PHONY : RealSense/fast
+
+#=============================================================================
 # Target rules for targets named Utility
 
 # Build rule for target.
@@ -242,6 +255,7 @@ help:
 	@echo "... GUI"
 	@echo "... Math"
 	@echo "... lodepng"
+	@echo "... RealSense"
 	@echo "... Utility"
 	@echo "... main.o"
 	@echo "... main.i"

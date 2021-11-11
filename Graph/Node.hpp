@@ -35,14 +35,19 @@ namespace mobo
         public:
             enum {
                 UPDATE_FLAG = 1,
-                ROOT_FLAG = UPDATE_FLAG << 1
+                ROOT_FLAG = UPDATE_FLAG << 1,
+                ISOLATE = ROOT_FLAG << 1,
             };
 
         DECLARE_TYPE
 
         public:
             Node(uint64_t iRef = 0);
+            Node(Node&& iNode) : RefCtr(), className(), nodeFlags(iNode.nodeFlags), nodeId(iNode.nodeId), inputs(move(iNode.inputs)), dinputs(move(iNode.dinputs)) { }
             virtual ~Node();
+
+            void setClassName(const string& iClassName) { className = iClassName;}
+            const string &getClassName() const { return className; }
 
             virtual Json::Value serialize() const;
             virtual void serializeSelf(Json::Value& self) const;
@@ -60,6 +65,15 @@ namespace mobo
                 return dynamic_cast<T*>(inputs[iIndex].src.deref());
             }
 
+            template <class T, typename enable_if<is_base_of<Node,T>::value, bool>::type E = true> const T* getInput(int iIndex) const
+            {
+                if(iIndex >= inputs.size()) {
+                    iIndex -= inputs.size();
+                    return dynamic_cast<const T*>(dinputs[iIndex].src.deref());
+                }
+                return dynamic_cast<const T*>(inputs[iIndex].src.deref());
+            }
+
             void addLinkTo(Node& iNewLink);
             bool linkTo(int i, Node& iNode);
             void unlink(int i);
@@ -67,14 +81,14 @@ namespace mobo
             void updateIfNeeded(Context &iCtx, const time_point<steady_clock>& iTimestamp);
             virtual bool update(Context& iCtx) { return true; }
 
-            bool deepSubmit(Context& iCtx);
-            bool deepRetract(Context& iCtx);
+            virtual bool deepSubmit(Context& iCtx);
+            virtual bool deepRetract(Context& iCtx);
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context& iCtx);
 
         public:
+            string className;
             Flags nodeFlags;
-
             uuid nodeId;
             vector<Link<Node>> inputs;
             vector<Link<Node>> dinputs;

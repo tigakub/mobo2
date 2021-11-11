@@ -32,6 +32,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../GUI"
   "../lodepng"
   "../Math"
+  "../RealSense"
   "../Utility"
   "/build"
   "/include"
@@ -42,6 +43,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/tigakub/Documents/Robotics/mobo2/build/GUI/CMakeFiles/GUI.dir/DependInfo.cmake"
+  "/home/tigakub/Documents/Robotics/mobo2/build/RealSense/CMakeFiles/RealSense.dir/DependInfo.cmake"
   "/home/tigakub/Documents/Robotics/mobo2/build/Graphics/CMakeFiles/Graphics.dir/DependInfo.cmake"
   "/home/tigakub/Documents/Robotics/mobo2/build/Graph/CMakeFiles/Graph.dir/DependInfo.cmake"
   "/home/tigakub/Documents/Robotics/mobo2/build/Math/CMakeFiles/Math.dir/DependInfo.cmake"

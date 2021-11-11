@@ -16,8 +16,6 @@ iostream
 iomanip
 -
 
-..//MovingAverage.hpp
-
 ../GUI/App.hpp
 EventHandler.hpp
 ../GUI/EventHandler.hpp
@@ -265,6 +263,8 @@ string
 -
 iostream
 -
+
+../Math/MovingAverage.hpp
 
 ../Utility/Buffer.hpp
 DataSource.hpp

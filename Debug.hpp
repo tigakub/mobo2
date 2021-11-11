@@ -9,5 +9,6 @@
 using namespace std;
 
 #define DEBUG_OPENGL
+// #define TRACE
 
 #endif

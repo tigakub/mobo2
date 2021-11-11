@@ -3,7 +3,6 @@
 
 CMakeFiles/mobo.dir/main.cpp.o
  ..//Debug.hpp
- ..//MovingAverage.hpp
  ../GUI/App.hpp
  ../GUI/EventHandler.hpp
  ../GUI/Win.hpp
@@ -21,6 +20,7 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../Graphics/GLShader.hpp
  ../Graphics/GLTexture.hpp
  ../Math/Math.hpp
+ ../Math/MovingAverage.hpp
  ../Utility/Buffer.hpp
  ../Utility/DataSource.hpp
  ../Utility/Flags.hpp

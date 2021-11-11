@@ -11,6 +11,7 @@
 #include "GLMaterial.hpp"
 #include "GLDraw.hpp"
 #include "GLTransform.hpp"
+#include "GLCamera.hpp"
 #include "FileNode.hpp"
 
 #include <jsoncpp/json/json.h>
@@ -95,48 +96,46 @@ namespace mobo
         cout << id.asString() << endl;
         */
 
-        GLPipelineStart *startNode = new GLPipelineStart();
+        auto startNode = ctx.createNodeT(GLPipelineStart);
         cout << "startNode " << startNode->nodeId.toString() << endl;
 
-        StringNode *vtxShaderSrc = new StringNode(vtxShaderText);
+        auto vtxShaderSrc = ctx.createNodeT(StringNode);
+        vtxShaderSrc->setValue(vtxShaderText);
         cout << "vtxShaderSrc " << vtxShaderSrc->nodeId.toString() << endl;
-        GLVertexShader *vtxShader = new GLVertexShader();
+        auto vtxShader = ctx.createNodeT(GLVertexShader);
         cout << "vtxShader " << vtxShader->nodeId.toString() << endl;
         vtxShader->linkTo(0, *vtxShaderSrc);
 
-        StringNode *frgShaderSrc = new StringNode(frgShaderText);
+        auto frgShaderSrc = ctx.createNodeT(StringNode);
+        frgShaderSrc->setValue(frgShaderText);
         cout << "frgShaderSrc " << frgShaderSrc->nodeId.toString() << endl;
-        GLFragmentShader *frgShader = new GLFragmentShader();
+        auto frgShader = ctx.createNodeT(GLFragmentShader);
         cout << "frgShader " << frgShader->nodeId.toString() << endl;
         frgShader->linkTo(0, *frgShaderSrc);
 
-        GLProgram *program = new GLProgram();
+        auto program = ctx.createNodeT(GLProgram);
         cout << "program " << program->nodeId.toString() << endl;
         program->linkTo(0, *startNode);
         program->linkTo(1, *vtxShader);
         program->linkTo(2, *frgShader);
 
-        auto vtxFilename = new StringNode("../vtxBuf.bin");
-        auto clrFilename = new StringNode("../clrBuf.bin");
-        auto uvFilename = new StringNode("../uvBuf.bin");
+        auto vtxFilename = ctx.createNodeT(StringNode);
+        vtxFilename->setValue("../vtxBuf.bin");
+        auto clrFilename = ctx.createNodeT(StringNode);
+        clrFilename->setValue("../clrBuf.bin");
+        auto uvFilename = ctx.createNodeT(StringNode);
+        uvFilename->setValue("../uvBuf.bin");
 
-        auto vtxFile = new BinaryFileInputNode();
-        auto clrFile = new BinaryFileInputNode();
-        auto uvFile = new BinaryFileInputNode();
+        auto vtxFile = ctx.createNodeT(BinaryFileInputNode);
+        auto clrFile = ctx.createNodeT(BinaryFileInputNode);
+        auto uvFile = ctx.createNodeT(BinaryFileInputNode);
         vtxFile->linkTo(0, *vtxFilename);
         clrFile->linkTo(0, *clrFilename);
         uvFile->linkTo(0, *uvFilename); 
-        /*
-        auto vtxHostBuf = new HostV4BufferNode();
-        auto clrHostBuf = new HostV4BufferNode();
-        auto uvHostBuf = new HostV2BufferNode();
-        vtxHostBuf->linkTo(0, *vtxFile);
-        clrHostBuf->linkTo(0, *clrFile);
-        uvHostBuf->linkTo(0, *uvFile);
-        */
-        auto vtxBuf = new GLV4BufferNode();
-        auto clrBuf = new GLV4BufferNode();
-        auto uvBuf = new GLV2BufferNode();
+
+        auto vtxBuf = ctx.createNodeT(GLV4BufferNode);
+        auto clrBuf = ctx.createNodeT(GLV4BufferNode);
+        auto uvBuf = ctx.createNodeT(GLV2BufferNode);
         vtxBuf->linkTo(0, *vtxFile);
         clrBuf->linkTo(0, *clrFile);
         uvBuf->linkTo(0, *uvFile);
@@ -145,11 +144,6 @@ namespace mobo
         clrBuf->setAttribName("iVtxClr");
         uvBuf->setAttribName("iVtxUV");
 
-        /*
-        vtxBuf->blit((const vec<GLfloat,4>*) vtxData, 3);
-        clrBuf->blit((const vec<GLfloat,4>*) clrData, 3);
-        uvBuf->blit((const vec<GLfloat,2>*) uvData, 3);
-        */
         /*
         HostV4BufferNode* hostVtxBuf = new HostV4BufferNode();
         HostV4BufferNode* hostClrBuf = new HostV4BufferNode();
@@ -175,43 +169,37 @@ namespace mobo
         fileOutputNode->nodeFlags.set(Node::UPDATE_FLAG);
         fileOutputNode->update(ctx);
         */
-        GLGeometry* geom = new GLGeometry();
+
+        auto geom = ctx.createNodeT(GLGeometry);
         geom->linkTo(0, *program);
         geom->linkTo(1, *vtxBuf);
         geom->linkTo(2, *clrBuf);
         geom->linkTo(3, *uvBuf);
 
-        GL2DTexture* tex = new GL2DTexture();
+        auto tex = ctx.createNodeT(GL2DTexture);
         tex->setUnifName("tex");
         tex->loadFromPNG("../Burst.png");
 
-        GLMaterial* material = new GLMaterial();
+        auto material = ctx.createNodeT(GLMaterial);
         material->linkTo(0, *geom);
         material->addLinkTo(*tex);
 
-        GLTransform* xfm = new GLTransform();
-        xfm->linkTo(0, *material);
+        auto cameraXfm = ctx.createNodeT(GLTransform);
+        (*cameraXfm) = mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 3.0) * mat4<GLfloat>(ROTATION, -0.0625 * M_PI, 0.0, 1.0, 0.0);
+        auto camera = ctx.createNodeT(GLCamera);
+        camera->linkTo(0, *cameraXfm);
 
-        GLDraw* drawNode = new GLDraw();
+        auto xfm = ctx.createNodeT(GLTransform);
+        xfm->linkTo(0, *material);
+        xfm->addLinkTo(*camera);
+
+        auto drawNode = ctx.createNodeT(GLDraw);
         drawNode->linkTo(0, *xfm);
 
-        GLPipeline *pipelineNode = new GLPipeline();
+        auto pipelineNode = ctx.createNodeT(GLPipeline);
         cout << "pipelineNode " << pipelineNode->nodeId.toString() << endl;
         pipelineNode->linkTo(0, *drawNode);
 
-        ctx.addNode(startNode);
-        ctx.addNode(vtxShaderSrc);
-        ctx.addNode(frgShaderSrc);
-        ctx.addNode(program);
-        ctx.addNode(vtxBuf);
-        ctx.addNode(clrBuf);
-        ctx.addNode(uvBuf);
-        ctx.addNode(geom);
-        ctx.addNode(tex);
-        ctx.addNode(material);
-        ctx.addNode(drawNode);
-        ctx.addNode(xfm);
-        ctx.addNode(pipelineNode);
         ctx.setRoot(pipelineNode->nodeId);
 
         ofstream jsonFile("../test.json", ofstream::out);

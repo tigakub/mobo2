@@ -72,6 +72,14 @@ namespace mobo
             : GLVertexBufferNodeT<vec4<GLfloat>>() { }
     };
 
+    class GLP4BufferNode : public GLVertexBufferNodeT<pnt4<GLfloat>>
+    {
+        DECLARE_TYPE
+        public:
+            GLP4BufferNode()
+            : GLVertexBufferNodeT<pnt4<GLfloat>>() { }
+    };
+
     class GLIndexBufferNode : public GLBufferNodeT<GLint>
     {
         DECLARE_TYPE

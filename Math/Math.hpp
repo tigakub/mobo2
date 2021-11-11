@@ -52,28 +52,30 @@ namespace mobo
         
         vec(T x = T(0.0), T y = T(0.0), T z = T(0.0), T w = T(0.0)) { switch(SIZE) { case 4: v[3] = w; case 3: v[2] = z; case 2: v[1] = y; case 1: v[0] = x; } }
         // vec(const T* v) { unsigned int i = SIZE; while(i--) v[i] = v[i]; }
-        vec(const T v[SIZE]) { unsigned int i = SIZE; while(i--) v[i] = v[i]; }
-        vec(const vec<T, SIZE>& v) { unsigned int i = SIZE; while(i--) v[i] = v[i]; }
+        vec(const T iv[SIZE]) { unsigned int i = SIZE; while(i--) v[i] = iv[i]; }
+        vec(const vec<T, SIZE>& iv) { unsigned int i = SIZE; while(i--) v[i] = iv[i]; }
+        vec(const vec<T, SIZE-1>& iv, T s = 0.0) { unsigned int i = SIZE-1; v[i] = s; while(i--) v[i] = iv[i]; }
 
         T operator[](unsigned int i) const { if(i >= SIZE) return T(0.0); return v[i]; }
         T& operator[](unsigned int i) { if(i >= SIZE) return shunt; return v[i]; }
 
-        bool operator==(const vec<T, SIZE>& v) const { int i = SIZE; while(i--) if(ABS(v[i] - v[i]) > FLOAT_PRECISION) return false; return true; }
-        bool operator!=(const vec<T, SIZE>& v) const { int i = SIZE; while(i--) if(ABS(v[i] - v[i]) > FLOAT_PRECISION) return true; return false; }
+        bool operator==(const vec<T, SIZE>& iv) const { int i = SIZE; while(i--) if(ABS(v[i] - iv[i]) > FLOAT_PRECISION) return false; return true; }
+        bool operator!=(const vec<T, SIZE>& iv) const { int i = SIZE; while(i--) if(ABS(v[i] - iv[i]) > FLOAT_PRECISION) return true; return false; }
 
-        vec<T, SIZE>& operator+=(const vec<T, SIZE>& v) { int i = SIZE; while(i--) v[i] += v[i]; return *this; }
-        vec<T, SIZE>& operator-=(const vec<T, SIZE>& v) { int i = SIZE; while(i--) v[i] -= v[i]; return *this; }
-        vec<T, SIZE>& operator&=(const vec<T, SIZE>& v) { int i = SIZE; while(i--) v[i] *= v[i]; return *this; }
+        vec<T, SIZE>& operator=(const vec<T, SIZE-1>& iv) { int i = SIZE-1; v[i] = 0.0; while(i--) v[i] += iv[i]; return *this; }
+        vec<T, SIZE>& operator+=(const vec<T, SIZE>& iv) { int i = SIZE; while(i--) v[i] += iv[i]; return *this; }
+        vec<T, SIZE>& operator-=(const vec<T, SIZE>& iv) { int i = SIZE; while(i--) v[i] -= iv[i]; return *this; }
+        vec<T, SIZE>& operator&=(const vec<T, SIZE>& iv) { int i = SIZE; while(i--) v[i] *= iv[i]; return *this; }
         vec<T, SIZE>& operator*=(T s) { int i = SIZE; while(i--) v[i] *= s; return *this; }
         vec<T, SIZE>& operator/=(T s) { s = T(1.0)/s; int i = SIZE; while(i--) v[i] *= s; return *this; }
 
-        vec<T, SIZE> operator+(const vec<T, SIZE>& v) const { vec<T, SIZE> r(*this); r += v; return r; }
-        vec<T, SIZE> operator-(const vec<T, SIZE>& v) const { vec<T, SIZE> r(*this); r -= v; return r; }
-        vec<T, SIZE> operator&(const vec<T, SIZE>& v) const { vec<T, SIZE> r(*this); r &= v; return r; }
+        vec<T, SIZE> operator+(const vec<T, SIZE>& iv) const { vec<T, SIZE> r(*this); r += iv; return r; }
+        vec<T, SIZE> operator-(const vec<T, SIZE>& iv) const { vec<T, SIZE> r(*this); r -= iv; return r; }
+        vec<T, SIZE> operator&(const vec<T, SIZE>& iv) const { vec<T, SIZE> r(*this); r &= iv; return r; }
         vec<T, SIZE> operator*(T s) const { vec<T, SIZE> r(*this); r *= s; return r; }
         vec<T, SIZE> operator/(T s) const { s = T(1.0)/s; vec<T, SIZE> r(*this); r *= s; return r; }
 
-        T operator*(const vec<T, SIZE>& v) const { T r(0.0); int i = SIZE; while(i--) r += v[i] * v[i]; return r; }
+        T operator*(const vec<T, SIZE>& iv) const { T r(0.0); int i = SIZE; while(i--) r += v[i] * iv[i]; return r; }
 
         T magSquared() const { return (*this) * (*this); }
         T mag() const { return SQRT(magSquared()); }
@@ -107,6 +109,7 @@ namespace mobo
         pnt(T x = T(0.0), T y = T(0.0), T z = T(0.0), T w = T(0.0)) { switch(SIZE) { case 4: v[3] = w; case 3: v[2] = z; case 2: v[1] = y; case 1: v[0] = x; } }
         pnt(const T p[SIZE]) { unsigned int i = SIZE; while(i--) v[i] = p[i]; }
         pnt(const pnt<T, SIZE>& p) { unsigned int i = SIZE; while(i--) v[i] = p[i]; }
+        pnt(const pnt<T, SIZE-1>& p) { unsigned int i = SIZE-1; v[i] = 1.0; while(i--) v[i] = p[i]; }
 
         T operator[](unsigned int i) const { if(i >= SIZE) return T(1.0); return v[i]; }
         T& operator[](unsigned int i) { if(i >= SIZE) return shunt; return v[i]; }
@@ -114,13 +117,15 @@ namespace mobo
         bool operator==(const vec<T, SIZE>& p) const { int i = SIZE; while(i--) if(ABS(v[i] - p[i]) > FLOAT_PRECISION) return false; return true; }
         bool operator!=(const vec<T, SIZE>& p) const { int i = SIZE; while(i--) if(ABS(v[i] - p[i]) > FLOAT_PRECISION) return true; return false; }
 
-        pnt<T, SIZE>& operator+=(const vec<T, SIZE>& v) { int i = SIZE; while(i--) v[i] += v[i]; return *this; }
-        pnt<T, SIZE>& operator-=(const vec<T, SIZE>& v) { int i = SIZE; while(i--) v[i] -= v[i]; return *this; }
+        pnt<T, SIZE>& operator=(const pnt<T, SIZE-1>& iv) { int i = SIZE-1; v[i] = 1.0; while(i--) v[i] += iv[i]; return *this; }
+        pnt<T, SIZE>& operator=(const vec<T, SIZE-1>& iv) { int i = SIZE-1; v[i] = 1.0; while(i--) v[i] += iv[i]; return *this; }
+        pnt<T, SIZE>& operator+=(const vec<T, SIZE>& iv) { int i = SIZE; while(i--) v[i] += iv[i]; return *this; }
+        pnt<T, SIZE>& operator-=(const vec<T, SIZE>& iv) { int i = SIZE; while(i--) v[i] -= iv[i]; return *this; }
         pnt<T, SIZE>& operator*=(T s) { int i = SIZE; while(i--) v[i] *= s; return *this; }
         pnt<T, SIZE>& operator/=(T s) { s = T(1.0)/s; int i = SIZE; while(i--) v[i] *= s; return *this; }
 
-        pnt<T, SIZE> operator+(const vec<T, SIZE>& v) const { vec<T, SIZE> r(*this); r += v; return r; }
-        pnt<T, SIZE> operator-(const vec<T, SIZE>& v) const { vec<T, SIZE> r(*this); r -= v; return r; }
+        pnt<T, SIZE> operator+(const vec<T, SIZE>& iv) const { vec<T, SIZE> r(*this); r += iv; return r; }
+        pnt<T, SIZE> operator-(const vec<T, SIZE>& iv) const { vec<T, SIZE> r(*this); r -= iv; return r; }
         vec<T, SIZE> operator-(const pnt<T, SIZE>& p) const { vec<T, SIZE> r; int i = SIZE; while(i--) r[i] = v[i] - p[i]; }
         pnt<T, SIZE> operator*(T s) const { pnt<T, SIZE> r(*this); r *= s; return r; }
         pnt<T, SIZE> operator/(T s) const { s = T(1.0)/s; pnt<T, SIZE> r(*this); r *= s; return r; }
@@ -256,27 +261,27 @@ namespace mobo
     }
 
     template <class T>
-    vec3<T> mat4<T>::operator*(const vec3<T>& v) const
+    vec3<T> mat4<T>::operator*(const vec3<T>& iv) const
     {
         vec3<T> r;
         int i = 3, j, c;
         while(i--) {
             j = 3;
             c = i << 2;
-            while(j--) r[i] += v[c + j] * v[j];
+            while(j--) r[i] += v[c + j] * iv[j];
         }
         return r;
     }
 
     template <class T>
-    vec4<T> mat4<T>::operator*(const vec4<T>& v) const
+    vec4<T> mat4<T>::operator*(const vec4<T>& iv) const
     {
         vec4<T> r;
         int i = 4, j, c;
         while(i--) {
             j = 4;
             c = i << 2;
-            while(j--) r[i] += v[c + j] * v[j];
+            while(j--) r[i] += v[c + j] * iv[j];
         }
         return r;
     }

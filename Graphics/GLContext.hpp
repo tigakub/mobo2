@@ -56,7 +56,7 @@ namespace mobo
 
             void pushCameraMatrix(const mat4<GLfloat>& iMag) { cameraMatrixStack.push_back(iMag); }
             const mat4<GLfloat>& cameraMatrix() const { return cameraMatrixStack.back(); }
-            const mat4<GLfloat>& popCameraMatrix() { cameraMatrixStack.pop_back(); return modelviewMatrix(); }
+            const mat4<GLfloat>& popCameraMatrix() { cameraMatrixStack.pop_back(); return cameraMatrix(); }
 
             void pushModelviewMatrix(const mat4<GLfloat>& iMag) { modelviewMatrixStack.push_back(iMag); }
             const mat4<GLfloat>& modelviewMatrix() const { return modelviewMatrixStack.back(); }

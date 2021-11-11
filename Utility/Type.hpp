@@ -54,6 +54,18 @@ namespace mobo
             : baseTypes(move(iType.baseTypes)), id(iType.id)
             { }
 
+            virtual Type& operator=(const Type& iType) {
+                id = iType.id;
+                baseTypes = iType.baseTypes;
+                return *this;
+            }
+
+            virtual Type& operator=(Type&& iType) {
+                id = iType.id;
+                baseTypes = move(iType.baseTypes);
+                return *this;
+            }
+
             void subtype(const Type* iType) {
                 baseTypes[iType->id] = iType;
             }

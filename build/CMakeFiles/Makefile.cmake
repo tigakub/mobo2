@@ -13,6 +13,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../Graphics/CMakeLists.txt"
   "../Math/CMakeLists.txt"
   "../MoboConfig.h.in"
+  "../RealSense/CMakeLists.txt"
   "../Utility/CMakeLists.txt"
   "../base_includes.txt"
   "CMakeFiles/3.10.2/CMakeCXXCompiler.cmake"
@@ -48,6 +49,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "GUI/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Math/CMakeFiles/CMakeDirectoryInformation.cmake"
   "lodepng/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "RealSense/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Utility/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
@@ -59,5 +61,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "GUI/CMakeFiles/GUI.dir/DependInfo.cmake"
   "Math/CMakeFiles/Math.dir/DependInfo.cmake"
   "lodepng/CMakeFiles/lodepng.dir/DependInfo.cmake"
+  "RealSense/CMakeFiles/RealSense.dir/DependInfo.cmake"
   "Utility/CMakeFiles/Utility.dir/DependInfo.cmake"
   )

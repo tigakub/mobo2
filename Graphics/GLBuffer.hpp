@@ -72,10 +72,12 @@ namespace mobo
                 }
             }
 
+            /*
             virtual DataSourceT<T>& operator=(const HostBufferT<T>& iSrc)
             {
                 return DataSourceT<T>::operator=(dynamic_cast<const DataSource&>(iSrc));
             }
+            */
 
             virtual DataSourceT<T>& operator=(const GLBufferT<T>& iSrc)
             {

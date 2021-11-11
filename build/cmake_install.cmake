@@ -44,6 +44,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/tigakub/Documents/Robotics/mobo2/build/GUI/cmake_install.cmake")
   include("/home/tigakub/Documents/Robotics/mobo2/build/Math/cmake_install.cmake")
   include("/home/tigakub/Documents/Robotics/mobo2/build/lodepng/cmake_install.cmake")
+  include("/home/tigakub/Documents/Robotics/mobo2/build/RealSense/cmake_install.cmake")
   include("/home/tigakub/Documents/Robotics/mobo2/build/Utility/cmake_install.cmake")
 
 endif()

@@ -114,6 +114,8 @@ namespace mobo
             */
             HostV4BufferNode(HostV4BufferNode&& iBuffer)
             : HostVertexBufferNodeT<4>(move(iBuffer)) { }
+
+            virtual HostV4BufferNode& operator=(const DataSourceT<vec3<float>>& iV3DataSource);
     };
 
     class HostIndexBufferNode : public HostBufferNodeT<int>

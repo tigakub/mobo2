@@ -8,6 +8,8 @@
 
 namespace mobo
 {
+    #define createNodeT(CLASS) createNode<CLASS>(#CLASS)
+    
     class Context
     {
         public:
@@ -16,6 +18,18 @@ namespace mobo
 
             virtual Json::Value serialize() const;
             virtual void deserialize(Json::Value& root);
+
+            template <class T>
+            T* createNode(const string& iClassName = "")
+            {
+                T* newNode = new T();
+                if(newNode) {
+                    newNode->setClassName(iClassName);
+                    nodes[newNode->nodeId] = newNode;
+                }
+                return newNode;
+            }
+
 
             void addNode(Node* iNode);
 

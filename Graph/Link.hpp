@@ -17,6 +17,9 @@ namespace mobo
             Link(Link<T>&& iLink) : srcType(iLink.srcType), src(move(iLink.src)) { }
             Link(const Link<T>& iLink) : srcType(iLink.srcType), src(iLink.src) { }
 
+            virtual Link<T>& operator=(const Link<T>& iLink) { srcType = iLink.srcType; src = iLink.src; return *this; }
+            virtual Link<T>& operator=(Link<T>&& iLink) { srcType = iLink.srcType; src = move(iLink.src); return *this; }
+
             virtual const Type& type() const { return srcType; }
 
             Type srcType;

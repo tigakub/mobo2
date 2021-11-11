@@ -34,6 +34,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../GUI"
   "../lodepng"
   "../Math"
+  "../RealSense"
   "../Utility"
   )
 

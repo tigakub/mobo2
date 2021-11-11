@@ -16,8 +16,6 @@ iostream
 iomanip
 -
 
-..//MovingAverage.hpp
-
 ../Graph/Context.hpp
 uuid.hpp
 ../Graph/uuid.hpp
@@ -125,6 +123,12 @@ Node.hpp
 ../Graphics/Node.hpp
 DataSourceNode.hpp
 ../Graphics/DataSourceNode.hpp
+
+../Graphics/GLCamera.hpp
+Node.hpp
+../Graphics/Node.hpp
+GLTransform.hpp
+../Graphics/GLTransform.hpp
 
 ../Graphics/GLContext.hpp
 Debug.hpp
@@ -294,6 +298,8 @@ string
 iostream
 -
 
+../Math/MovingAverage.hpp
+
 ../Utility/Buffer.hpp
 DataSource.hpp
 ../Utility/DataSource.hpp
@@ -433,6 +439,8 @@ GLDraw.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLDraw.hpp
 GLTransform.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLTransform.hpp
+GLCamera.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/GLCamera.hpp
 FileNode.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/FileNode.hpp
 jsoncpp/json/json.h
