@@ -5,6 +5,7 @@
 #include "GLShader.hpp"
 #include "StringNode.hpp"
 #include "HostBufferNode.hpp"
+#include "ImageNode.hpp"
 #include "GLBufferNode.hpp"
 #include "GLGeometry.hpp"
 #include "GLTexture.hpp"
@@ -176,9 +177,16 @@ namespace mobo
         geom->linkTo(2, *clrBuf);
         geom->linkTo(3, *uvBuf);
 
+        auto texFilename = ctx.createNodeT(StringNode);
+        texFilename->setValue("../Burst.png");
+
+        auto imageNode = ctx.createNodeT(ImageNode);
+        imageNode->linkTo(0, *texFilename);
+
         auto tex = ctx.createNodeT(GL2DTexture);
+        tex->linkTo(0, *imageNode);
         tex->setUnifName("tex");
-        tex->loadFromPNG("../Burst.png");
+        // tex->loadFromPNG("../Burst.png");
 
         auto material = ctx.createNodeT(GLMaterial);
         material->linkTo(0, *geom);

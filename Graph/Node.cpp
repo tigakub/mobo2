@@ -28,6 +28,7 @@ namespace mobo
             generator(TextFileInputNode);
             generator(BinaryFileOutputNode);
             generator(TextFileOutputNode);
+            generator(ImageNode);
             generator(GLV2BufferNode);
             generator(GLV3BufferNode);
             generator(GLV4BufferNode);

@@ -4,8 +4,10 @@
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Debug.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Context.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/DataSourceNode.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/ImageNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Link.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Node.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/StringNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLBuffer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graphics/GLContext.hpp
@@ -24,6 +26,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/RefCtr.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/SmartPtr.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Streamer.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Timestamp.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Transblitter.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Type.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/Typed.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Utility/uuid.hpp
@@ -41,6 +44,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Context.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/DataSourceNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/FileNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/HostBufferNode.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/ImageNode.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Link.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/Node.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graph/StringNode.hpp
@@ -66,6 +70,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/RefCtr.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/SmartPtr.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Streamer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Timestamp.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Transblitter.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Type.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Typed.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/uuid.hpp

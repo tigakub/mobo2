@@ -8,8 +8,10 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../GUI/Win.hpp
  ../Graph/Context.hpp
  ../Graph/DataSourceNode.hpp
+ ../Graph/ImageNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp
+ ../Graph/StringNode.hpp
  ../Graphics/GLBuffer.hpp
  ../Graphics/GLBufferNode.hpp
  ../Graphics/GLContext.hpp
@@ -28,6 +30,7 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../Utility/SmartPtr.hpp
  ../Utility/Streamer.hpp
  ../Utility/Timestamp.hpp
+ ../Utility/Transblitter.hpp
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
  ../Utility/uuid.hpp

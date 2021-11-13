@@ -1,4 +1,5 @@
 #include "RealSense.hpp"
+#include "Math.hpp"
 
 #include <iostream>
 #include <chrono>
@@ -352,6 +353,7 @@ namespace mobo
     {
         return nullptr;
     }
+
 }
 
 void _intelIsFuckingStupid(rs2::event_information& iInfo)

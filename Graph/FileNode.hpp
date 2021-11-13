@@ -31,7 +31,7 @@ namespace mobo
             virtual bool update(Context& iCtx);
 
             virtual uint32_t size() const { return buffer.size(); }
-            virtual uint32_t elementSize() const { return 1; }
+            virtual uint32_t byteStride() const { return 1; }
             virtual const void* rawMap() const { return static_cast<const void*>(&buffer[0]); }
             virtual void* rawMap() { return static_cast<void*>(&buffer[0]); }
 
@@ -52,7 +52,7 @@ namespace mobo
             virtual bool update(Context& iCtx);
 
             virtual uint32_t size() const { return buffer.length(); }
-            virtual uint32_t elementSize() const { return 1; }
+            virtual uint32_t byteStride() const { return 1; }
             virtual const void* rawMap() const { return static_cast<const void*>(&buffer[0]); }
             virtual void* rawMap() { return static_cast<void*>(&buffer[0]); }
 

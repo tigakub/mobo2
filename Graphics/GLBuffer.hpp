@@ -108,7 +108,7 @@ namespace mobo
                 GLuint newBuffer;
                 glGenBuffers(1, &newBuffer);
                 glBindBuffer(GL_ARRAY_BUFFER, newBuffer);
-                glBufferData(GL_ARRAY_BUFFER, iSize * GLBufferT<T>::elementSize(), nullptr, usage);
+                glBufferData(GL_ARRAY_BUFFER, iSize * GLBufferT<T>::byteStride(), nullptr, usage);
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
                 if(bufferHandle) {
                     if(iPreserve) {

@@ -5,6 +5,9 @@
 #include "Debug.hpp"
 
 #include "Node.hpp"
+#include "DataSourceNode.hpp"
+#include "ImageNode.hpp"
+
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
@@ -29,6 +32,7 @@ namespace mobo
         public:
             GLTexture()
             : Node(), textureHandle(0), uniformName() {
+                addInput(ImageNode::_type);
                 glGenTextures(1, &textureHandle);
             }
             virtual ~GLTexture() {
@@ -44,6 +48,8 @@ namespace mobo
 
             void setUnifName(const string& iName) { uniformName = iName; }
             const string& unifName() const { return uniformName; }
+
+            virtual bool update(Context& iCtx);
 
         protected:
             unsigned imgWidth, imgHeight;

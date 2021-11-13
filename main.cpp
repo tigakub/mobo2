@@ -22,7 +22,7 @@ int main(int argc, char**argv)
     sigaction(SIGINT, &sigIntHandler, NULL);
 
     App app(argc, argv);
-    Win* newWin = app.newWindow(100, 100, 2048, 1024);
+    Win* newWin = app.newWindow();
 
     app.run();
 

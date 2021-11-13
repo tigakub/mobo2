@@ -28,6 +28,20 @@ namespace mobo
         loadFromBuffer(imageBuffer);
     }
 
+    bool GLTexture::update(Context& iContext)
+    {
+        auto imgNode = getInput<ImageNode>(0);
+        if(imgNode) {
+            imgWidth = imgNode->getWidth();
+            imgHeight = imgNode->getHeight();
+            glEnable(target());
+            glBindTexture(target(), textureHandle);
+            glTexParameterf(target(), GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(target(), GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            loadFromBuffer(imgNode->getImageBuffer());
+        }
+    }
+
     void GL2DTexture::loadFromBuffer(const vector<unsigned char>& iBuffer)
     {
         glTexImage2D(target(), 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*) &(iBuffer[0]));

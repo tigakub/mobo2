@@ -7,8 +7,10 @@ CMakeFiles/mobo.dir/main.cpp.o: ../GUI/EventHandler.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../GUI/Win.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/Context.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/DataSourceNode.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../Graph/ImageNode.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/Link.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graph/Node.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../Graph/StringNode.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLBuffer.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLBufferNode.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Graphics/GLContext.hpp
@@ -27,6 +29,7 @@ CMakeFiles/mobo.dir/main.cpp.o: ../Utility/RefCtr.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/SmartPtr.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Streamer.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Timestamp.hpp
+CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Transblitter.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Type.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/Typed.hpp
 CMakeFiles/mobo.dir/main.cpp.o: ../Utility/uuid.hpp

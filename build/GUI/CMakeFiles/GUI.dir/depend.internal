@@ -5,8 +5,10 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ..//Debug.hpp
  ../Graph/Context.hpp
  ../Graph/DataSourceNode.hpp
+ ../Graph/ImageNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp
+ ../Graph/StringNode.hpp
  ../Graphics/GLBuffer.hpp
  ../Graphics/GLBufferNode.hpp
  ../Graphics/GLContext.hpp
@@ -25,6 +27,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ../Utility/SmartPtr.hpp
  ../Utility/Streamer.hpp
  ../Utility/Timestamp.hpp
+ ../Utility/Transblitter.hpp
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
  ../Utility/uuid.hpp
@@ -42,6 +45,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Graph/DataSourceNode.hpp
  ../Graph/FileNode.hpp
  ../Graph/HostBufferNode.hpp
+ ../Graph/ImageNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp
  ../Graph/StringNode.hpp
@@ -67,6 +71,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o
  ../Utility/SmartPtr.hpp
  ../Utility/Streamer.hpp
  ../Utility/Timestamp.hpp
+ ../Utility/Transblitter.hpp
  ../Utility/Type.hpp
  ../Utility/Typed.hpp
  ../Utility/uuid.hpp

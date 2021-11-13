@@ -31,8 +31,14 @@ namespace mobo
 
         glutInit(&argc, argv); 
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-        glutInitWindowSize(2048, 1024);
-        glutInitWindowPosition(100, 100);
+        GLuint screenWidth, screenHeight;
+        screenWidth = glutGet(GLUT_SCREEN_WIDTH);
+        screenHeight = glutGet(GLUT_SCREEN_HEIGHT);
+        GLuint windowWidth, windowHeight;
+        windowWidth = screenWidth * 0.9;
+        windowHeight = windowWidth >> 1;
+        glutInitWindowSize(windowWidth, windowHeight);
+        glutInitWindowPosition((screenWidth - windowWidth) >> 1, (screenHeight - windowHeight) >> 1);
         glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
         glutTimerFuncUcall(30, _tick, 0, (void*) this);
     }
@@ -56,8 +62,10 @@ namespace mobo
 
     Win* App::newWindow(int x, int y, int w, int h)
     {
-        glutInitWindowSize(w, h);
-        glutInitWindowPosition(x, y);
+        if(w && h) {
+            glutInitWindowSize(w, h);
+            glutInitWindowPosition(x, y);
+        }
         Win* newWin = new Win(*this); windows[newWin->winId] = newWin;
         return newWin;
     }

@@ -81,6 +81,10 @@ namespace mobo
         
             virtual const void* rawMap() const;
             virtual void* rawMap();
+
+            virtual const Transblitter* getTransblitter() const {
+                return &pnt4fFromVec3fTransblitter;
+            }
     };
     
     class ColorTelemetry : public DataSourceNode, public DataSourceT<vec3<uint8_t>>
@@ -97,6 +101,10 @@ namespace mobo
         
             virtual const void* rawMap() const;
             virtual void* rawMap();
+
+            virtual const Transblitter* getTransblitter() const {
+                return &rgbaFromRgbTransblitter;
+            }
     };
 
     class IMUTelemetry : public Node

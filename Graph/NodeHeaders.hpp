@@ -1,6 +1,7 @@
+#include "FileNode.hpp"
+#include "ImageNode.hpp"
 #include "HostBufferNode.hpp"
 #include "StringNode.hpp"
-#include "FileNode.hpp"
 #include "GLBufferNode.hpp"
 #include "GLCamera.hpp"
 #include "GLDraw.hpp"

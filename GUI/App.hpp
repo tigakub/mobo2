@@ -42,7 +42,7 @@ namespace mobo
             virtual bool keyDown(unsigned char k, int x, int y);
             virtual bool specialUp(int k, int x, int y);
 
-            Win* newWindow(int x, int y, int w, int h);
+            Win* newWindow(int x = 0, int y = 0, int w = 0, int h = 0);
             void removeWindow(int);
 
             WinMap windows;

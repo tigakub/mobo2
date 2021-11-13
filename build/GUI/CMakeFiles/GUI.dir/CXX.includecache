@@ -52,6 +52,22 @@ Node.hpp
 DataSourceNode.hpp
 ../Graph/DataSourceNode.hpp
 
+../Graph/ImageNode.hpp
+StringNode.hpp
+../Graph/StringNode.hpp
+DataSourceNode.hpp
+../Graph/DataSourceNode.hpp
+Transblitter.hpp
+../Graph/Transblitter.hpp
+Math.hpp
+../Graph/Math.hpp
+lodepng.h
+../Graph/lodepng.h
+Type.hpp
+../Graph/Type.hpp
+vector
+-
+
 ../Graph/Link.hpp
 RefCtr.hpp
 ../Graph/RefCtr.hpp
@@ -257,6 +273,10 @@ Debug.hpp
 ../Graphics/Debug.hpp
 Node.hpp
 ../Graphics/Node.hpp
+DataSourceNode.hpp
+../Graphics/DataSourceNode.hpp
+ImageNode.hpp
+../Graphics/ImageNode.hpp
 GL/freeglut.h
 -
 GL/gl.h
@@ -313,6 +333,8 @@ iostream
 ../Utility/DataSource.hpp
 Debug.hpp
 ../Utility/Debug.hpp
+Transblitter.hpp
+../Utility/Transblitter.hpp
 Node.hpp
 ../Utility/Node.hpp
 
@@ -341,6 +363,10 @@ jsoncpp/json/json.h
 ../Utility/Timestamp.hpp
 uuid.hpp
 ../Utility/uuid.hpp
+
+../Utility/Transblitter.hpp
+Math.hpp
+../Utility/Math.hpp
 
 ../Utility/Type.hpp
 uuid.hpp
@@ -427,6 +453,8 @@ StringNode.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/StringNode.hpp
 HostBufferNode.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/HostBufferNode.hpp
+ImageNode.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/ImageNode.hpp
 GLBufferNode.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLBufferNode.hpp
 GLGeometry.hpp
