@@ -150,8 +150,14 @@ namespace mobo
             vtxShader->attach(programHandle);
             frgShader->attach(programHandle);
             glLinkProgram(programHandle);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glLinkProgram)
+            #endif
             GLint status;
             glGetProgramiv(programHandle, GL_LINK_STATUS, &status);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glGetProgramiv)
+            #endif
             if(status) {
                 #ifdef DEBUG_OPENGL
                 cout << "success" << endl;
@@ -161,16 +167,27 @@ namespace mobo
                 attribInfo.clear();
                 GLint n;
                 glUseProgram(programHandle);
-
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glUseProgram)
+                #endif
                 glGetProgramiv(programHandle, GL_ACTIVE_UNIFORMS, &n);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glGetProgramiv)
+                #endif
                 if(!n) cout << "No active uniforms" << endl;
                 else cout << n << " uniforms active" << endl;
                 for(auto i = 0; i < n; i++) {
                     UniformInfo uInfo;
                     glGetActiveUniform(programHandle, i, 255, nullptr, &uInfo.size, &uInfo.type, nameBuf);
+                    #ifdef DEBUG_OPENGL
+                    CHECK_OPENGL_ERROR(glGetActiveUniform)
+                    #endif
                     uInfo.name = nameBuf;
                     uInfo.typeName = nameFromType(uInfo.type);
                     uInfo.location = glGetUniformLocation(programHandle, nameBuf);
+                    #ifdef DEBUG_OPENGL
+                    CHECK_OPENGL_ERROR(glGetUniformLocation)
+                    #endif
                     uniformInfo[uInfo.name] = uInfo;
                     cout << "Uniform:" << endl;
                     cout << "\tName:     " << uInfo.name << endl; 
@@ -178,17 +195,52 @@ namespace mobo
                     cout << "\tLocation: " << uInfo.location << endl;
                     cout << "\tSize:     " << uInfo.size << endl;
                     cout << "\tType:     " << uInfo.typeName << endl;
+                    switch(uInfo.type) {
+                        case GL_SAMPLER_2D:
+                        case GL_SAMPLER_2D_RECT:
+                            uInfo.generateSampler();
+                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_WRAP_S, GL_REPEAT);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_WRAP_T, GL_REPEAT);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameterf(uInfo.sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                                #endif
+                            break;
+                    }
                 }
 
                 glGetProgramiv(programHandle, GL_ACTIVE_ATTRIBUTES, &n);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glGetProgramiv)
+                #endif
                 if(!n) cout << "No active attributes" << endl;
                 else cout << n << " attributes active" << endl;
                 for(auto i = 0; i < n; i++) {
                     AttribInfo aInfo;
                     glGetActiveAttrib(programHandle, i, 255, nullptr, &aInfo.size, &aInfo.type, nameBuf);
+                    #ifdef DEBUG_OPENGL
+                    CHECK_OPENGL_ERROR(glGetActiveAttrib)
+                    #endif
                     aInfo.name = nameBuf;
                     aInfo.typeName = nameFromType(aInfo.type);
                     aInfo.location = glGetAttribLocation(programHandle, nameBuf);
+                    #ifdef DEBUG_OPENGL
+                    CHECK_OPENGL_ERROR(glGetAttribLocation)
+                    #endif
                     attribInfo[aInfo.name] = aInfo;
                     cout << "Attribute:" << endl;
                     cout << "\tName:     " << aInfo.name << endl; 
@@ -199,6 +251,9 @@ namespace mobo
                 }
 
                 glUseProgram(0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glUseProgram)
+                #endif
                 return status;
             #ifdef DEBUG_OPENGL
             } else {
@@ -247,7 +302,9 @@ namespace mobo
     bool GLProgram::activate()
     {
         glUseProgram(programHandle);
-
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glUseProgram)
+        #endif
         GLint texLoc = glGetUniformLocation(programHandle, "tex");
         glUniform1i(texLoc, 0);
 
@@ -257,6 +314,9 @@ namespace mobo
     bool GLProgram::deactivate()
     {
         glUseProgram(0);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glUseProgram)
+        #endif
         return true;
     }
 

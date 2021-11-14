@@ -17,12 +17,20 @@ namespace mobo
     GLShader::GLShader(GLenum iShaderType)
     : Node(), shaderHandle(glCreateShader(iShaderType))
     {
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glCreateShader)
+        #endif
         addInput(StringNode::_type);
     }
 
     GLShader::~GLShader()
     {
-        if(shaderHandle) glDeleteShader(shaderHandle);
+        if(shaderHandle) {
+            glDeleteShader(shaderHandle);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glDeleteShader)
+            #endif
+        }
     }
 
     GLuint GLShader::compileFromString(const string& iSource)
@@ -31,8 +39,17 @@ namespace mobo
         GLint srcSize = iSource.size();
         GLint status;
         glShaderSource(shaderHandle, 1, &srcPtr, &srcSize);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glShaderSource)
+        #endif
         glCompileShader(shaderHandle);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glCompileShader)
+        #endif
         glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &status);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glGetShaderiv)
+        #endif
 
         return status;
     }

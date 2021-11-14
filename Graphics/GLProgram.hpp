@@ -49,11 +49,21 @@ namespace mobo
                     }
 
                     virtual ~UniformInfo() {
-                        if(sampler) glDeleteSamplers(1, &sampler);
+                        if(sampler) {
+                            glDeleteSamplers(1, &sampler);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glDeleteSamplers)
+                            #endif
+                        }
                     }
 
                     virtual void generateSampler() {
-                        if(!sampler) glGenSamplers(1, &sampler);
+                        if(!sampler) {
+                            glGenSamplers(1, &sampler);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glGenSamplers)
+                            #endif
+                        }
                     }
 
                     UniformInfo& operator=(const UniformInfo& i) {

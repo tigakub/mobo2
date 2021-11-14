@@ -1,6 +1,8 @@
 #ifndef __GLCAMERA_HPP__
 #define __GLCAMERA_HPP__
 
+#include "Debug.hpp"
+
 #include "Node.hpp"
 #include "GLTransform.hpp"
 

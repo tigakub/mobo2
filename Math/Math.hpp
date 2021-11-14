@@ -110,6 +110,7 @@ namespace mobo
         pnt(const T p[SIZE]) { unsigned int i = SIZE; while(i--) v[i] = p[i]; }
         pnt(const pnt<T, SIZE>& p) { unsigned int i = SIZE; while(i--) v[i] = p[i]; }
         pnt(const pnt<T, SIZE-1>& p) { unsigned int i = SIZE-1; v[i] = 1.0; while(i--) v[i] = p[i]; }
+        pnt(const vec<T, SIZE-1>& iv) { unsigned int i = SIZE-1; v[i] = 1.0; while(i--) v[i] = iv[i]; }
 
         T operator[](unsigned int i) const { if(i >= SIZE) return T(1.0); return v[i]; }
         T& operator[](unsigned int i) { if(i >= SIZE) return shunt; return v[i]; }

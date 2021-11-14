@@ -63,6 +63,7 @@ GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTexture.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Graphics/GLTransform.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Math/Math.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Math/MovingAverage.hpp
+GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../RealSense/RealSense.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Buffer.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/DataSource.hpp
 GUI/CMakeFiles/GUI.dir/Win.cpp.o: ../Utility/Flags.hpp

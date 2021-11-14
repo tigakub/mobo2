@@ -31,9 +31,14 @@ namespace mobo
         
         public:
             GLTexture()
-            : Node(), textureHandle(0), uniformName() {
-                addInput(ImageNode::_type);
+            : Node(), textureHandle(0), uniformName(), internalFormat(GL_RGBA8), format(GL_RGBA), imgWidth(0), imgHeight(0),
+              textureCreated(false)
+            {
+                addInput(FrameSourceNode::_type);
                 glGenTextures(1, &textureHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glGenTextures)
+                #endif
             }
             virtual ~GLTexture() {
                 if(textureHandle) glDeleteTextures(1, &textureHandle);
@@ -44,7 +49,7 @@ namespace mobo
 
             void loadFromPNG(const string& iFilename);
 
-            virtual void loadFromBuffer(const vector<unsigned char>& iBuffer) = 0;
+            virtual void loadFromBuffer(const uint8_t* iBuffer) = 0;
 
             void setUnifName(const string& iName) { uniformName = iName; }
             const string& unifName() const { return uniformName; }
@@ -52,9 +57,12 @@ namespace mobo
             virtual bool update(Context& iCtx);
 
         protected:
-            unsigned imgWidth, imgHeight;
             GLuint textureHandle;
             string uniformName;
+            unsigned imgWidth, imgHeight;
+            bool textureCreated;
+            GLenum internalFormat;
+            GLenum format;
     };
 
     template <int iTarget>
@@ -72,7 +80,7 @@ namespace mobo
         
         public:
             GL2DTexture() : GLTextureT<GL_TEXTURE_2D>() { }
-            virtual void loadFromBuffer(const vector<unsigned char>& iBuffer);
+            virtual void loadFromBuffer(const uint8_t* iBuffer);
     };
 
     class GLRectTexture : public GLTextureT<GL_TEXTURE_RECTANGLE>
@@ -81,7 +89,7 @@ namespace mobo
 
         public:
             GLRectTexture() : GLTextureT<GL_TEXTURE_RECTANGLE>() { }
-            virtual void loadFromBuffer(const vector<unsigned char>& iBuffer);
+            virtual void loadFromBuffer(const uint8_t* iBuffer);
     };
     
 }

@@ -13,8 +13,8 @@ void _intelIsFuckingStupid(rs2::event_information& iInfo);
 namespace mobo
 {
     DERIVE_TYPE(RealSense, "26a52b11-915a-4337-b49f-3a60acfa3f64", {&Node::_type});
-    DERIVE_TYPE(DepthTelemetry, "ac99dd2b-741b-4b86-bb8d-1dc9d0f85ae4", {&DataSourceNode::_type});
-    DERIVE_TYPE(ColorTelemetry, "d19490fe-454a-4e40-8621-98d59d1cc1ea", {&DataSourceNode::_type});
+    DERIVE_TYPE(DepthTelemetry, "ac99dd2b-741b-4b86-bb8d-1dc9d0f85ae4", {&FrameSourceNode::_type});
+    DERIVE_TYPE(ColorTelemetry, "d19490fe-454a-4e40-8621-98d59d1cc1ea", {&FrameSourceNode::_type});
     DERIVE_TYPE(IMUTelemetry, "bffd9cdc-9dc0-4128-b5ef-c2c4a6228cbf", {&Node::_type});
 
     rs2::pointcloud RealSense::pointcloud;
@@ -22,15 +22,16 @@ namespace mobo
     rs2::pipeline RealSense::pipeline;
     rs2::context RealSense::ctx;
     vector<RealSense*> RealSense::nodes;
-    rs2::frameset frames;
-    /*
-    size_t colorWidth, RealSense::colorHeight;
-    HostBufferT<vec4<float>> RealSense::colorBuffer;
-    size_t depthWidth, depthHeight;
-    HostBufferT<vec4<float>> RealSense::depthBuffer;
-    */
-    vec3<float> gyroData, RealSense::accelData;
-    mutex RealSense::telemLock;
+    rs2::frameset RealSense::frames;
+    
+    size_t RealSense::colorWidth, RealSense::colorHeight;
+    HostBufferT<pnt4<uint8_t>> RealSense::colorBuffer;
+
+    size_t RealSense::depthWidth, RealSense::depthHeight;
+    HostBufferT<pnt4<float>> RealSense::depthBuffer;
+    
+    vec3<float> RealSense::gyroData, RealSense::accelData;
+    mutex RealSense::telemLock, RealSense::nodeFlagsLock;
     bool RealSense::initialized;
     thread* RealSense::telemThread;
     bool RealSense::framesAvailable = false;
@@ -102,7 +103,7 @@ namespace mobo
                     rs2_format fmt = profile.format();
                     switch(profile.stream_type()) {
                         case RS2_STREAM_COLOR:
-                            pipelineCfg.enable_stream(RS2_STREAM_COLOR, profile.stream_index());
+                            pipelineCfg.enable_stream(RS2_STREAM_COLOR, profile.stream_index(), RS2_FORMAT_RGB8);
                             // pipelineCfg.enable_stream(RS2_STREAM_COLOR, profile.stream_index(), COLORSIZE, RS2_FORMAT_RGB8, 30);
                             streamsAvailable = true;
                             break;
@@ -167,42 +168,41 @@ namespace mobo
                         alive = true;
                         while(alive) {
                             telemLock.lock();
-                            rs2::frameset frames;
                             auto startTime = steady_clock::now();
                             if(framesAvailable = pipeline.poll_for_frames(&frames)) {
-                                //colorFrame = &frames.get_color_frame();
-                                /*
-                                if(colorFrame) {
-                                    colorBuffer.resizeIfNeeded(colorFrame.get_width() * colorFrame.get_height());
-                                    const vec3<uint8_t>* src = static_cast<const vec3<uint8_t>*>(colorFrame.get_data());
-                                    vec4<float>* dst = static_cast<vec4<float>*>(colorBuffer.rawMap());
-                                    size_t i = colorBuffer.size();
-                                    while(i--) {
-                                        size_t j = 3; dst[i][j] = 1.0;
-                                        while(j--) dst[i][j] = src[i][j];
-                                    }
-                                    colorBuffer.unmap();
+                                for(auto node : nodes) {
+                                    node->setNodeFlags(UPDATE_FLAG);
+                                }
+                                {
+                                    auto colorFrame = frames.get_color_frame();
                                     colorWidth = colorFrame.get_width();
                                     colorHeight = colorFrame.get_height();
-                                }
-                                */
-                                //depthFrame = &frames.get_depth_frame();
-                                /*
-                                if(depthFrame) {
-                                    depthBuffer.resizeIfNeeded(depthFrame.get_width() * colorFrame.get_height());
-                                    const rs2::points p = pointcloud.calculate(depthFrame);
-                                    const vec3<float>* src = static_cast<const vec3<float>*>(p.get_data());
-                                    vec4<float>* dst = static_cast<vec4<float>*>(depthBuffer.rawMap());
-                                    size_t i = depthBuffer.size();
+                                    colorBuffer.resizeIfNeeded(colorWidth * colorHeight);
+                                    auto src = static_cast<const vec3<uint8_t>*>(colorFrame.get_data());
+                                    auto dst = static_cast<pnt4<uint8_t>*>(colorBuffer.rawMap());
+                                    size_t i = colorBuffer.size();
                                     while(i--) {
-                                        size_t j = 3; dst[i][j] = 1.0;
-                                        while(j--) dst[i][j] = src[i][j];
+                                        dst[i][0] = src[i][0];
+                                        dst[i][1] = src[i][1];
+                                        dst[i][2] = src[i][2];
+                                        dst[i][3] = 255;
                                     }
-                                    depthBuffer.unmap();
+                                    colorBuffer.unmap();
+                                }
+                                {
+                                    auto depthFrame = frames.get_depth_frame();
                                     depthWidth = depthFrame.get_width();
                                     depthHeight = depthFrame.get_height();
+                                    depthBuffer.resizeIfNeeded(depthWidth * depthHeight);
+                                    auto p = pointcloud.calculate(depthFrame);
+                                    auto src = static_cast<const vec3<float>*>(p.get_data());
+                                    auto dst = static_cast<pnt4<float>*>(depthBuffer.rawMap());
+                                    size_t i = depthBuffer.size();
+                                    while(i--) {
+                                        dst[i] = src[i];
+                                    }
+                                    depthBuffer.unmap();
                                 }
-                                */
                                 bool gyro = false;
                                 bool accel = false;
                                 for(auto frame : frames) {
@@ -269,7 +269,6 @@ namespace mobo
 
     bool RealSense::update(Context& iCtx)
     {
-   
         return true;
     }
 
@@ -294,66 +293,75 @@ namespace mobo
     }
 
     DepthTelemetry::DepthTelemetry()
-    : DataSourceNode()
+    : FrameSourceNode(), DataSourceT<pnt4<float>>()
     {
         addInput(RealSense::_type);
+    }
+    /*
+    DepthTelemetry::~DepthTelemetry()
+    { }
+    */
+
+    bool DepthTelemetry::update(Context& iCtx)
+    {
+        imgWidth = RealSense::depthWidth;
+        imgHeight = RealSense::depthHeight;
+        return true;
     }
 
     uint32_t DepthTelemetry::size() const
     {
-        const RealSense* rs = getInput<RealSense>(0);
-        if(rs && rs->available()) {
-            rs2::depth_frame df = rs->getDepthFrame();
-            return df.get_width() * df.get_height();
-        }
-        return 0;
+        return imgWidth * imgHeight;
     }
 
     const void* DepthTelemetry::rawMap() const
     {
-        const RealSense* rs = getInput<RealSense>(0);
-        if(rs && rs->available()) {
-            rs2::depth_frame df = rs->getDepthFrame();
-            return static_cast<const void*>(df.get_data());
-        }
-        return nullptr;
+        return RealSense::depthBuffer.rawMap();
     }
 
     void* DepthTelemetry::rawMap()
     {
-        return nullptr;
+        return RealSense::depthBuffer.rawMap();
     }
 
     ColorTelemetry::ColorTelemetry()
-    : DataSourceNode()
+    : FrameSourceNode(), DataSourceT<pnt4<uint8_t>>()
     {
         addInput(RealSense::_type);
+    }
+    /*
+    ColorTelemetry::~ColorTelemetry()
+    { }
+    */
+
+    bool ColorTelemetry::update(Context& iCtx)
+    {
+        imgWidth = RealSense::colorWidth;
+        imgHeight = RealSense::colorHeight;
+        return true;
     }
 
     uint32_t ColorTelemetry::size() const
     {
-        const RealSense* rs = getInput<RealSense>(0);
-        if(rs && rs->available()) {
-            rs2::video_frame cf = rs->getColorFrame();
-            return cf.get_width() * cf.get_height();
-        }
+        return imgWidth * imgHeight;
     }
 
     const void* ColorTelemetry::rawMap() const
     {
-        const RealSense* rs = getInput<RealSense>(0);
-        if(rs && rs->available()) {
-            rs2::video_frame cf = rs->getColorFrame();
-            return static_cast<const void*>(cf.get_data());
-        }
-        return nullptr;
+        return RealSense::colorBuffer.rawMap();
     }
     
     void* ColorTelemetry::rawMap()
     {
-        return nullptr;
+        return RealSense::colorBuffer.rawMap();
     }
 
+    IMUTelemetry::IMUTelemetry()
+    : Node()
+    { }
+
+    IMUTelemetry::~IMUTelemetry()
+    { }
 }
 
 void _intelIsFuckingStupid(rs2::event_information& iInfo)

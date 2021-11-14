@@ -1,6 +1,7 @@
 #ifndef __GLTRANSFORM_HPP__
 #define __GLTRANSFORM_HPP__
 
+#include "Debug.hpp"
 #include "Node.hpp"
 #include "Context.hpp"
 #include "Math.hpp"

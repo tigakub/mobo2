@@ -22,35 +22,99 @@ namespace mobo
         cout << "imgWidth " << imgWidth << endl;
         cout << "imgHeight " << imgHeight << endl;
         glEnable(target());
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glEnable)
+        #endif
         glBindTexture(target(), textureHandle);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glBindTexture)
+        #endif
         glTexParameterf(target(), GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glTexParameterf)
+        #endif
         glTexParameterf(target(), GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        loadFromBuffer(imageBuffer);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glTexParameterf)
+        #endif
+        loadFromBuffer(&(imageBuffer[0]));
     }
 
-    bool GLTexture::update(Context& iContext)
+    bool GLTexture::update(Context& iCtx)
     {
-        auto imgNode = getInput<ImageNode>(0);
-        if(imgNode) {
+        auto imgNode = getInput<FrameSourceNode>(0);
+        const DataSource* ds = dynamic_cast<const DataSource*>(imgNode);
+        if(imgNode && ds) {
             imgWidth = imgNode->getWidth();
             imgHeight = imgNode->getHeight();
+            format = GL_RGBA;
+            internalFormat = GL_RGBA8;
+            GLint err;
             glEnable(target());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glEnable)
+            #endif
             glBindTexture(target(), textureHandle);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glBindTexture)
+            #endif
             glTexParameterf(target(), GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glTexParameterf)
+            #endif
             glTexParameterf(target(), GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            loadFromBuffer(imgNode->getImageBuffer());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glTexParameterf)
+            #endif
+            const uint8_t* ptr = static_cast<const uint8_t*>(ds->rawMap());
+            if(!ptr) cout << "Null texture buffer" << endl;
+            loadFromBuffer(ptr);
+            ds->unmap();
         }
     }
 
-    void GL2DTexture::loadFromBuffer(const vector<unsigned char>& iBuffer)
+    void GL2DTexture::loadFromBuffer(const unsigned char* iBuffer)
     {
-        glTexImage2D(target(), 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*) &(iBuffer[0]));
-        if(glGetError()) cout << "Failed glTexImage2D " << gluErrorString(glGetError()) << endl;
+        if(imgWidth && imgHeight) {
+            if(!textureCreated) {
+                //cout << "Allocating texture memory" << endl;
+                //cout << "target: " << target() << ", internalFormat: " << internalFormat << ", imgWidth: " << std::dec << imgWidth << ", imgHeight: " << imgHeight << ", format: " << format << ", buffer: 0x" << hex << (uint64_t) iBuffer << std::dec << endl;
+                // glPixelStorei(
+                glTexImage2D(target(), 0, internalFormat, imgWidth, imgHeight, 0, format, GL_UNSIGNED_INT_8_8_8_8_REV, (void*) iBuffer);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glTexImage2D)
+                #endif
+                textureCreated = true;
+            } else {
+                //cout << "Updating texture" << endl;
+                //cout << "target: " << target() << ", internalFormat: " << internalFormat << ", imgWidth: " << std::dec << imgWidth << ", imgHeight: " << imgHeight << ", format: " << format << ", buffer: 0x" << hex << (uint64_t) iBuffer << std::dec << endl;
+                glTexSubImage2D(target(), 0, 0, 0, imgWidth, imgHeight, format, GL_UNSIGNED_INT_8_8_8_8_REV, (void *) iBuffer);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glTexSubImage2D)
+                #endif
+            }
+        }
     }
 
-    void GLRectTexture::loadFromBuffer(const vector<unsigned char>& iBuffer)
+    void GLRectTexture::loadFromBuffer(const unsigned char* iBuffer)
     {
-        glTexImage2D(target(), 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*) &(iBuffer[0]));
-        if(glGetError()) cout << "Failed glTexImage2D " << gluErrorString(glGetError()) << endl;
+        if(imgWidth && imgHeight) {
+            if(!textureCreated) {
+                //cout << "Allocating texture memory" << endl;
+                //cout << "target: " << target() << ", internalFormat: " << internalFormat << ", imgWidth: " << std::dec << imgWidth << ", imgHeight: " << imgHeight << ", format: " << format << ", buffer: 0x" << hex << (uint64_t) iBuffer << std::dec << endl;
+                glTexImage2D(target(), 0, internalFormat, imgWidth, imgHeight, 0, format, GL_UNSIGNED_INT_8_8_8_8, (void*) iBuffer);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glTexImage2D)
+                #endif
+                textureCreated = true;
+            } else {
+                //cout << "Updating texture" << endl;
+                //cout << "target: " << target() << ", internalFormat: " << internalFormat << ", imgWidth: " << std::dec << imgWidth << ", imgHeight: " << imgHeight << ", format: " << format << ", buffer: 0x" << hex << (uint64_t) iBuffer << std::dec << endl;
+                glTexSubImage2D(target(), 0, 0, 0, imgWidth, imgHeight, format, GL_UNSIGNED_INT_8_8_8_8, (void *) iBuffer);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glTexSubImage2D)
+                #endif
+            }
+        }
     }
 }

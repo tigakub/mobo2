@@ -91,9 +91,9 @@ mobo_EXTERNAL_OBJECTS =
 mobo: CMakeFiles/mobo.dir/main.cpp.o
 mobo: CMakeFiles/mobo.dir/build.make
 mobo: GUI/libGUI.a
-mobo: RealSense/libRealSense.a
 mobo: Graphics/libGraphics.a
 mobo: Graph/libGraph.a
+mobo: RealSense/libRealSense.a
 mobo: Math/libMath.a
 mobo: lodepng/liblodepng.a
 mobo: Utility/libUtility.a

@@ -17,6 +17,22 @@ namespace mobo
             { }
     };
 
+    class FrameSourceNode : public DataSourceNode
+    {
+        DECLARE_TYPE
+
+        public:
+            FrameSourceNode()
+            : DataSourceNode(), imgWidth(0), imgHeight(0)
+            { }
+
+            uint32_t getWidth() const { return imgWidth; }
+            uint32_t getHeight() const { return imgHeight; }
+        
+        protected:
+            uint32_t imgWidth, imgHeight;
+    };
+
 }
 
 #endif

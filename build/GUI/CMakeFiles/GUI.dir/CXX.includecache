@@ -141,6 +141,8 @@ DataSourceNode.hpp
 ../Graphics/DataSourceNode.hpp
 
 ../Graphics/GLCamera.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Node.hpp
 ../Graphics/Node.hpp
 GLTransform.hpp
@@ -171,6 +173,8 @@ vector
 -
 
 ../Graphics/GLDraw.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
 GLPipeline.hpp
@@ -289,6 +293,8 @@ string
 -
 
 ../Graphics/GLTransform.hpp
+Debug.hpp
+../Graphics/Debug.hpp
 Node.hpp
 ../Graphics/Node.hpp
 Context.hpp
@@ -320,12 +326,38 @@ iostream
 
 ../Math/MovingAverage.hpp
 
+../RealSense/RealSense.hpp
+DataSourceNode.hpp
+../RealSense/DataSourceNode.hpp
+Buffer.hpp
+../RealSense/Buffer.hpp
+Type.hpp
+../RealSense/Type.hpp
+Math.hpp
+../RealSense/Math.hpp
+Buffer.hpp
+../RealSense/Buffer.hpp
+HostBufferNode.hpp
+../RealSense/HostBufferNode.hpp
+librealsense2/rs.hpp
+-
+vector
+-
+thread
+-
+mutex
+-
+atomic
+-
+
 ../Utility/Buffer.hpp
 DataSource.hpp
 ../Utility/DataSource.hpp
 cstdint
 -
 type_traits
+-
+vector
 -
 iostream
 -
@@ -471,6 +503,8 @@ GLCamera.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/GLCamera.hpp
 FileNode.hpp
 /home/tigakub/Documents/Robotics/mobo2/GUI/FileNode.hpp
+RealSense.hpp
+/home/tigakub/Documents/Robotics/mobo2/GUI/RealSense.hpp
 jsoncpp/json/json.h
 -
 fstream

@@ -20,12 +20,21 @@ namespace mobo
         pushModelviewMatrix(mvMat);
 
         glViewport(viewport.origin[0], viewport.origin[1], viewport.size[0], viewport.size[1]);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glViewport)
+        #endif
     }
 
     void GLContext::finalize()
     {
         glFinish();
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glFinish)
+        #endif
         glutSwapBuffers();
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glutSwapBuffers)
+        #endif
         popModelviewMatrix();
         popCameraMatrix();
         popProjectionMatrix();

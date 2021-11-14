@@ -2,7 +2,7 @@
 
 namespace mobo
 {
-    DERIVE_TYPE(ImageNode, "0ef83d70-53b7-464d-b32e-10dbfb31afa2", {&DataSourceNode::_type});
+    DERIVE_TYPE(ImageNode, "0ef83d70-53b7-464d-b32e-10dbfb31afa2", {&FrameSourceNode::_type});
     
     bool ImageNode::update(Context& iCtx)
     {
@@ -28,7 +28,11 @@ namespace mobo
 
     const void* ImageNode::rawMap() const
     {
-        return static_cast<const void*>(&imageBuffer[0]);
+        return static_cast<const void*>(&(imageBuffer[0]));
     }
 
+    void* ImageNode::rawMap()
+    {
+        return static_cast<void*>(&(imageBuffer[0]));
+    }
 }

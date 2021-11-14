@@ -14,6 +14,28 @@ namespace mobo
 
     bool GLMaterial::update(Context& iCtx)
     {
+        return true;
+    }
+
+    bool GLMaterial::submit(Context& iCtx)
+    {
+        GLContext& ctx = static_cast<GLContext&>(iCtx);
+        ctx.pushMaterial(this);
+        activate(iCtx);
+    }
+
+    bool GLMaterial::retract(Context& iCtx)
+    {
+        deactivate(iCtx);
+        GLContext& ctx = static_cast<GLContext&>(iCtx);
+        GLMaterial* prev = ctx.popMaterial();
+        if(prev) {
+            prev->activate(iCtx);
+        }
+    }
+
+    void GLMaterial::activate(Context& iCtx)
+    {
         GLContext& ctx = static_cast<GLContext&>(iCtx);
         GLProgram *programNode = ctx.currentProgram();
         if(programNode) {
@@ -22,73 +44,74 @@ namespace mobo
                 if(node) {
                     const string& uniformName = node->unifName();
                     try {
-                        GLProgram::UniformInfo info = programNode->getUniformInfo(uniformName);
-                        info.tex = node->texHandle();
-                        info.target = node->target();
-                        switch(info.type) {
-                            case GL_SAMPLER_2D:
-                            case GL_SAMPLER_2D_RECT:
-                                info.generateSampler();
-                                glSamplerParameteri(info.sampler, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                                glSamplerParameteri(info.sampler, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                                glSamplerParameteri(info.sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                                glSamplerParameteri(info.sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                                glSamplerParameterf(info.sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
-                                break;
+                        const GLProgram::UniformInfo& info = programNode->getUniformInfo(uniformName);
+                        glActiveTexture(GL_TEXTURE0 + info.location);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glActiveTexture)
+                        #endif
+                        glEnable(node->target());
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glEnable)
+                        #endif
+                        glBindTexture(node->target(), node->texHandle());
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glBindTexture)
+                        #endif
+                        if(info.sampler) {
+                            glBindSampler(info.location, info.sampler);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glBindSampler)
+                            #endif
                         }
-                        uniformInfo.push_back(move(info));
                     } catch(...) {
                     }
                 }
             }
         }
-        return true;
+        glActiveTexture(GL_TEXTURE0);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glActiveTexture)
+        #endif
     }
 
-    bool GLMaterial::submit(Context& iCtx)
+    void GLMaterial::deactivate(Context& iCtx)
     {
         GLContext& ctx = static_cast<GLContext&>(iCtx);
-        ctx.pushMaterial(this);
-        activate();
-    }
-
-    bool GLMaterial::retract(Context& iCtx)
-    {
-        deactivate();
-        GLContext& ctx = static_cast<GLContext&>(iCtx);
-        GLMaterial* prev = ctx.popMaterial();
-        if(prev) {
-            prev->activate();
-        }
-    }
-
-    void GLMaterial::activate()
-    {
-        for(auto info : uniformInfo) {
-            glActiveTexture(GL_TEXTURE0 + info.location);
-            //cout << "glActivateTexture(GL_TEXTURE0 + " << info.location << ")" << endl;
-            glEnable(info.target);
-            //cout << "glEnable(" << info.target << ")" << endl;
-            glBindTexture(info.target, info.tex);
-            //cout << "glBindTexture(" << info.target << ", " << info.tex << ")" << endl;
-            if(info.sampler) {
-                glBindSampler(info.location, info.sampler);
-                //cout << "glBindSampler(" << info.location << ", " << info.sampler << ")" << endl;
+        GLProgram *programNode = ctx.currentProgram();
+        if(programNode) {
+            for(auto link : dinputs) {
+                GLTexture* node = static_cast<GLTexture*>(link.src.deref());
+                if(node) {
+                    const string& uniformName = node->unifName();
+                    try {
+                        const GLProgram::UniformInfo& info = programNode->getUniformInfo(uniformName);
+                        glActiveTexture(GL_TEXTURE0 + info.location);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glActiveTexture)
+                        #endif
+                        if(info.sampler) {
+                            glBindSampler(info.location, 0);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glBindSampler)
+                            #endif
+                        }
+                        glBindTexture(node->target(), 0);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glBindTexture)
+                        #endif
+                        glDisable(node->target());
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glEnable)
+                        #endif
+                    } catch(...) {
+                    }
+                }
             }
         }
         glActiveTexture(GL_TEXTURE0);
-    }
-
-    void GLMaterial::deactivate()
-    {
-        for(auto info : uniformInfo) {
-            if(info.sampler)
-                glActiveTexture(GL_TEXTURE0 + info.location);
-                glBindSampler(info.location, 0);
-                glBindTexture(info.target, 0);
-                glDisable(info.target);
-        }
-        glActiveTexture(GL_TEXTURE0);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glActiveTexture)
+        #endif
     }
 
 }

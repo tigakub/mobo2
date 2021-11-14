@@ -25,11 +25,11 @@ namespace mobo
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context& iCtx);
 
-            virtual void activate();
-            virtual void deactivate();
+            virtual void activate(Context& iCtx);
+            virtual void deactivate(Context& iCtx);
 
         protected:
-            vector<GLProgram::UniformInfo> uniformInfo;
+            vector<string> uniformNames;
     };
 }
 

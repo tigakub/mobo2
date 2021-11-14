@@ -1,6 +1,8 @@
 #ifndef __GLDRAW_HPP__
 #define __GLDRAW_HPP__
 
+#include "Debug.hpp"
+
 #include "Context.hpp"
 #include "GLPipeline.hpp"
 

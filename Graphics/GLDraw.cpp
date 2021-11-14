@@ -19,8 +19,17 @@ namespace mobo
             const GLProgram::UniformInfo& cameraInfo = prog->getUniformInfo("camera");
             const GLProgram::UniformInfo& mvInfo = prog->getUniformInfo("modelview");
             glUniformMatrix4fv(projInfo.location, 1, true, (const GLfloat*) &ctx.projectionMatrix());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glUniformMatrix4fv)
+            #endif
             glUniformMatrix4fv(cameraInfo.location, 1, true, (const GLfloat*) &ctx.cameraMatrix());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glUniformMatrix4fv)
+            #endif
             glUniformMatrix4fv(mvInfo.location, 1, true, (const GLfloat*) &ctx.modelviewMatrix());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glUniformMatrix4fv)
+            #endif
 
             draw();
         }
@@ -36,7 +45,10 @@ namespace mobo
 
     void GLDraw::draw()
     {
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_QUAD_STRIP, 0, 4);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glDrawArrays)
+        #endif
     }
 
 }

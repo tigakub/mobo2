@@ -35,8 +35,8 @@ namespace mobo
         screenWidth = glutGet(GLUT_SCREEN_WIDTH);
         screenHeight = glutGet(GLUT_SCREEN_HEIGHT);
         GLuint windowWidth, windowHeight;
-        windowWidth = screenWidth * 0.9;
-        windowHeight = windowWidth >> 1;
+        windowHeight = screenHeight * 0.9;
+        windowWidth = windowHeight << 1;
         glutInitWindowSize(windowWidth, windowHeight);
         glutInitWindowPosition((screenWidth - windowWidth) >> 1, (screenHeight - windowHeight) >> 1);
         glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);

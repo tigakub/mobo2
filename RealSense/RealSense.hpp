@@ -29,21 +29,20 @@ namespace mobo
             static void resumePipeline();
             static void devicesChangedCallback(rs2::event_information&);
 
-        protected:
             static rs2::pointcloud pointcloud;
             static rs2::device_list deviceList;
             static rs2::pipeline pipeline;
             static rs2::context ctx;
             static vector<RealSense *> nodes;
             static rs2::frameset frames;
-            /*
+            
             static size_t colorWidth, colorHeight;
-            static HostBufferT<vec4<float>> colorBuffer;
+            static HostBufferT<pnt4<uint8_t>> colorBuffer;
             static size_t depthWidth, depthHeight;
-            static HostBufferT<vec4<float>> depthBuffer;
-            */
+            static HostBufferT<pnt4<float>> depthBuffer;
+            
             static vec3<float> gyroData, accelData;
-            static mutex telemLock;
+            static mutex telemLock, nodeFlagsLock;
             static bool initialized;
             static thread* telemThread;
             static bool framesAvailable;
@@ -52,6 +51,10 @@ namespace mobo
         public:
             RealSense();
             virtual ~RealSense();
+
+            virtual void setNodeFlags(uint64_t iFlags) { nodeFlagsLock.lock(); nodeFlags.set(iFlags); nodeFlagsLock.unlock(); }
+            virtual void clearNodeFlags(uint64_t iFlags) { nodeFlagsLock.lock(); nodeFlags.clear(iFlags); nodeFlagsLock.unlock(); }
+            virtual uint64_t testNodeFlags(uint64_t iFlags) const { uint64_t flags; nodeFlagsLock.lock(); flags = nodeFlags.test(iFlags); nodeFlagsLock.unlock(); return flags; }
 
             virtual void lock();
             virtual void unlock();
@@ -67,44 +70,46 @@ namespace mobo
             virtual bool retract(Context& iCtx);
     };
 
-    class DepthTelemetry : public DataSourceNode, public DataSourceT<pnt3<float>>
+    class DepthTelemetry : public FrameSourceNode, public DataSourceT<pnt4<float>>
     {
         DECLARE_TYPE
 
         public:
             DepthTelemetry();
-
-            virtual bool submit(Context& iCtx);
-            virtual bool retract(Context& iCtx);
-
+            // virtual ~DepthTelemetry();
+            /*
+            virtual bool submit(Context& iCtx) { return true; }
+            virtual bool retract(Context& iCtx) { return true; }
+            */
+            virtual bool update(Context& iCtx);
             virtual uint32_t size() const;
         
             virtual const void* rawMap() const;
             virtual void* rawMap();
 
-            virtual const Transblitter* getTransblitter() const {
-                return &pnt4fFromVec3fTransblitter;
-            }
+        protected:
+            virtual void setSize(uint32_t, bool) { } 
     };
     
-    class ColorTelemetry : public DataSourceNode, public DataSourceT<vec3<uint8_t>>
+    class ColorTelemetry : public FrameSourceNode, public DataSourceT<pnt4<uint8_t>>
     {
         DECLARE_TYPE
         
         public:
             ColorTelemetry();
-
-            virtual bool submit(Context& iCtx);
-            virtual bool retract(Context& iCtx);
-
+            // virtual ~ColorTelemetry();
+            /*
+            virtual bool submit(Context& iCtx) { return true; }
+            virtual bool retract(Context& iCtx) { return true; }
+            */
+            virtual bool update(Context& iCtx);
             virtual uint32_t size() const;
         
             virtual const void* rawMap() const;
             virtual void* rawMap();
 
-            virtual const Transblitter* getTransblitter() const {
-                return &rgbaFromRgbTransblitter;
-            }
+        protected:
+            virtual void setSize(uint32_t, bool) { } 
     };
 
     class IMUTelemetry : public Node
@@ -113,6 +118,7 @@ namespace mobo
         
         public:
             IMUTelemetry();
+            virtual ~IMUTelemetry();
     };
 
 }

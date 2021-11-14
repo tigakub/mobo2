@@ -13,7 +13,7 @@ namespace mobo
             Flags() : bits(0) { }
             void set(uint64_t iFlags) { bits |= iFlags; }
             void clear(uint64_t iFlags) { bits &= ~iFlags; }
-            uint64_t test(uint64_t iFlags) { return bits & iFlags; }
+            uint64_t test(uint64_t iFlags) const { return bits & iFlags; }
 
         protected:
             uint64_t bits;

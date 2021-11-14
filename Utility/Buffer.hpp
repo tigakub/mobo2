@@ -5,7 +5,7 @@
 
 #include <cstdint> // for uint32_t
 #include <type_traits> // for enable_if
-
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -40,19 +40,17 @@ namespace mobo
     {
         public:
             HostBufferT()
-            : BufferT<T>(), nativeBuffer(nullptr) { }
+            : BufferT<T>(), nativeBuffer() { }
             
             HostBufferT(const BufferT<T>& iBuffer)
-            : nativeBuffer(nullptr), BufferT<T>(iBuffer) { }
+            : nativeBuffer(), BufferT<T>(iBuffer) { }
             
             HostBufferT(HostBufferT<T>&& iBuffer)
-            : BufferT<T>(), nativeBuffer(nullptr) {
-                nativeBuffer = iBuffer.nativeBuffer; iBuffer.nativeBuffer = nullptr;
-             }
-            
-            virtual ~HostBufferT() {
-                if(nativeBuffer) delete [] nativeBuffer;
-            }
+            : BufferT<T>(), nativeBuffer(move(iBuffer.nativeBuffer))
+            { }
+
+            virtual ~HostBufferT() { }
+
             /*
             virtual Buffer& operator=(const Buffer& iSrc) {
                 if(dynamic_cast<const BufferT<T>*>(&iSrc)) {
@@ -62,10 +60,10 @@ namespace mobo
             }
             */
             virtual DataSourceT<T>& operator=(HostBufferT<T>&& iSrc) {
-                if(nativeBuffer) delete [] nativeBuffer;
-                nativeBuffer = iSrc.nativeBuffer;
+                // if(nativeBuffer) delete [] nativeBuffer;
+                nativeBuffer = move(iSrc.nativeBuffer);
                 BufferT<T>::elementCount = iSrc.elementCount;
-                iSrc.nativeBuffer = nullptr;
+                // iSrc.nativeBuffer = nullptr;
                 iSrc.elementCount = 0;
                 return *this;
             }
@@ -74,6 +72,8 @@ namespace mobo
             virtual void setSize(uint32_t iSize, bool iPreserve = false)
             {
                 BufferT<T>::setSize(iSize, iPreserve);
+                nativeBuffer.resize(iSize);
+                /*
                 T* newBuffer = new T[iSize];
                 if(nativeBuffer) {
                     if(iPreserve) {
@@ -83,21 +83,25 @@ namespace mobo
                     delete [] nativeBuffer;
                 }
                 nativeBuffer = newBuffer;
+                */
             }
 
         public:
             virtual const void* rawMap() const
             {
-                return (const void*) nativeBuffer;
+                return static_cast<const void*>(&(nativeBuffer[0]));
+                // return (const void*) nativeBuffer;
             }
 
             virtual void* rawMap()
             {
-                return (void*) nativeBuffer;
+                return static_cast<void*>(&(nativeBuffer[0]));
+                // return (void*) nativeBuffer;
             }
 
         protected:
-            T* nativeBuffer;
+            //T* nativeBuffer;
+            vector<T> nativeBuffer;
     };
 }
 

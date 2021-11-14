@@ -45,6 +45,10 @@ namespace mobo
             generator(GL2DTexture);
             generator(GLRectTexture);
             generator(GLTransform);
+            generator(RealSense);
+            generator(ColorTelemetry);
+            generator(DepthTelemetry);
+            generator(IMUTelemetry);
         }
         if(_generators.find(iClassName) == _generators.end()) return nullptr;
         Node* obj = _generators[iClassName]();
@@ -77,14 +81,14 @@ namespace mobo
         jsonSelf["type"] = jsonNodeType;
         for(auto l : inputs) {
             if(l.src) {
-                jsonInputs.append(move(Json::Value(l.src.deref()->nodeId.toString())));
+                jsonInputs.append(move(Json::Value(l.src.deref()->getNodeId().toString())));
             } else {
                 jsonInputs.append(move(Json::Value(Json::nullValue)));
             }
         }
         for(auto l : dinputs) {
             if(l.src) {
-                jsonDInputs.append(move(Json::Value(l.src.deref()->nodeId.toString())));
+                jsonDInputs.append(move(Json::Value(l.src.deref()->getNodeId().toString())));
             } else {
                 jsonDInputs.append(move(Json::Value(Json::nullValue)));
             }
@@ -176,24 +180,24 @@ namespace mobo
         return false;
     }
 
-    void Node::updateIfNeeded(Context &iCtx, const time_point<steady_clock>& iTimestamp)
+    bool Node::checkUpdateNeeded(Context& iCtx, const time_point<steady_clock>& iTimestamp)
     {
-        /*
-        int i = inputs.size();
+        int i = inputs.size() + dinputs.size();
         while(i--) {
-            Node* inputNode = getInput<Node>(i);
-            if(inputNode) {
-                #ifdef TRACE
-                cout << "Updating source " << i << endl;
-                #endif
-                inputNode->updateIfNeeded(iCtx, iTimestamp);
+            auto node = getInput<Node>(i);
+            if(node && node->checkUpdateNeeded(iCtx, iTimestamp)) {
+                setNodeFlags(UPDATE_FLAG);
             }
         }
-        */
+        return testNodeFlags(UPDATE_FLAG) != 0;
+    }
+
+    void Node::updateIfNeeded(Context &iCtx, const time_point<steady_clock>& iTimestamp)
+    {
         if(iTimestamp > timestamp()) {
-            if(nodeFlags.test(UPDATE_FLAG)) {
+            if(testNodeFlags(UPDATE_FLAG)) {
                 update(iCtx);
-                nodeFlags.clear(UPDATE_FLAG);
+                clearNodeFlags(UPDATE_FLAG);
             }
             stampTime(iTimestamp);
         }
@@ -225,7 +229,7 @@ namespace mobo
         cout << getClassName() << "::submit()" << endl;
         #endif
         submit(iCtx);
-        if(nodeFlags.test(ISOLATE)) {
+        if(testNodeFlags(ISOLATE)) {
             for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
                 i->src && i->src->deepRetract(iCtx);
             for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
@@ -233,13 +237,14 @@ namespace mobo
         }
         return true;
     }
+
     bool Node::deepRetract(Context& iCtx)
     {
         #ifdef TRACE
         cout << getClassName() << "::retract()" << endl;
         #endif
         retract(iCtx);
-        if(!nodeFlags.test(ISOLATE)) {
+        if(!testNodeFlags(ISOLATE)) {
             for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
                 i->src && i->src->deepRetract(iCtx);
             for(auto i = inputs.rbegin(); i != inputs.rend(); i++)

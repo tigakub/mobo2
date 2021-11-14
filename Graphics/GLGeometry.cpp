@@ -89,19 +89,37 @@ namespace mobo
         if(vtxNode && vtxInfo.available) {
             vtxNode->bind(GL_ARRAY_BUFFER);
             glVertexAttribPointer(vtxInfo.location, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glVertexAttribPointer)
+            #endif
             glEnableVertexAttribArray(vtxInfo.location);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glEnableVertexAttribArray)
+            #endif
         }
 
         if(clrNode && clrInfo.available) {
             clrNode->bind(GL_ARRAY_BUFFER);
             glVertexAttribPointer(clrInfo.location, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glVertexAttribPointer)
+            #endif
             glEnableVertexAttribArray(clrInfo.location);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glEnableVertexAttribArray)
+            #endif
         }
 
         if(uvNode && uvInfo.available) {
             uvNode->bind(GL_ARRAY_BUFFER);
             glVertexAttribPointer(uvInfo.location, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glVertexAttribPointer)
+            #endif
             glEnableVertexAttribArray(uvInfo.location);
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glEnableVertexAttribArray)
+            #endif
         }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -112,16 +130,43 @@ namespace mobo
     bool GLGeometry::deactivate()
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glBindBuffer)
+        #endif
         glVertexAttribPointer(vtxInfo.location, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glVertexAttribPointer)
+        #endif
         glDisableVertexAttribArray(vtxInfo.location);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glDisableVertexAttribArray)
+        #endif
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glBindBuffer)
+        #endif
         glVertexAttribPointer(clrInfo.location, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glVertexAttribPointer)
+        #endif
         glDisableVertexAttribArray(clrInfo.location);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glDisableVertexAttribArray)
+        #endif
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glBindBuffer)
+        #endif
         glVertexAttribPointer(uvInfo.location, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glVertexAttribPointer)
+        #endif
         glDisableVertexAttribArray(uvInfo.location);
+        #ifdef DEBUG_OPENGL
+        CHECK_OPENGL_ERROR(glDisableVertexAttribArray)
+        #endif
         
         return true;
     }

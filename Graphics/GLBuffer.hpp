@@ -29,6 +29,9 @@ namespace mobo
             : BufferT<T>(), bufferHandle(0), usage(GL_STATIC_DRAW), attributeName()
             {
                 glGenBuffers(1, &bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glGenBuffers)
+                #endif
             }
             GLBufferT(const GLBufferT<T>& iSrc)
             : BufferT<T>(), bufferHandle(0), usage(iSrc.usage), attributeName(iSrc.attributeName)
@@ -83,23 +86,50 @@ namespace mobo
             {
                 GLBufferT<T>::resizeIfNeeded(iSrc.size());
                 glBindBuffer(GL_COPY_READ_BUFFER, iSrc.bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 glBindBuffer(GL_COPY_WRITE_BUFFER, bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, GLBufferT<T>::byteSize());
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glCopyBufferSubData)
+                #endif
                 glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 glBindBuffer(GL_COPY_READ_BUFFER, 0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 return *this;
             }
 
             virtual void unmap()
             {
                 glUnmapBuffer(GL_ARRAY_BUFFER);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glUnmapBuffer)
+                #endif
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
             }
 
             virtual void unmap() const
             {
                 glUnmapBuffer(GL_ARRAY_BUFFER);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glUnmapBuffer)
+                #endif
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
             }
 
         protected:
@@ -107,18 +137,48 @@ namespace mobo
             {
                 GLuint newBuffer;
                 glGenBuffers(1, &newBuffer);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glGenBuffers)
+                #endif
                 glBindBuffer(GL_ARRAY_BUFFER, newBuffer);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 glBufferData(GL_ARRAY_BUFFER, iSize * GLBufferT<T>::byteStride(), nullptr, usage);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBufferData)
+                #endif
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 if(bufferHandle) {
                     if(iPreserve) {
                         glBindBuffer(GL_COPY_READ_BUFFER, bufferHandle);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glBindBuffer)
+                        #endif
                         glBindBuffer(GL_COPY_WRITE_BUFFER, newBuffer);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glBindBuffer)
+                        #endif
                         glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, GLBufferT<T>::byteSize());
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glCopyBufferSubData)
+                        #endif
                         glBindBuffer(GL_COPY_WRITE_BUFFER, 0);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glBindBuffer)
+                        #endif
                         glBindBuffer(GL_COPY_READ_BUFFER, 0);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glBindBuffer)
+                        #endif
                     }
                     glDeleteBuffers(1, &bufferHandle);
+                    #ifdef DEBUG_OPENGL
+                    CHECK_OPENGL_ERROR(glDeleteBuffers)
+                    #endif
                 }
                 BufferT<T>::setSize(iSize);
                 bufferHandle = newBuffer;
@@ -128,16 +188,26 @@ namespace mobo
             virtual const void* rawMap() const
             {
                 glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY);
-                if(!ptr) cout << gluErrorString(glGetError()) << endl;
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glMapBuffer)
+                #endif
                 return ptr;
             }
 
             virtual void* rawMap()
             {
                 glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
                 void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
-                if(!ptr) cout << gluErrorString(glGetError()) << endl;
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glMapBuffer)
+                #endif
                 return ptr;
             }
 

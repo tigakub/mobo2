@@ -32,22 +32,22 @@ namespace mobo
             Json::Value& jsonObject = *i;
             Node* newNode = Node::generate(jsonObject["type"].asString());
             newNode->deserialize(jsonObject, history, forwardReferences);
-            nodes[newNode->nodeId] = newNode;
+            nodes[newNode->getNodeId()] = newNode;
         }
     }
 
     void Context::addNode(Node* iNode)
     {
-        nodes[iNode->nodeId] = iNode;
+        nodes[iNode->getNodeId()] = iNode;
     }
 
     void Context::setRoot(const uuid& iNodeId)
     {
         auto i = nodes.find(iNodeId);
         if(i != nodes.end()) {
-            if(i->second->nodeFlags.test(Node::ROOT_FLAG)) return;
+            if(i->second->testNodeFlags(Node::ROOT_FLAG)) return;
             roots[iNodeId] = i->second;
-            i->second->nodeFlags.set(Node::ROOT_FLAG);
+            i->second->setNodeFlags(Node::ROOT_FLAG);
         }
     }
 
@@ -56,7 +56,7 @@ namespace mobo
         auto i = roots.find(iNodeId);
         if(i != nodes.end()) {
             auto node = i->second;
-            node->nodeFlags.clear(Node::ROOT_FLAG);
+            node->clearNodeFlags(Node::ROOT_FLAG);
             roots.erase(i);
         }
     }
@@ -65,6 +65,9 @@ namespace mobo
     {
         timestamp = steady_clock::now();
 
+        for(auto i : roots) {
+            i.second->checkUpdateNeeded(*this, timestamp);
+        }
         /*
         for(auto i : roots) {
             i.second->updateIfNeeded(*this, timestamp);

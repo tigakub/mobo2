@@ -28,4 +28,4 @@ add_subdirectory(Utility)
 add_executable(mobo main.cpp)
 
 target_include_directories(mobo PUBLIC "${LIBREALSENSE_BASE}/build" "${LIBREALSENSE_BASE}/include" "${LIBREALSENSE_BASE}/third-party/glfw/include" /usr/local/cuda/include)
-target_link_libraries(mobo PUBLIC GUI RealSense Graphics Graph Math lodepng Utility "${LIBS}")
+target_link_libraries(mobo PUBLIC GUI Graphics Graph RealSense Math lodepng Utility "${LIBS}")

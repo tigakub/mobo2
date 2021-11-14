@@ -46,6 +46,13 @@ namespace mobo
             Node(Node&& iNode) : RefCtr(), className(), nodeFlags(iNode.nodeFlags), nodeId(iNode.nodeId), inputs(move(iNode.inputs)), dinputs(move(iNode.dinputs)) { }
             virtual ~Node();
 
+
+            const uuid& getNodeId() const { return nodeId; }
+
+            virtual void setNodeFlags(uint64_t iFlags) { nodeFlags.set(iFlags); }
+            virtual void clearNodeFlags(uint64_t iFlags) { nodeFlags.clear(iFlags); }
+            virtual uint64_t testNodeFlags(uint64_t iFlags) const { return nodeFlags.test(iFlags); }
+
             void setClassName(const string& iClassName) { className = iClassName;}
             const string &getClassName() const { return className; }
 
@@ -78,6 +85,7 @@ namespace mobo
             bool linkTo(int i, Node& iNode);
             void unlink(int i);
             
+            bool checkUpdateNeeded(Context& iCtx, const time_point<steady_clock>& iTimestamp);
             void updateIfNeeded(Context &iCtx, const time_point<steady_clock>& iTimestamp);
             virtual bool update(Context& iCtx) { return true; }
 
@@ -86,7 +94,7 @@ namespace mobo
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context& iCtx);
 
-        public:
+        protected:
             string className;
             Flags nodeFlags;
             uuid nodeId;

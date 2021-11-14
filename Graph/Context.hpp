@@ -25,7 +25,7 @@ namespace mobo
                 T* newNode = new T();
                 if(newNode) {
                     newNode->setClassName(iClassName);
-                    nodes[newNode->nodeId] = newNode;
+                    nodes[newNode->getNodeId()] = newNode;
                 }
                 return newNode;
             }
