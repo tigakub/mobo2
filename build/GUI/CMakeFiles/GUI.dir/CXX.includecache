@@ -177,6 +177,8 @@ Debug.hpp
 ../Graphics/Debug.hpp
 Context.hpp
 ../Graphics/Context.hpp
+GLProgram.hpp
+../Graphics/GLProgram.hpp
 GLPipeline.hpp
 ../Graphics/GLPipeline.hpp
 GL/freeglut.h

@@ -88,6 +88,37 @@ namespace mobo
             : GLBufferNodeT<GLint>() { }
     };
 
+    class GLMeshUVBufferNode : public GLV2BufferNode
+    {
+        DECLARE_TYPE
+        public:
+            GLMeshUVBufferNode()
+            : GLV2BufferNode() {
+                inputs[0].srcType = FrameSourceNode::_type;
+            }
+
+            virtual bool update(Context& iCtx);
+    };
+
+    class GLMeshIndexBufferNode : public GLIndexBufferNode
+    {
+        DECLARE_TYPE
+        public:
+            GLMeshIndexBufferNode()
+            : GLIndexBufferNode(), stripCount(0), stripIndexCount(0) {
+                inputs[0].srcType = FrameSourceNode::_type;
+            }
+
+            uint32_t getStripCount() { return stripCount; }
+            uint32_t getStripIndexCount() { return stripIndexCount; }
+
+            virtual bool update(Context& iCtx);
+
+        protected:
+            uint32_t stripCount;
+            uint32_t stripIndexCount;
+    };
+
 }
 
 #endif

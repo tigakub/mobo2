@@ -23,6 +23,7 @@ namespace mobo
             generator(HostV3BufferNode);
             generator(HostV4BufferNode);
             generator(HostIndexBufferNode);
+            generator(MeshIndexBufferNode);
             generator(StringNode);
             generator(BinaryFileInputNode);
             generator(TextFileInputNode);
@@ -33,8 +34,11 @@ namespace mobo
             generator(GLV3BufferNode);
             generator(GLV4BufferNode);
             generator(GLIndexBufferNode);
+            generator(GLMeshUVBufferNode);
+            generator(GLMeshIndexBufferNode);
             generator(GLCamera);
             generator(GLDraw);
+            generator(GLDrawMesh);
             generator(GLGeometry);
             generator(GLMaterial);
             generator(GLPipeline);
@@ -151,30 +155,36 @@ namespace mobo
         inputs.push_back(Link<Node>(iType));
     }
 
-    void Node::addLinkTo(Node& iNode)
+    void Node::removeInput(int i)
     {
-        dinputs.push_back(Link<Node>(&iNode));
+        if(i >= inputs.size()) return;
+        inputs.erase(inputs.begin() + i);
     }
 
-    bool Node::linkTo(int i, Node& iNode)
+    void Node::addLinkTo(Node* iNode)
+    {
+        dinputs.push_back(Link<Node>(iNode));
+    }
+
+    bool Node::linkTo(int i, Node* iNode)
     {
         if(i >= inputs.size()) return false;
         if(i >= inputs.size()) {
             i -= inputs.size();
             if(i >= dinputs.size()) return false;
-            if(dinputs[i].type().isBaseOf(iNode.type())) {
+            if(dinputs[i].type().isBaseOf(iNode->type())) {
                 #ifdef TRACE
-                cout << "Linking " << nodeId.toString() << " to " << iNode.nodeId.toString() << endl;
+                cout << "Linking " << nodeId.toString() << " to " << iNode->nodeId.toString() << endl;
                 #endif
-                dinputs[i].src = &iNode;
+                dinputs[i].src = iNode;
                 return true;
             }
         }
-        if(inputs[i].type().isBaseOf(iNode.type())) {
+        if(inputs[i].type().isBaseOf(iNode->type())) {
             #ifdef TRACE
-            cout << "Linking " << nodeId.toString() << " to " << iNode.nodeId.toString() << endl;
+            cout << "Linking " << nodeId.toString() << " to " << iNode->nodeId.toString() << endl;
             #endif
-            inputs[i].src = &iNode;
+            inputs[i].src = iNode;
             return true;
         }
         return false;

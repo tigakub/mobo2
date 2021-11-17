@@ -313,20 +313,6 @@ namespace mobo
         return r;
     }
 
-    template <class T, unsigned int SIZE>
-    ostream& operator<<(ostream& os, const vec<T, SIZE>& v)
-    {
-        unsigned int i = SIZE;
-        os << "(";
-        while(i--) {
-            unsigned int n = SIZE - i - 1;
-            if(n) os << ", ";
-            os << v[n];
-        }
-        os << ")";
-        return os;
-    }
-
     template <class T>
     T mat4<T>::determinant() const
     {
@@ -412,25 +398,6 @@ namespace mobo
             r[j] = row[j >> 2][4 + (j & 3)];
 
         return r;
-    }
-    
-    template <class T>
-    ostream& operator<<(ostream& os, mat4<T>& m)
-    {
-        os << fixed;
-        int i = 16;
-        while(i--) {
-            int n = 15 - i;
-            os << right << setw(20) << setprecision(10) << m[n];
-            if(n == 15) os << "\n";
-            else {
-                if((n % 4) == 3) os << ",\n";
-                else os << ",  ";
-            }
-        }
-        os.unsetf(ios::fixed);
-        os << left << setw(0) << setprecision(6);
-        return os;
     }
 
     template <class T>
@@ -547,6 +514,54 @@ namespace mobo
         pnt2<S> origin;
         vec2<U> size;
     };
+
+    template <class T, unsigned int SIZE>
+    ostream& operator<<(ostream& os, const vec<T, SIZE>& v)
+    {
+        unsigned int i = SIZE;
+        os << "(";
+        while(i--) {
+            unsigned int n = SIZE - i - 1;
+            if(n) os << ", ";
+            os << v[n];
+        }
+        os << ")";
+        return os;
+    }
+
+    template <class T, unsigned int SIZE>
+    ostream& operator<<(ostream& os, const pnt<T, SIZE>& p)
+    {
+        unsigned int i = SIZE;
+        os << "(";
+        while(i--) {
+            unsigned int n = SIZE - i - 1;
+            if(n) os << ", ";
+            os << p[n];
+        }
+        os << ")";
+        return os;
+    }
+    
+    template <class T>
+    ostream& operator<<(ostream& os, mat4<T>& m)
+    {
+        os << fixed;
+        int i = 16;
+        while(i--) {
+            int n = 15 - i;
+            os << right << setw(20) << setprecision(10) << m[n];
+            if(n == 15) os << "\n";
+            else {
+                if((n % 4) == 3) os << ",\n";
+                else os << ",  ";
+            }
+        }
+        os.unsetf(ios::fixed);
+        os << left << setw(0) << setprecision(6);
+        return os;
+    }
+
 }
 
 #endif

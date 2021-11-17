@@ -136,6 +136,37 @@ namespace mobo
             : HostBufferNodeT<int>(move(iBuffer)) { }
     };
 
+    class MeshUVBufferNode : public HostV2BufferNode
+    {
+        DECLARE_TYPE
+        public:
+            MeshUVBufferNode()
+            : HostV2BufferNode() {
+                addInput(FrameSourceNode::_type);
+            }
+
+            virtual bool update(Context& iCtx);
+    };
+
+    class MeshIndexBufferNode : public HostBufferNodeT<int>
+    {
+        DECLARE_TYPE
+        public:
+            MeshIndexBufferNode()
+            : HostBufferNodeT<int>(), stripCount(0), stripIndexCount(0) {
+                addInput(FrameSourceNode::_type);
+            }
+
+            virtual bool update(Context& iCtx);
+
+            uint32_t getStripCount() { return stripCount; }
+            uint32_t getStripIndexCount() { return stripIndexCount; }
+
+        protected:
+            uint32_t stripCount;
+            uint32_t stripIndexCount;
+    };
+
 }
 
 #endif

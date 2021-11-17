@@ -107,6 +107,32 @@ namespace mobo
                 #endif
                 return *this;
             }
+            
+            virtual const void* rawMap() const
+            {
+                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
+                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glMapBuffer)
+                #endif
+                return ptr;
+            }
+
+            virtual void* rawMap()
+            {
+                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
+                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glMapBuffer)
+                #endif
+                return ptr;
+            }
 
             virtual void unmap()
             {
@@ -182,33 +208,6 @@ namespace mobo
                 }
                 BufferT<T>::setSize(iSize);
                 bufferHandle = newBuffer;
-            }
-        
-        public:
-            virtual const void* rawMap() const
-            {
-                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
-                #ifdef DEBUG_OPENGL
-                CHECK_OPENGL_ERROR(glBindBuffer)
-                #endif
-                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY);
-                #ifdef DEBUG_OPENGL
-                CHECK_OPENGL_ERROR(glMapBuffer)
-                #endif
-                return ptr;
-            }
-
-            virtual void* rawMap()
-            {
-                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
-                #ifdef DEBUG_OPENGL
-                CHECK_OPENGL_ERROR(glBindBuffer)
-                #endif
-                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
-                #ifdef DEBUG_OPENGL
-                CHECK_OPENGL_ERROR(glMapBuffer)
-                #endif
-                return ptr;
             }
 
         protected:

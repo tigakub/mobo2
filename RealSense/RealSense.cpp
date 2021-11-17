@@ -103,13 +103,11 @@ namespace mobo
                     rs2_format fmt = profile.format();
                     switch(profile.stream_type()) {
                         case RS2_STREAM_COLOR:
-                            pipelineCfg.enable_stream(RS2_STREAM_COLOR, profile.stream_index(), RS2_FORMAT_RGB8);
-                            // pipelineCfg.enable_stream(RS2_STREAM_COLOR, profile.stream_index(), COLORSIZE, RS2_FORMAT_RGB8, 30);
+                            pipelineCfg.enable_stream(RS2_STREAM_COLOR, profile.stream_index(), RS2_FORMAT_RGB8, 30);
                             streamsAvailable = true;
                             break;
                         case RS2_STREAM_DEPTH:
                             pipelineCfg.enable_stream(RS2_STREAM_DEPTH);
-                            // pipelineCfg.enable_stream(RS2_STREAM_DEPTH, -1, DEPTHSIZE, RS2_FORMAT_Z16, 30);
                             streamsAvailable = true;
                             break;
                         case RS2_STREAM_GYRO:
@@ -201,6 +199,13 @@ namespace mobo
                                     while(i--) {
                                         dst[i] = src[i];
                                     }
+                                    /*
+                                    cout << "[";
+                                    for(i = 0; i < depthBuffer.size(); i++) {
+                                        cout << (i ? ", " : "") << dst[i];
+                                    }
+                                    cout << "]" << endl;
+                                    */
                                     depthBuffer.unmap();
                                 }
                                 bool gyro = false;
@@ -316,11 +321,13 @@ namespace mobo
 
     const void* DepthTelemetry::rawMap() const
     {
+        cout << "DepthTelemetry::rawMap() const" << endl;
         return RealSense::depthBuffer.rawMap();
     }
 
     void* DepthTelemetry::rawMap()
     {
+        cout << "DepthTelemetry::rawMap()" << endl;
         return RealSense::depthBuffer.rawMap();
     }
 

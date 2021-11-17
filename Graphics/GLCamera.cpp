@@ -18,7 +18,7 @@ namespace mobo
         } else {
             vFactor = 1.0 / aspect;
         }
-        GLfloat left(-0.5 * hFactor), right(0.5 * hFactor), bottom(-0.5 * vFactor), top(0.5 * vFactor), near(1.0), far(20.0);
+        GLfloat left(-0.05 * hFactor), right(0.05 * hFactor), bottom(-0.05 * vFactor), top(0.05 * vFactor), near(0.1), far(20.0);
         mat4<GLfloat> projMat(PERSPECTIVE, left, right, bottom, top, near, far);
         ctx.pushProjectionMatrix(projMat);
         const mat4<GLfloat>& mvMat = ctx.modelviewMatrix();

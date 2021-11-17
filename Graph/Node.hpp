@@ -62,6 +62,7 @@ namespace mobo
             virtual void deserializeSelf(const Json::Value& self) const;
 
             void addInput(const Type&);
+            void removeInput(int i);
 
             template <class T, typename enable_if<is_base_of<Node,T>::value, bool>::type E = true> T* getInput(int iIndex)
             {
@@ -81,8 +82,8 @@ namespace mobo
                 return dynamic_cast<const T*>(inputs[iIndex].src.deref());
             }
 
-            void addLinkTo(Node& iNewLink);
-            bool linkTo(int i, Node& iNode);
+            void addLinkTo(Node* iNewLink);
+            bool linkTo(int i, Node* iNode);
             void unlink(int i);
             
             bool checkUpdateNeeded(Context& iCtx, const time_point<steady_clock>& iTimestamp);

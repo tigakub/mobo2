@@ -4,6 +4,7 @@
 #include "Debug.hpp"
 
 #include "Context.hpp"
+#include "GLProgram.hpp"
 #include "GLPipeline.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
@@ -24,10 +25,31 @@ namespace mobo
         public:
             GLDraw();
 
+            virtual bool update(Context& iCtx);
             virtual bool submit(Context& iCtx);
             virtual bool retract(Context &iCtx);
 
-            virtual void draw();
+            void setDrawMode(GLenum iDrawMode) { drawMode  = iDrawMode; }
+            GLenum getDrawMode() { return drawMode; }
+
+        protected:
+            GLenum drawMode;
+            GLProgram::UniformInfo projInfo, cameraInfo, mvInfo;
+   };
+
+   class GLDrawMesh: public GLPipeline
+   {
+        DECLARE_TYPE
+
+        public:
+            GLDrawMesh();
+
+            virtual bool update(Context& iCtx);
+            virtual bool submit(Context& iCtx);
+            virtual bool retract(Context& iCtx);
+        
+        protected:
+            GLProgram::UniformInfo projInfo, cameraInfo, mvInfo;            
    };
 
 }

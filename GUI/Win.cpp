@@ -27,10 +27,47 @@ using namespace std;
 
 #define LOAD_FROM_MEMORY true
 #define USE_REALSENSE true
+#define USE_REALSENSE_COLOR true
+#define USE_REALSENSE_DEPTH false
 
 namespace mobo
 {
+    #if USE_REALSENSE_DEPTH
+    const string vtxShaderText(
+    R"(
+        #version 330 core
 
+        layout(location = 0) in vec4 iVtxPos;
+        layout(location = 1) in vec2 iVtxUV;
+
+        uniform mat4 project;
+        uniform mat4 camera;
+        uniform mat4 modelview;
+
+        out vec2 fVtxUV;
+
+        void main() {
+            gl_Position = project * camera * modelview * iVtxPos;
+            fVtxUV = iVtxUV;
+        }
+    )");
+
+    const string frgShaderText(
+    R"(
+        #version 330 core
+
+        uniform sampler2D tex;
+
+        in vec2 fVtxUV;
+        
+        out vec4 oColor;
+
+        void main() {
+            oColor = texture(tex, fVtxUV);
+        }
+    )");
+
+    #else
     const string vtxShaderText(
     R"(
         #version 330 core
@@ -68,6 +105,7 @@ namespace mobo
             oColor = texture(tex, fVtxUV) * fVtxClr;
         }
     )");
+    #endif
 
     const GLfloat vtxData[] = { -1.0, 1.0, 0.0, 1.0,    -1.0, -1.0, 0.0, 1.0,    1.0, 1.0, 0.0, 1.0,    1.0, -1.0, 0.0, 1.0 };
     const GLfloat clrData[] = { 1.0, 1.0, 1.0, 1.0,    1.0, 1.0, 1.0, 1.0,    1.0, 1.0, 1.0, 1.0,    1.0, 1.0, 1.0, 1.0 };
@@ -133,36 +171,103 @@ namespace mobo
         cout << "vtxShaderSrc " << vtxShaderSrc->getNodeId().toString() << endl;
         auto vtxShader = ctx.createNodeT(GLVertexShader);
         cout << "vtxShader " << vtxShader->getNodeId().toString() << endl;
-        vtxShader->linkTo(0, *vtxShaderSrc);
+        vtxShader->linkTo(0, vtxShaderSrc);
 
         auto frgShaderSrc = ctx.createNodeT(StringNode);
         frgShaderSrc->setValue(frgShaderText);
         cout << "frgShaderSrc " << frgShaderSrc->getNodeId().toString() << endl;
         auto frgShader = ctx.createNodeT(GLFragmentShader);
         cout << "frgShader " << frgShader->getNodeId().toString() << endl;
-        frgShader->linkTo(0, *frgShaderSrc);
+        frgShader->linkTo(0, frgShaderSrc);
 
         auto program = ctx.createNodeT(GLProgram);
         cout << "program " << program->getNodeId().toString() << endl;
-        program->linkTo(0, *startNode);
-        program->linkTo(1, *vtxShader);
-        program->linkTo(2, *frgShader);
+        program->linkTo(0, startNode);
+        program->linkTo(1, vtxShader);
+        program->linkTo(2, frgShader);
+
+        #if USE_REALSENSE
+        auto rsNode = ctx.createNodeT(RealSense);
+
+        auto colorNode = ctx.createNodeT(ColorTelemetry);
+        colorNode->linkTo(0, rsNode);
+
+        auto tex = ctx.createNodeT(GL2DTexture);
+        tex->linkTo(0, colorNode);
+
+        auto depthNode = ctx.createNodeT(DepthTelemetry);
+        depthNode->linkTo(1, rsNode);
+
+        #else
+        auto texFilename = ctx.createNodeT(StringNode);
+        texFilename->setValue("../raindrops-2098.png");
+
+        auto imageNode = ctx.createNodeT(ImageNode);
+        imageNode->linkTo(0, texFilename);
+
+        auto tex = ctx.createNodeT(GL2DTexture);
+        tex->linkTo(0, imageNode);
+        #endif
+
+        tex->setUnifName("tex");
+        // tex->loadFromPNG("../Burst.png");
 
         #if LOAD_FROM_MEMORY
+
+        #if USE_REALSENSE_DEPTH
+        auto hostVtxBuf = ctx.createNodeT(HostV4BufferNode);
+        auto hostUVBuf = ctx.createNodeT(MeshUVBufferNode);
+        auto hostNdxBuf = ctx.createNodeT(MeshIndexBufferNode);
+        hostVtxBuf->linkTo(0, depthNode);
+        hostUVBuf->linkTo(0, depthNode);
+        hostNdxBuf->linkTo(0, depthNode);
+
+        auto vtxBuf = ctx.createNodeT(GLV4BufferNode);
+        auto uvBuf = ctx.createNodeT(GLV2BufferNode);
+        auto ndxBuf = ctx.createNodeT(GLIndexBufferNode);
+        vtxBuf->linkTo(0, hostVtxBuf);
+        uvBuf->linkTo(0, hostUVBuf);
+        ndxBuf->linkTo(0, hostNdxBuf);
+
+        vtxBuf->setAttribName("iVtxPos");
+        uvBuf->setAttribName("iVtxUV");
+
+        auto geom = ctx.createNodeT(GLGeometry);
+        geom->linkTo(0, program);
+        geom->linkTo(1, vtxBuf);
+        geom->linkTo(3, uvBuf);
+
+        #else
         auto hostVtxBuf = ctx.createNodeT(HostV4BufferNode);
         auto hostClrBuf = ctx.createNodeT(HostV4BufferNode);
         auto hostUVBuf = ctx.createNodeT(HostV2BufferNode);
+        auto hostNdxBuf = ctx.createNodeT(HostIndexBufferNode);
 
         hostVtxBuf->blit((const vec<GLfloat,4>*) vtxData, 4);
         hostClrBuf->blit((const vec<GLfloat,4>*) clrData, 4);
         hostUVBuf->blit((const vec<GLfloat,2>*) uvData, 4);
+        hostNdxBuf->blit((const GLuint*) indexData, 4);
 
         auto vtxBuf = ctx.createNodeT(GLV4BufferNode);
         auto clrBuf = ctx.createNodeT(GLV4BufferNode);
         auto uvBuf = ctx.createNodeT(GLV2BufferNode);
-        vtxBuf->linkTo(0, *hostVtxBuf);
-        clrBuf->linkTo(0, *hostClrBuf);
-        uvBuf->linkTo(0, *hostUVBuf);
+        auto ndxBuf = ctx.createNodeT(GLIndexBufferNode);
+
+        vtxBuf->linkTo(0, hostVtxBuf);
+        clrBuf->linkTo(0, hostClrBuf);
+        uvBuf->linkTo(0, hostUVBuf);
+        ndxBuf->linkTo(0, hostNdxBuf);
+
+        vtxBuf->setAttribName("iVtxPos");
+        clrBuf->setAttribName("iVtxClr");
+        uvBuf->setAttribName("iVtxUV");
+
+        auto geom = ctx.createNodeT(GLGeometry);
+        geom->linkTo(0, program);
+        geom->linkTo(1, vtxBuf);
+        geom->linkTo(2, clrBuf);
+        geom->linkTo(3, uvBuf);
+        #endif
 
         #else
         auto vtxFilename = ctx.createNodeT(StringNode);
@@ -175,26 +280,32 @@ namespace mobo
         auto vtxFile = ctx.createNodeT(BinaryFileInputNode);
         auto clrFile = ctx.createNodeT(BinaryFileInputNode);
         auto uvFile = ctx.createNodeT(BinaryFileInputNode);
-        vtxFile->linkTo(0, *vtxFilename);
-        clrFile->linkTo(0, *clrFilename);
-        uvFile->linkTo(0, *uvFilename); 
+        vtxFile->linkTo(0, vtxFilename);
+        clrFile->linkTo(0, clrFilename);
+        uvFile->linkTo(0, uvFilename); 
 
         auto vtxBuf = ctx.createNodeT(GLV4BufferNode);
         auto clrBuf = ctx.createNodeT(GLV4BufferNode);
         auto uvBuf = ctx.createNodeT(GLV2BufferNode);
-        vtxBuf->linkTo(0, *vtxFile);
-        clrBuf->linkTo(0, *clrFile);
-        uvBuf->linkTo(0, *uvFile);
-        #endif
+        vtxBuf->linkTo(0, vtxFile);
+        clrBuf->linkTo(0, clrFile);
+        uvBuf->linkTo(0, uvFile);
 
         vtxBuf->setAttribName("iVtxPos");
         clrBuf->setAttribName("iVtxClr");
         uvBuf->setAttribName("iVtxUV");
 
+        auto geom = ctx.createNodeT(GLGeometry);
+        geom->linkTo(0, program);
+        geom->linkTo(1, vtxBuf);
+        geom->linkTo(2, clrBuf);
+        geom->linkTo(3, uvBuf);
+        #endif
+
         /*
         StringNode *outputFilename = new StringNode("../vtxBuf.bin");
         BinaryFileOutputNode* fileOutputNode = new BinaryFileOutputNode();
-        fileOutputNode->linkTo(0, *outputFilename);
+        fileOutputNode->linkTo(0, outputFilename);
         fileOutputNode->linkTo(1, *hostVtxBuf);
         fileOutputNode->update(ctx);
 
@@ -209,54 +320,34 @@ namespace mobo
         fileOutputNode->update(ctx);
         */
 
-        auto geom = ctx.createNodeT(GLGeometry);
-        geom->linkTo(0, *program);
-        geom->linkTo(1, *vtxBuf);
-        geom->linkTo(2, *clrBuf);
-        geom->linkTo(3, *uvBuf);
-
-        #if USE_REALSENSE
-        auto rsNode = ctx.createNodeT(RealSense);
-        auto colorNode = ctx.createNodeT(ColorTelemetry);
-
-        colorNode->linkTo(0, *rsNode);
-
-        auto tex = ctx.createNodeT(GL2DTexture);
-        tex->linkTo(0, *colorNode);
-
-        #else
-        auto texFilename = ctx.createNodeT(StringNode);
-        texFilename->setValue("../raindrops-2098.png");
-
-        auto imageNode = ctx.createNodeT(ImageNode);
-        imageNode->linkTo(0, *texFilename);
-
-        auto tex = ctx.createNodeT(GL2DTexture);
-        tex->linkTo(0, *imageNode);
-        #endif
-
-        tex->setUnifName("tex");
-        // tex->loadFromPNG("../Burst.png");
-
         auto material = ctx.createNodeT(GLMaterial);
-        material->linkTo(0, *geom);
-        material->addLinkTo(*tex);
+        material->linkTo(0, geom);
+        material->addLinkTo(tex);
 
         auto cameraXfm = ctx.createNodeT(GLTransform);
-        (*cameraXfm) = mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 3.0) * mat4<GLfloat>(ROTATION, -0.0625 * M_PI, 0.0, 1.0, 0.0);
+        (*cameraXfm) = mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 10.0); // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
         auto camera = ctx.createNodeT(GLCamera);
-        camera->linkTo(0, *cameraXfm);
+        camera->linkTo(0, cameraXfm);
 
         auto xfm = ctx.createNodeT(GLTransform);
-        xfm->linkTo(0, *material);
-        xfm->addLinkTo(*camera);
+        xfm->linkTo(0, material);
+        xfm->addLinkTo(camera);
 
+        #if USE_REALSENSE_DEPTH
+        auto drawNode = ctx.createNodeT(GLDrawMesh);
+        drawNode->linkTo(0, xfm);
+        drawNode->linkTo(1, ndxBuf);
+
+        #else
         auto drawNode = ctx.createNodeT(GLDraw);
-        drawNode->linkTo(0, *xfm);
+        drawNode->linkTo(0, xfm);
+        drawNode->linkTo(1, ndxBuf);
+        drawNode->setDrawMode(GL_QUAD_STRIP);
+        #endif
 
         auto pipelineNode = ctx.createNodeT(GLPipeline);
         cout << "pipelineNode " << pipelineNode->getNodeId().toString() << endl;
-        pipelineNode->linkTo(0, *drawNode);
+        pipelineNode->linkTo(0, drawNode);
 
         ctx.setRoot(pipelineNode->getNodeId());
 
