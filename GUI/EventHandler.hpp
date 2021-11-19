@@ -1,7 +1,7 @@
 #ifndef __EVENTHANDLER_HPP__
 #define __EVENTHANDLER_HPP__
 
-#include <cstdint> // for uint32_t
+#include <cstdint> // for size_t
 
 using namespace std;
 
@@ -28,11 +28,11 @@ namespace mobo
             RENDEROVERLAY
         };
 
-        Event(int iId, uint32_t iK = 0, int iX = 0, int iY = 0, void* iData = nullptr)
+        Event(int iId, size_t iK = 0, int iX = 0, int iY = 0, void* iData = nullptr)
         : id(iId), k(iK), x(iX), y(iY), data(iData) { }
 
         int id;
-        uint32_t k;
+        size_t k;
         int x, y;
         void* data;
     } Event;
@@ -54,8 +54,8 @@ namespace mobo
             virtual bool specialDown(int k, int x, int y) { return true; }
             virtual bool specialUp(int k, int x, int y) { return true; }
             virtual bool mouseMove(int x, int y) { return true; }
-            virtual bool mouseDown(uint32_t b, int x, int y) { return true; }
-            virtual bool mouseUp(uint32_t b, int x, int y) { return true; }
+            virtual bool mouseDown(size_t b, int x, int y) { return true; }
+            virtual bool mouseUp(size_t b, int x, int y) { return true; }
             virtual bool mouseDrag(int x, int y) { return true; }
             virtual bool mouseEntered() { return true; }
             virtual bool mouseExited() { return true; }

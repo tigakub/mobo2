@@ -139,6 +139,8 @@ Node.hpp
 ../Graphics/Node.hpp
 DataSourceNode.hpp
 ../Graphics/DataSourceNode.hpp
+HostBufferNode.hpp
+../Graphics/HostBufferNode.hpp
 
 ../Graphics/GLCamera.hpp
 Debug.hpp

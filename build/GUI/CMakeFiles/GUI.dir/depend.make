@@ -4,6 +4,7 @@
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Debug.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Context.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/DataSourceNode.hpp
+GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/HostBufferNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/ImageNode.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Link.hpp
 GUI/CMakeFiles/GUI.dir/App.cpp.o: ../Graph/Node.hpp

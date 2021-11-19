@@ -25,7 +25,7 @@ namespace mobo
                 addInput(StringNode::_type);
             }
 
-            virtual uint32_t size() const { return imageBuffer.size() / byteStride(); }
+            virtual size_t size() const { return imageBuffer.size() / byteStride(); }
 
             virtual bool update(Context& iCtx);
 
@@ -33,7 +33,7 @@ namespace mobo
             virtual void* rawMap();
             
         protected:
-            virtual void setSize(uint32_t iSize, bool iPreserve = false) { }
+            virtual void setSize(size_t iSize, bool iPreserve = false) { }
 
         protected:
             vector<uint8_t> imageBuffer;

@@ -5,6 +5,7 @@ GUI/CMakeFiles/GUI.dir/App.cpp.o
  ..//Debug.hpp
  ../Graph/Context.hpp
  ../Graph/DataSourceNode.hpp
+ ../Graph/HostBufferNode.hpp
  ../Graph/ImageNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp

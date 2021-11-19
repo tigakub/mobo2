@@ -26,11 +26,11 @@ namespace mobo
             : DataSourceNode(), imgWidth(0), imgHeight(0)
             { }
 
-            uint32_t getWidth() const { return imgWidth; }
-            uint32_t getHeight() const { return imgHeight; }
+            size_t getWidth() const { return imgWidth; }
+            size_t getHeight() const { return imgHeight; }
         
         protected:
-            uint32_t imgWidth, imgHeight;
+            size_t imgWidth, imgHeight;
     };
 
 }

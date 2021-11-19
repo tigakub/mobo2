@@ -3,7 +3,7 @@
 
 #include "DataSource.hpp"
 
-#include <cstdint> // for uint32_t
+#include <cstdint> // for size_t
 #include <type_traits> // for enable_if
 #include <vector>
 #include <iostream>
@@ -22,17 +22,17 @@ namespace mobo
                 DataSourceT<T>::blit(iSrc);
             }
 
-            virtual uint32_t size() const {
+            virtual size_t size() const {
                 return elementCount;
             }
 
         protected:
-            virtual void setSize(uint32_t iSize, bool iPreserve = false) {
+            virtual void setSize(size_t iSize, bool iPreserve = false) {
                 elementCount = iSize;
             }
 
         protected:
-            uint32_t elementCount;
+            size_t elementCount;
     };
 
     template <class T>
@@ -69,7 +69,7 @@ namespace mobo
             }
             
         protected:
-            virtual void setSize(uint32_t iSize, bool iPreserve = false)
+            virtual void setSize(size_t iSize, bool iPreserve = false)
             {
                 BufferT<T>::setSize(iSize, iPreserve);
                 nativeBuffer.resize(iSize);
@@ -77,7 +77,7 @@ namespace mobo
                 T* newBuffer = new T[iSize];
                 if(nativeBuffer) {
                     if(iPreserve) {
-                        uint32_t i = BufferT<T>::size();
+                        size_t i = BufferT<T>::size();
                         while(i--) newBuffer[i] = nativeBuffer[i];
                     }
                     delete [] nativeBuffer;

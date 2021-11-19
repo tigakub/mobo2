@@ -42,8 +42,8 @@ namespace mobo
             virtual bool specialDown(int k, int x, int y) { return false; }
             virtual bool specialUp(int k, int x, int y) { return false; }
             virtual bool mouseMove(int x, int y) { return true; }
-            virtual bool mouseDown(uint32_t b, int x, int y) { return true; }
-            virtual bool mouseUp(uint32_t b, int x, int y) { return true; }
+            virtual bool mouseDown(size_t b, int x, int y) { return true; }
+            virtual bool mouseUp(size_t b, int x, int y) { return true; }
             virtual bool mouseDrag(int x, int y) { return true; }
             virtual bool mouseEntered() { return true; }
             virtual bool mouseExited() { return true; }
@@ -56,7 +56,7 @@ namespace mobo
             
             App& app;
             int winId;
-            uint32_t mouseButtonState;
+            size_t mouseButtonState;
             float needsDisplay;
             time_point<steady_clock> timestamp;
             float emaWindow;

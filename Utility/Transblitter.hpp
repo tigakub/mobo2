@@ -9,19 +9,19 @@ namespace mobo
     class Transblitter
     {
         public:
-            virtual void operator()(void* iDst, const void* iSrc, uint32_t iCount) const = 0;
+            virtual void operator()(void* iDst, const void* iSrc, size_t iCount) const = 0;
     };
 
     template <class T, class U>
     class TransblitterT : public Transblitter
     {
-        virtual void operator()(void* iDst, const void* iSrc, uint32_t i) const {
+        virtual void operator()(void* iDst, const void* iSrc, size_t i) const {
             const U* src = static_cast<const U*>(iSrc);
             T* dst = static_cast<T*>(iDst);
             if(iDst > iSrc)
                 while(i--) dst[i] = src[i];
             else
-                for(uint32_t n = 0; n < i; n++)
+                for(size_t n = 0; n < i; n++)
                     dst[n] = src[n];
         }
     };

@@ -26,7 +26,7 @@ namespace mobo
     {
         public:
             GLBufferT()
-            : BufferT<T>(), bufferHandle(0), usage(GL_STATIC_DRAW), attributeName()
+            : BufferT<T>(), target(GL_ARRAY_BUFFER), bufferHandle(0), usage(GL_DYNAMIC_DRAW), attributeName()
             {
                 glGenBuffers(1, &bufferHandle);
                 #ifdef DEBUG_OPENGL
@@ -34,12 +34,12 @@ namespace mobo
                 #endif
             }
             GLBufferT(const GLBufferT<T>& iSrc)
-            : BufferT<T>(), bufferHandle(0), usage(iSrc.usage), attributeName(iSrc.attributeName)
+            : BufferT<T>(), target(GL_ARRAY_BUFFER), bufferHandle(0), usage(iSrc.usage), attributeName(iSrc.attributeName)
             {
                 DataSourceT<T>::operator=(iSrc);
             }
             GLBufferT(GLBufferT<T>&& iSrc)
-            : BufferT<T>(), bufferHandle(iSrc.bufferHandle), usage(iSrc.usage), attributeName(move(iSrc.attributeName)) 
+            : BufferT<T>(), target(GL_ARRAY_BUFFER), bufferHandle(iSrc.bufferHandle), usage(iSrc.usage), attributeName(move(iSrc.attributeName)) 
             {
                 BufferT<T>::elementCount = iSrc.size();
                 iSrc.bufferHandle = 0;
@@ -48,6 +48,16 @@ namespace mobo
             virtual ~GLBufferT()
             {
                 if(bufferHandle) glDeleteBuffers(1, &bufferHandle);
+            }
+
+            void setTarget(GLenum iTarget)
+            {
+                target = iTarget;
+            }
+
+            GLenum getTarget()
+            {
+                return target;
             }
 
             void setAttribName(const string &iName)
@@ -63,6 +73,9 @@ namespace mobo
             void bind(GLenum iTarget)
             {
                 glBindBuffer(iTarget, bufferHandle);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
             }
 
             void setUsage(GLenum iUsage, bool iReallocate = true)
@@ -110,11 +123,11 @@ namespace mobo
             
             virtual const void* rawMap() const
             {
-                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                glBindBuffer(target, bufferHandle);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBindBuffer)
                 #endif
-                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY);
+                void* ptr = glMapBuffer(target, GL_READ_ONLY);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glMapBuffer)
                 #endif
@@ -123,11 +136,11 @@ namespace mobo
 
             virtual void* rawMap()
             {
-                glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+                glBindBuffer(target, bufferHandle);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBindBuffer)
                 #endif
-                void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
+                void* ptr = glMapBuffer(target, GL_READ_WRITE);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glMapBuffer)
                 #endif
@@ -136,11 +149,11 @@ namespace mobo
 
             virtual void unmap()
             {
-                glUnmapBuffer(GL_ARRAY_BUFFER);
+                glUnmapBuffer(target);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glUnmapBuffer)
                 #endif
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                glBindBuffer(target, 0);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBindBuffer)
                 #endif
@@ -148,33 +161,33 @@ namespace mobo
 
             virtual void unmap() const
             {
-                glUnmapBuffer(GL_ARRAY_BUFFER);
+                glUnmapBuffer(target);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glUnmapBuffer)
                 #endif
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                glBindBuffer(target, 0);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBindBuffer)
                 #endif
             }
 
         protected:
-            virtual void setSize(uint32_t iSize, bool iPreserve = false)
+            virtual void setSize(size_t iSize, bool iPreserve = false)
             {
                 GLuint newBuffer;
                 glGenBuffers(1, &newBuffer);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glGenBuffers)
                 #endif
-                glBindBuffer(GL_ARRAY_BUFFER, newBuffer);
+                glBindBuffer(target, newBuffer);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBindBuffer)
                 #endif
-                glBufferData(GL_ARRAY_BUFFER, iSize * GLBufferT<T>::byteStride(), nullptr, usage);
+                glBufferData(target, iSize * DataSourceT<T>::byteStride(), nullptr, usage);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBufferData)
                 #endif
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                glBindBuffer(target, 0);
                 #ifdef DEBUG_OPENGL
                 CHECK_OPENGL_ERROR(glBindBuffer)
                 #endif
@@ -211,6 +224,7 @@ namespace mobo
             }
 
         protected:
+            GLenum target;
             GLuint bufferHandle;
             GLenum usage;
             string attributeName;

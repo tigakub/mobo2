@@ -7,6 +7,7 @@
 #include "GLBuffer.hpp"
 #include "Node.hpp"
 #include "DataSourceNode.hpp"
+#include "HostBufferNode.hpp"
 
 using namespace std;
 
@@ -80,12 +81,24 @@ namespace mobo
             : GLVertexBufferNodeT<pnt4<GLfloat>>() { }
     };
 
-    class GLIndexBufferNode : public GLBufferNodeT<GLint>
+    class GLIndexBufferNode : public GLBufferNodeT<GLuint>
     {
         DECLARE_TYPE
         public:
             GLIndexBufferNode()
-            : GLBufferNodeT<GLint>() { }
+            : GLBufferNodeT<GLuint>() { setTarget(GL_ELEMENT_ARRAY_BUFFER); }
+    };
+
+    class GLMeshVtxBufferNode : public GLP4BufferNode
+    {
+        DECLARE_TYPE
+        public:
+            GLMeshVtxBufferNode()
+            : GLP4BufferNode() {
+                inputs[0].srcType = FrameSourceNode::_type;
+            }
+
+            virtual bool update(Context& iCtx);
     };
 
     class GLMeshUVBufferNode : public GLV2BufferNode
@@ -99,7 +112,7 @@ namespace mobo
 
             virtual bool update(Context& iCtx);
     };
-
+    
     class GLMeshIndexBufferNode : public GLIndexBufferNode
     {
         DECLARE_TYPE
@@ -109,16 +122,16 @@ namespace mobo
                 inputs[0].srcType = FrameSourceNode::_type;
             }
 
-            uint32_t getStripCount() { return stripCount; }
-            uint32_t getStripIndexCount() { return stripIndexCount; }
+            size_t getStripCount() { return stripCount; }
+            size_t getStripIndexCount() { return stripIndexCount; }
 
             virtual bool update(Context& iCtx);
 
         protected:
-            uint32_t stripCount;
-            uint32_t stripIndexCount;
+            size_t stripCount;
+            size_t stripIndexCount;
     };
-
+    
 }
 
 #endif

@@ -28,11 +28,10 @@ using namespace std;
 #define LOAD_FROM_MEMORY true
 #define USE_REALSENSE true
 #define USE_REALSENSE_COLOR true
-#define USE_REALSENSE_DEPTH false
+#define USE_REALSENSE_DEPTH true
 
 namespace mobo
 {
-    #if USE_REALSENSE_DEPTH
     const string vtxShaderText(
     R"(
         #version 330 core
@@ -67,8 +66,7 @@ namespace mobo
         }
     )");
 
-    #else
-    const string vtxShaderText(
+    const string vtxClrShaderText(
     R"(
         #version 330 core
 
@@ -90,7 +88,7 @@ namespace mobo
         }
     )");
 
-    const string frgShaderText(
+    const string frgClrShaderText(
     R"(
         #version 330 core
 
@@ -105,7 +103,6 @@ namespace mobo
             oColor = texture(tex, fVtxUV) * fVtxClr;
         }
     )");
-    #endif
 
     const GLfloat vtxData[] = { -1.0, 1.0, 0.0, 1.0,    -1.0, -1.0, 0.0, 1.0,    1.0, 1.0, 0.0, 1.0,    1.0, -1.0, 0.0, 1.0 };
     const GLfloat clrData[] = { 1.0, 1.0, 1.0, 1.0,    1.0, 1.0, 1.0, 1.0,    1.0, 1.0, 1.0, 1.0,    1.0, 1.0, 1.0, 1.0 };
@@ -196,7 +193,7 @@ namespace mobo
         tex->linkTo(0, colorNode);
 
         auto depthNode = ctx.createNodeT(DepthTelemetry);
-        depthNode->linkTo(1, rsNode);
+        depthNode->linkTo(0, rsNode);
 
         #else
         auto texFilename = ctx.createNodeT(StringNode);
@@ -215,27 +212,21 @@ namespace mobo
         #if LOAD_FROM_MEMORY
 
         #if USE_REALSENSE_DEPTH
-        auto hostVtxBuf = ctx.createNodeT(HostV4BufferNode);
+        /*
+        auto hostVtxBuf = ctx.createNodeT(MeshVtxBufferNode);
         auto hostUVBuf = ctx.createNodeT(MeshUVBufferNode);
         auto hostNdxBuf = ctx.createNodeT(MeshIndexBufferNode);
         hostVtxBuf->linkTo(0, depthNode);
         hostUVBuf->linkTo(0, depthNode);
         hostNdxBuf->linkTo(0, depthNode);
-
-        auto vtxBuf = ctx.createNodeT(GLV4BufferNode);
-        auto uvBuf = ctx.createNodeT(GLV2BufferNode);
-        auto ndxBuf = ctx.createNodeT(GLIndexBufferNode);
-        vtxBuf->linkTo(0, hostVtxBuf);
-        uvBuf->linkTo(0, hostUVBuf);
-        ndxBuf->linkTo(0, hostNdxBuf);
-
-        vtxBuf->setAttribName("iVtxPos");
-        uvBuf->setAttribName("iVtxUV");
-
-        auto geom = ctx.createNodeT(GLGeometry);
-        geom->linkTo(0, program);
-        geom->linkTo(1, vtxBuf);
-        geom->linkTo(3, uvBuf);
+        */
+        auto vtxBuf = ctx.createNodeT(GLMeshVtxBufferNode);
+        auto uvBuf = ctx.createNodeT(GLMeshUVBufferNode);
+        auto ndxBuf = ctx.createNodeT(GLMeshIndexBufferNode);
+        vtxBuf->linkTo(0, depthNode);
+        // clrBuf->linkTo(0, hostClrBuf);
+        uvBuf->linkTo(0, depthNode);
+        ndxBuf->linkTo(0, depthNode);
 
         #else
         auto hostVtxBuf = ctx.createNodeT(HostV4BufferNode);
@@ -247,27 +238,26 @@ namespace mobo
         hostClrBuf->blit((const vec<GLfloat,4>*) clrData, 4);
         hostUVBuf->blit((const vec<GLfloat,2>*) uvData, 4);
         hostNdxBuf->blit((const GLuint*) indexData, 4);
-
-        auto vtxBuf = ctx.createNodeT(GLV4BufferNode);
-        auto clrBuf = ctx.createNodeT(GLV4BufferNode);
+        
+        auto vtxBuf = ctx.createNodeT(GLufferNode);
+        // auto clrBuf = ctx.createNodeT(GLV4BufferNode);
         auto uvBuf = ctx.createNodeT(GLV2BufferNode);
         auto ndxBuf = ctx.createNodeT(GLIndexBufferNode);
-
         vtxBuf->linkTo(0, hostVtxBuf);
-        clrBuf->linkTo(0, hostClrBuf);
+        // clrBuf->linkTo(0, hostClrBuf);
         uvBuf->linkTo(0, hostUVBuf);
         ndxBuf->linkTo(0, hostNdxBuf);
+        #endif
 
         vtxBuf->setAttribName("iVtxPos");
-        clrBuf->setAttribName("iVtxClr");
+        // clrBuf->setAttribName("iVtxClr");
         uvBuf->setAttribName("iVtxUV");
 
         auto geom = ctx.createNodeT(GLGeometry);
         geom->linkTo(0, program);
         geom->linkTo(1, vtxBuf);
-        geom->linkTo(2, clrBuf);
+        //geom->linkTo(2, clrBuf);
         geom->linkTo(3, uvBuf);
-        #endif
 
         #else
         auto vtxFilename = ctx.createNodeT(StringNode);
@@ -325,11 +315,12 @@ namespace mobo
         material->addLinkTo(tex);
 
         auto cameraXfm = ctx.createNodeT(GLTransform);
-        (*cameraXfm) = mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 10.0); // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
+        (*cameraXfm) = mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 0); // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
         auto camera = ctx.createNodeT(GLCamera);
         camera->linkTo(0, cameraXfm);
 
         auto xfm = ctx.createNodeT(GLTransform);
+        (*xfm) = mat4<GLfloat>(ROTATION, M_PI, 0.0, 1.0, 0.0) * mat4<GLfloat>(SCALING, 2.0) * mat4<GLfloat>(ROTATION, M_PI, 0.0, 0.0, 1.0);
         xfm->linkTo(0, material);
         xfm->addLinkTo(camera);
 
@@ -337,12 +328,19 @@ namespace mobo
         auto drawNode = ctx.createNodeT(GLDrawMesh);
         drawNode->linkTo(0, xfm);
         drawNode->linkTo(1, ndxBuf);
+        drawNode->linkTo(2, rsNode);
 
         #else
+        auto drawNode = ctx.createNodeT(GLDrawMesh);
+        drawNode->linkTo(0, xfm);
+        drawNode->linkTo(1, ndxBuf);
+        drawNode->linkTo(2, vtxBuf);
+        /*
         auto drawNode = ctx.createNodeT(GLDraw);
         drawNode->linkTo(0, xfm);
         drawNode->linkTo(1, ndxBuf);
-        drawNode->setDrawMode(GL_QUAD_STRIP);
+        drawNode->setDrawMode(GL_TRIANGLE_STRIP);
+        */
         #endif
 
         auto pipelineNode = ctx.createNodeT(GLPipeline);
@@ -534,7 +532,7 @@ namespace mobo
     void _mouse(int b, int d, int x, int y)
     {
         Win* win = (Win*) glutGetWindowData();
-        uint32_t button = 0;
+        size_t button = 0;
         switch(b) {
             case GLUT_LEFT_BUTTON:
                 button = Win::PRIMARY_BUTTON; break;

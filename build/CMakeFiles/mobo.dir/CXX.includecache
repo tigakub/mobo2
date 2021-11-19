@@ -64,6 +64,16 @@ Node.hpp
 DataSource.hpp
 ../Graph/DataSource.hpp
 
+../Graph/HostBufferNode.hpp
+Math.hpp
+../Graph/Math.hpp
+Buffer.hpp
+../Graph/Buffer.hpp
+Node.hpp
+../Graph/Node.hpp
+DataSourceNode.hpp
+../Graph/DataSourceNode.hpp
+
 ../Graph/ImageNode.hpp
 StringNode.hpp
 ../Graph/StringNode.hpp
@@ -151,6 +161,8 @@ Node.hpp
 ../Graphics/Node.hpp
 DataSourceNode.hpp
 ../Graphics/DataSourceNode.hpp
+HostBufferNode.hpp
+../Graphics/HostBufferNode.hpp
 
 ../Graphics/GLContext.hpp
 Debug.hpp

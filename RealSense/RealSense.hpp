@@ -19,7 +19,7 @@ using namespace std;
 namespace mobo
 {
 
-    class RealSense : public Node
+    class RealSense : public Node, public MeshSegmentation
     {
         DECLARE_TYPE
 
@@ -40,13 +40,14 @@ namespace mobo
             static HostBufferT<pnt4<uint8_t>> colorBuffer;
             static size_t depthWidth, depthHeight;
             static HostBufferT<pnt4<float>> depthBuffer;
+            static vector<MeshSegmentation::Segment> segmentation;
             
             static vec3<float> gyroData, accelData;
             static mutex telemLock, nodeFlagsLock;
             static bool initialized;
             static thread* telemThread;
             static bool framesAvailable;
-            static atomic<bool> alive;
+            static atomic_bool alive;
 
         public:
             RealSense();
@@ -62,6 +63,8 @@ namespace mobo
             bool available() const { return framesAvailable; }
             rs2::video_frame getColorFrame() const { return frames.get_color_frame(); }
             rs2::depth_frame getDepthFrame() const { return frames.get_depth_frame(); }
+
+            const vector<MeshSegmentation::Segment>& getMeshSegmentation() const { return segmentation; }
 
             void onDevicesChanged(const rs2_device_list &iRemoved, const rs2_device_list &iAdded);
 
@@ -82,13 +85,13 @@ namespace mobo
             virtual bool retract(Context& iCtx) { return true; }
             */
             virtual bool update(Context& iCtx);
-            virtual uint32_t size() const;
+            virtual size_t size() const;
         
             virtual const void* rawMap() const;
             virtual void* rawMap();
 
         protected:
-            virtual void setSize(uint32_t, bool) { } 
+            virtual void setSize(size_t, bool) { } 
     };
     
     class ColorTelemetry : public FrameSourceNode, public DataSourceT<pnt4<uint8_t>>
@@ -103,13 +106,13 @@ namespace mobo
             virtual bool retract(Context& iCtx) { return true; }
             */
             virtual bool update(Context& iCtx);
-            virtual uint32_t size() const;
+            virtual size_t size() const;
         
             virtual const void* rawMap() const;
             virtual void* rawMap();
 
         protected:
-            virtual void setSize(uint32_t, bool) { } 
+            virtual void setSize(size_t, bool) { } 
     };
 
     class IMUTelemetry : public Node

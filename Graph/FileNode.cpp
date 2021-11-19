@@ -62,7 +62,7 @@ namespace mobo
             DataSource* dataNode = dynamic_cast<DataSource*>(getInput<DataSourceNode>(1));
             if(dataNode) {
                 ofstream fileStream(filepath, ios::binary);
-                uint32_t byteSize = dataNode->byteSize();
+                size_t byteSize = dataNode->byteSize();
                 void* bufferPtr = dataNode->rawMap();
                 fileStream.write(static_cast<char*>(bufferPtr), byteSize);
                 dataNode->unmap();

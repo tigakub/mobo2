@@ -1,6 +1,8 @@
 #include "GLDraw.hpp"
 #include "GLContext.hpp"
 #include "GLProgram.hpp"
+#include "DataSourceNode.hpp"
+#include "RealSense.hpp"
 
 namespace mobo
 {
@@ -53,6 +55,9 @@ namespace mobo
                 CHECK_OPENGL_ERROR(glDrawElements)
                 #endif
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+                #ifdef DEBUG_OPENGL
+                CHECK_OPENGL_ERROR(glBindBuffer)
+                #endif
             }
         }
         return true;
@@ -67,6 +72,7 @@ namespace mobo
     : GLPipeline()
     {
         addInput(GLMeshIndexBufferNode::_type);
+        addInput(Node::_type);
     }
 
     bool GLDrawMesh::update(Context& iCtx)
@@ -101,18 +107,35 @@ namespace mobo
             CHECK_OPENGL_ERROR(glUniformMatrix4fv)
             #endif
 
-            GLMeshIndexBufferNode* ndxNode = getInput<GLMeshIndexBufferNode>(1);
-            if(ndxNode) {
+            auto ndxNode = getInput<GLMeshIndexBufferNode>(1);
+            auto segmentationSource = getInput<RealSense>(2);
+            if(ndxNode && segmentationSource) {
                 ndxNode->bind(GL_ELEMENT_ARRAY_BUFFER);
-                uint32_t offset = 0;
-                for(uint32_t q = 0; q < ndxNode->getStripCount(); q++) {
-                    glDrawElements(GL_QUAD_STRIP, ndxNode->getStripIndexCount(), GL_UNSIGNED_INT, (const GLvoid*) offset);
+                for(auto segment : segmentationSource->getMeshSegmentation()) {
+                    size_t offset = segment.offset * sizeof(GLuint);
+                    glDrawElements(GL_TRIANGLE_STRIP, segment.count, GL_UNSIGNED_INT, (const GLvoid*) offset);
                     #ifdef DEBUG_OPENGL
                     CHECK_OPENGL_ERROR(glDrawElements)
                     #endif
-                    offset += ndxNode->getStripIndexCount();
                 }
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+                /*
+                size_t stripCount = ndxNode->getStripCount();
+                size_t stripIndexCount = ndxNode->getStripIndexCount();
+                size_t stripIndexByteCount = stripIndexCount * sizeof(GLuint);
+                if(stripCount && stripIndexCount) {
+                    ndxNode->bind(GL_ELEMENT_ARRAY_BUFFER);
+                    size_t offset = 0;
+                    for(size_t q = 0; q < stripCount; q++) {
+                        glDrawElements(GL_TRIANGLE_STRIP, stripIndexCount, GL_UNSIGNED_INT, (const GLvoid*) offset);
+                        #ifdef DEBUG_OPENGL
+                        CHECK_OPENGL_ERROR(glDrawElements)
+                        #endif
+                        offset += stripIndexByteCount;
+                    }
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+                }
+                */
             }
         }
         return true;

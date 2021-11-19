@@ -30,13 +30,13 @@ namespace mobo
 
             virtual bool update(Context& iCtx);
 
-            virtual uint32_t size() const { return buffer.size(); }
-            virtual uint32_t byteStride() const { return 1; }
+            virtual size_t size() const { return buffer.size(); }
+            virtual size_t byteStride() const { return 1; }
             virtual const void* rawMap() const { return static_cast<const void*>(&buffer[0]); }
             virtual void* rawMap() { return static_cast<void*>(&buffer[0]); }
 
         protected:
-            virtual void setSize(uint32_t, bool) { }
+            virtual void setSize(size_t, bool) { }
 
         protected:
             vector<unsigned char> buffer;
@@ -51,13 +51,13 @@ namespace mobo
 
             virtual bool update(Context& iCtx);
 
-            virtual uint32_t size() const { return buffer.length(); }
-            virtual uint32_t byteStride() const { return 1; }
+            virtual size_t size() const { return buffer.length(); }
+            virtual size_t byteStride() const { return 1; }
             virtual const void* rawMap() const { return static_cast<const void*>(&buffer[0]); }
             virtual void* rawMap() { return static_cast<void*>(&buffer[0]); }
 
         protected:
-            virtual void setSize(uint32_t, bool) { }
+            virtual void setSize(size_t, bool) { }
 
         protected:
             string buffer;

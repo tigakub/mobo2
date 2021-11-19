@@ -17,10 +17,13 @@ namespace mobo
             } else cout << "Loaded png file " << filename << endl;
             lodepng::State state;
             imageBuffer.clear();
-            error = lodepng::decode(imageBuffer, imgWidth, imgHeight, state, fileBuffer);
+            unsigned int width, height;
+            error = lodepng::decode(imageBuffer, width, height, state, fileBuffer);
             if(error) {
                 cerr << "Failed to decode png file " << filename << endl; return false;
             }
+            imgWidth = width;
+            imgHeight = height;
             cout << "Decoded png file, width: " << imgWidth << ", height: " << imgHeight << endl;
         }
         return true;

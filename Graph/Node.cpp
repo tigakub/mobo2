@@ -23,6 +23,8 @@ namespace mobo
             generator(HostV3BufferNode);
             generator(HostV4BufferNode);
             generator(HostIndexBufferNode);
+            generator(MeshVtxBufferNode);
+            generator(MeshUVBufferNode);
             generator(MeshIndexBufferNode);
             generator(StringNode);
             generator(BinaryFileInputNode);
@@ -34,6 +36,7 @@ namespace mobo
             generator(GLV3BufferNode);
             generator(GLV4BufferNode);
             generator(GLIndexBufferNode);
+            generator(GLMeshVtxBufferNode);
             generator(GLMeshUVBufferNode);
             generator(GLMeshIndexBufferNode);
             generator(GLCamera);
@@ -64,7 +67,7 @@ namespace mobo
     DEFINE_TYPE(Node, "d8ce3630-2919-447c-9f7e-630bd647ff35")
 
     Node::Node(uint64_t iRef)
-    : RefCtr(iRef), className(), nodeId(uuid::generate()), inputs()
+    : RefCtr(iRef), className(), nodeId(uuid::generate()), inputs(), submitCount(0)
     {
         nodeFlags.set(UPDATE_FLAG);
         stampTime(steady_clock::now());
@@ -192,24 +195,33 @@ namespace mobo
 
     bool Node::checkUpdateNeeded(Context& iCtx, const time_point<steady_clock>& iTimestamp)
     {
-        int i = inputs.size() + dinputs.size();
-        while(i--) {
-            auto node = getInput<Node>(i);
-            if(node && node->checkUpdateNeeded(iCtx, iTimestamp)) {
+        if(iTimestamp > timestamp()) {
+            //cout << getClassName() << " timestamp" << endl;
+            int i = inputs.size() + dinputs.size();
+            bool needsUpdate = false;
+            while(i--) {
+                auto node = getInput<Node>(i);
+                if(node && node->checkUpdateNeeded(iCtx, iTimestamp)) {
+                    needsUpdate = true;
+                }
+            }
+            if(needsUpdate) {
                 setNodeFlags(UPDATE_FLAG);
             }
+            stampTime(iTimestamp);
         }
-        return testNodeFlags(UPDATE_FLAG) != 0;
+        if(testNodeFlags(UPDATE_FLAG)) {
+            //cout << getClassName() << " needs update" << endl;
+            return true;
+        }
+        return false;
     }
 
     void Node::updateIfNeeded(Context &iCtx, const time_point<steady_clock>& iTimestamp)
     {
-        if(iTimestamp > timestamp()) {
-            if(testNodeFlags(UPDATE_FLAG)) {
-                update(iCtx);
-                clearNodeFlags(UPDATE_FLAG);
-            }
-            stampTime(iTimestamp);
+        if(testNodeFlags(UPDATE_FLAG)) {
+            update(iCtx);
+            clearNodeFlags(UPDATE_FLAG);
         }
     }
 
@@ -227,38 +239,44 @@ namespace mobo
 
     bool Node::deepSubmit(Context& iCtx)
     {
-        for(auto i : inputs)
-            i.src && i.src->deepSubmit(iCtx);
-        for(auto i : dinputs)
-            i.src && i.src->deepSubmit(iCtx);
-        #ifdef TRACE
-        cout << getClassName() << "::updateIfNeeded()" << endl;
-        #endif
-        updateIfNeeded(iCtx, iCtx.getTimestamp());
-        #ifdef TRACE
-        cout << getClassName() << "::submit()" << endl;
-        #endif
-        submit(iCtx);
-        if(testNodeFlags(ISOLATE)) {
-            for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
-                i->src && i->src->deepRetract(iCtx);
-            for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
-                i->src && i->src->deepRetract(iCtx);
+        if(!submitCount) {
+            for(auto i : inputs)
+                i.src && i.src->deepSubmit(iCtx);
+            for(auto i : dinputs)
+                i.src && i.src->deepSubmit(iCtx);
+            #ifdef TRACE
+            cout << getClassName() << "::updateIfNeeded()" << endl;
+            #endif
+            updateIfNeeded(iCtx, iCtx.getTimestamp());
+            #ifdef TRACE
+            cout << getClassName() << "::submit()" << endl;
+            #endif
+            submit(iCtx);
+            if(testNodeFlags(ISOLATE)) {
+                for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
+                    i->src && i->src->deepRetract(iCtx);
+                for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
+                    i->src && i->src->deepRetract(iCtx);
+            }
         }
+        submitCount++;
         return true;
     }
 
     bool Node::deepRetract(Context& iCtx)
     {
-        #ifdef TRACE
-        cout << getClassName() << "::retract()" << endl;
-        #endif
-        retract(iCtx);
-        if(!testNodeFlags(ISOLATE)) {
-            for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
-                i->src && i->src->deepRetract(iCtx);
-            for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
-                i->src && i->src->deepRetract(iCtx);
+        submitCount--;
+        if(!submitCount) {
+            #ifdef TRACE
+            cout << getClassName() << "::retract()" << endl;
+            #endif
+            retract(iCtx);
+            if(!testNodeFlags(ISOLATE)) {
+                for(auto i = dinputs.rbegin(); i != dinputs.rend(); i++)
+                    i->src && i->src->deepRetract(iCtx);
+                for(auto i = inputs.rbegin(); i != inputs.rend(); i++)
+                    i->src && i->src->deepRetract(iCtx);
+            }
         }
         return true;
     }

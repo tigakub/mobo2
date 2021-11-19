@@ -988,7 +988,7 @@ void printICCDetails(const unsigned char* icc, size_t size, const std::string& i
   std::cout << indent << "profile size: " << getICCUint32(icc, size, 0) << std::endl;
   std::cout << indent << "CMM type: " << printableICCWord(icc, size, 4) << std::endl;
 
-  uint32_t version = getICCUint32(icc, size, 8);
+  size_t version = getICCUint32(icc, size, 8);
   uint16_t version_major = (version >> 24) & 255;
   uint16_t version_minor = (version >> 20) & 15;
   uint16_t version_bugfix = (version >> 16) & 15;

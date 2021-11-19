@@ -15,23 +15,23 @@ namespace mobo
             DataSource() { }
             virtual ~DataSource() { }
 
-            virtual uint32_t byteSize() const { return size() * byteStride(); }
-            virtual uint32_t size() const = 0;
-            virtual uint32_t byteStride() const = 0;
-            virtual void resizeIfNeeded(uint32_t iNewSize, bool iPreserve = false);
+            virtual size_t byteSize() const { return size() * byteStride(); }
+            virtual size_t size() const = 0;
+            virtual size_t byteStride() const = 0;
+            virtual void resizeIfNeeded(size_t iNewSize, bool iPreserve = false);
         
             virtual const void* rawMap() const = 0;
             virtual void* rawMap() = 0;
             virtual void unmap() const { }
             virtual void unmap() { }
 
-            virtual void blit(const void* iData, uint32_t iSize, const Transblitter* iTransblitter = nullptr) { }
+            virtual void blit(const void* iData, size_t iSize, const Transblitter* iTransblitter = nullptr) { }
 
             virtual const Transblitter *getTransblitter() const { return nullptr; }
             virtual Transblitter *getTransblitter() { return nullptr; }
 
         protected:
-            virtual void setSize(uint32_t iSize, bool iPreserve = false) = 0;
+            virtual void setSize(size_t iSize, bool iPreserve = false) = 0;
     };
 
     template <class T>
@@ -49,9 +49,9 @@ namespace mobo
                 return *this;
             }
             
-            virtual uint32_t byteStride() const { return sizeof(T); }
+            virtual size_t byteStride() const { return sizeof(T); }
 
-            virtual void blit(const void* iData, uint32_t i, const Transblitter* iTransblitter = nullptr) {
+            virtual void blit(const void* iData, size_t i, const Transblitter* iTransblitter = nullptr) {
                 resizeIfNeeded(i);
                 void* rawDst = rawMap();
                 if(rawDst) {
@@ -64,7 +64,7 @@ namespace mobo
                             while(i--)
                                 dst[i] = src[i];
                         else
-                            for(uint32_t n = 0; n < i; n++)
+                            for(size_t n = 0; n < i; n++)
                                 dst[n] = src[n];
                     }
                 }

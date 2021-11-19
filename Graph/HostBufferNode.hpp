@@ -136,6 +136,18 @@ namespace mobo
             : HostBufferNodeT<int>(move(iBuffer)) { }
     };
 
+    class MeshVtxBufferNode : public HostV4BufferNode
+    {
+        DECLARE_TYPE
+        public:
+            MeshVtxBufferNode()
+            : HostV4BufferNode() {
+                addInput(FrameSourceNode::_type);
+            }
+
+            virtual bool update(Context& ictx);
+    };
+
     class MeshUVBufferNode : public HostV2BufferNode
     {
         DECLARE_TYPE
@@ -148,23 +160,35 @@ namespace mobo
             virtual bool update(Context& iCtx);
     };
 
-    class MeshIndexBufferNode : public HostBufferNodeT<int>
+    class MeshSegmentation
+    {
+        public:
+            typedef struct Segment
+            {
+                size_t offset;
+                size_t count;
+            } Segment;
+
+            virtual const vector<Segment>& getMeshSegmentation() const = 0;
+    };
+
+    class MeshIndexBufferNode : public HostIndexBufferNode
     {
         DECLARE_TYPE
         public:
             MeshIndexBufferNode()
-            : HostBufferNodeT<int>(), stripCount(0), stripIndexCount(0) {
+            : HostIndexBufferNode(), stripCount(0), stripIndexCount(0) {
                 addInput(FrameSourceNode::_type);
             }
 
+            size_t getStripCount() { return stripCount; }
+            size_t getStripIndexCount() { return stripIndexCount; }
+
             virtual bool update(Context& iCtx);
 
-            uint32_t getStripCount() { return stripCount; }
-            uint32_t getStripIndexCount() { return stripIndexCount; }
-
         protected:
-            uint32_t stripCount;
-            uint32_t stripIndexCount;
+            size_t stripCount;
+            size_t stripIndexCount;
     };
 
 }

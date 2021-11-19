@@ -101,6 +101,7 @@ namespace mobo
             uuid nodeId;
             vector<Link<Node>> inputs;
             vector<Link<Node>> dinputs;
+            int submitCount;
     };
 };
 

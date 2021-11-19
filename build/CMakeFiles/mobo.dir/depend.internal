@@ -8,6 +8,7 @@ CMakeFiles/mobo.dir/main.cpp.o
  ../GUI/Win.hpp
  ../Graph/Context.hpp
  ../Graph/DataSourceNode.hpp
+ ../Graph/HostBufferNode.hpp
  ../Graph/ImageNode.hpp
  ../Graph/Link.hpp
  ../Graph/Node.hpp
