@@ -42,12 +42,17 @@ namespace mobo
         uniform mat4 project;
         uniform mat4 camera;
         uniform mat4 modelview;
+        uniform mat3 uvMatrix;
 
         out vec2 fVtxUV;
 
         void main() {
             gl_Position = project * camera * modelview * iVtxPos;
-            fVtxUV = iVtxUV;
+            vec3 iuv;
+            iuv.xy = iVtxUV;
+            iuv.z = 1.0;
+            vec3 ouv = uvMatrix * iuv;
+            fVtxUV = ouv.xy;
         }
     )");
 
@@ -77,6 +82,7 @@ namespace mobo
         uniform mat4 project;
         uniform mat4 camera;
         uniform mat4 modelview;
+        uniform mat3 uvMatrix;
 
         out vec4 fVtxClr;
         out vec2 fVtxUV;
@@ -84,7 +90,11 @@ namespace mobo
         void main() {
             gl_Position = project * camera * modelview * iVtxPos;
             fVtxClr = iVtxClr;
-            fVtxUV = iVtxUV;
+            vec3 iuv;
+            iuv.xy = iVtxUV;
+            iuv.z = 1.0;
+            vec3 ouv = uvMatrix * iuv;
+            fVtxUV = ouv.xy;
         }
     )");
 
@@ -314,25 +324,60 @@ namespace mobo
         material->linkTo(0, geom);
         material->addLinkTo(tex);
 
+        #if 1
         auto cameraXfm = ctx.createNodeT(GLTransform);
-        (*cameraXfm) = mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 0); // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
+        (*cameraXfm) = 
+              mat4<GLfloat>(TRANSLATION, 0.0, 3.0, 3.0) // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
+            * mat4<GLfloat>(ROTATION, -0.125 * M_PI, 1.0, 0.0, 0.0)
+            ;
         auto camera = ctx.createNodeT(GLCamera);
         camera->linkTo(0, cameraXfm);
 
         auto xfm = ctx.createNodeT(GLTransform);
-        (*xfm) = mat4<GLfloat>(ROTATION, M_PI, 0.0, 1.0, 0.0) * mat4<GLfloat>(SCALING, 2.0) * mat4<GLfloat>(ROTATION, M_PI, 0.0, 0.0, 1.0);
+        (*xfm) = 
+              mat4<GLfloat>(ROTATION, M_PI, 0.0, 1.0, 0.0)
+            * mat4<GLfloat>(SCALING, 2.0, 2.0, 2.0)
+            * mat4<GLfloat>(ROTATION, M_PI, 0.0, 0.0, 1.0);
         xfm->linkTo(0, material);
         xfm->addLinkTo(camera);
 
+        auto uvm = ctx.createNodeT(GLUVMatrix);
+        (*uvm)
+            = mat3<GLfloat>(TRANSLATION, 0.05, -0.14)
+            * mat3<GLfloat>(SCALING, 1.0, 1.3)
+            ;
+        uvm->linkTo(0, xfm);
+        #else
+        auto cameraXfm = ctx.createNodeT(GLTransform);
+        (*cameraXfm) = mat4<GLfloat>(IDENTITY);
+        auto camera = ctx.createNodeT(GLCamera);
+        camera->linkTo(0, cameraXfm);
+
+        auto xfm = ctx.createNodeT(GLTransform);
+        (*xfm) = 
+              mat4<GLfloat>(ROTATION, M_PI, 0.0, 1.0, 0.0)
+            * mat4<GLfloat>(SCALING, 2.0, 2.0, 2.0)
+            * mat4<GLfloat>(ROTATION, M_PI, 0.0, 0.0, 1.0);
+        xfm->linkTo(0, material);
+        xfm->addLinkTo(camera);
+
+        auto uvm = ctx.createNodeT(GLUVMatrix);
+        (*uvm)
+            = mat3<GLfloat>(TRANSLATION, 0.05, -0.14)
+            * mat3<GLfloat>(SCALING, 1.0, 1.3)
+            ;
+        uvm->linkTo(0, xfm);
+        #endif
+
         #if USE_REALSENSE_DEPTH
         auto drawNode = ctx.createNodeT(GLDrawMesh);
-        drawNode->linkTo(0, xfm);
+        drawNode->linkTo(0, uvm);
         drawNode->linkTo(1, ndxBuf);
         drawNode->linkTo(2, rsNode);
 
         #else
         auto drawNode = ctx.createNodeT(GLDrawMesh);
-        drawNode->linkTo(0, xfm);
+        drawNode->linkTo(0, uvm);
         drawNode->linkTo(1, ndxBuf);
         drawNode->linkTo(2, vtxBuf);
         /*

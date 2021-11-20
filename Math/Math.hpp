@@ -153,19 +153,148 @@ namespace mobo
         ORTHOGRAPHIC = PERSPECTIVE + 1
     } MatrixInitMode;
 
+
+    template <class T>
+    struct mat3 {
+        
+        mat3(MatrixInitMode iType = IDENTITY, T a = T(0.0), T x = T(0.0), T y = T(0.0)) {
+            v[8] = T(1.0);
+            T factor[] = { 1.0, 1.0, 1.0 };
+            int i;
+            switch(iType) {
+                case SCALING:
+                    factor[0] = a;
+                    factor[1] = x;
+                case IDENTITY:
+                    i = 8;
+                    while(i--) v[i] = factor[i/3] * T((i % 4) == 0);
+                    break;
+                case TRANSLATION:
+                    i = 8;
+                    while(i--) v[i] = T((i % 4) == 0);
+                    v[2] = a; v[5] = x;
+                    break;
+                case ROTATION:
+                    {
+                        T c(COS(a)), s(SIN(a));
+                        v[0] = c;   v[1] = -s;  v[2] = 0.0;
+                        v[3] = s;   v[4] = c;   v[5] = 0.0;
+                        v[6] = 0.0; v[7] = 0.0; v[8] = 1.0;
+                    }
+                    break;
+            }
+        }
+        mat3(const T *m) { int i = 9; while(i--) v[i] = m[i]; }
+        mat3(const mat3<T>& m) { int i = 9; while(i--) v[i] = m[i]; }
+
+        T operator[](unsigned int i) const { if(i >= 9) return T(0.0); return v[i]; }
+        T& operator[](unsigned int i) { return v[i]; }
+
+        bool operator==(const mat3<T>& m) const { int i = 9; if(ABS(v[i] - m[i]) > FLOAT_PRECISION) return false; return true; }
+        bool operator!=(const mat3<T>& m) const { int i = 9; if(ABS(v[i] - m[i]) > FLOAT_PRECISION) return true; return false; }
+        
+        mat3<T>& operator*=(const mat3<T>& m);
+        mat3<T> operator*(const mat3<T>& m) const;
+
+        vec2<T> operator*(const vec2<T>& v) const;
+        vec3<T> operator*(const vec3<T>& v) const;
+
+        pnt2<T> operator*(const pnt2<T>& v) const;
+        pnt3<T> operator*(const pnt3<T>& v) const;
+
+        T v[9];
+    };
+
+    template <class T>
+    mat3<T>& mat3<T>::operator*=(const mat3<T>& m)
+    {
+        mat3<T> r(*this);
+        *this = r * m;
+        return *this;
+    }
+
+    template <class T>
+    mat3<T> mat3<T>::operator*(const mat3<T>& m) const
+    {
+        mat3<T> r;
+        unsigned int i = 9, c, j, k;
+        while(i--) {
+            c = i % 3;
+            k = i - c;
+            j = 3;
+            r[i] = T(0.0);
+            while(j--) r[i] += v[k + j] * m[(j * 3) + c];
+        }
+        return r;
+    }
+
+    template <class T>
+    vec2<T> mat3<T>::operator*(const vec2<T>& iv) const
+    {
+        vec2<T> r;
+        int i = 2, j, c;
+        while(i--) {
+            j = 1;
+            c = i * 2;
+            while(j--) r[i] += v[c + j] * iv[j];
+        }
+        return r;
+    }
+
+    template <class T>
+    vec3<T> mat3<T>::operator*(const vec3<T>& iv) const
+    {
+        vec3<T> r;
+        int i = 3, j, c;
+        while(i--) {
+            j = 3;
+            c = i * 3;
+            while(j--) r[i] += v[c + j] * iv[j];
+        }
+        return r;
+    }
+
+    template <class T>
+    pnt2<T> mat3<T>::operator*(const pnt2<T>& p) const
+    {
+        pnt2<T> r;
+        int i = 2, j, c;
+        while(i--) {
+            j = 2;
+            c = i * 3;
+            while(j--) r[i] += v[c + j] * p[j];
+        }
+        return r;
+    }
+
+    template <class T>
+    pnt3<T> mat3<T>::operator*(const pnt3<T>& p) const
+    {
+        pnt3<T> r;
+        int i = 3, j, c;
+        while(i--) {
+            j = 3;
+            c = i * 3;
+            while(j--) r[i] += v[c + j] * p[j];
+        }
+        return r;
+    }
+
     template <class T>
     struct mat4 {
         
         mat4(MatrixInitMode iType = IDENTITY, T a = T(0.0), T x = T(0.0), T y = T(0.0), T z = T(0.0), T n = T(0.0), T f = T(0.0)) {
             v[15] = T(1.0);
-            T factor(1.0);
+            T factor[] = { 1.0, 1.0, 1.0, 1.0 };
             int i;
             switch(iType) {
                 case SCALING:
-                    factor = a;
+                    factor[0] = a;
+                    factor[1] = x;
+                    factor[2] = y;
                 case IDENTITY:
                     i = 15;
-                    while(i--) v[i] = factor * T((i % 5) == 0);
+                    while(i--) v[i] = factor[i >> 2] * T((i % 5) == 0);
                     break;
                 case TRANSLATION:
                     i = 15;

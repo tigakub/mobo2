@@ -15,9 +15,11 @@ namespace mobo
         mat4<GLfloat> projMat(IDENTITY);
         mat4<GLfloat> camMat(IDENTITY);
         mat4<GLfloat> mvMat(IDENTITY);
+        mat3<GLfloat> uvMat(IDENTITY);
         pushProjectionMatrix(projMat);
         pushCameraMatrix(camMat.reciprocal());
         pushModelviewMatrix(mvMat);
+        pushUVMatrix(uvMat);
 
         glViewport(viewport.origin[0], viewport.origin[1], viewport.size[0], viewport.size[1]);
         #ifdef DEBUG_OPENGL

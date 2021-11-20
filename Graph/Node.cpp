@@ -52,6 +52,9 @@ namespace mobo
             generator(GL2DTexture);
             generator(GLRectTexture);
             generator(GLTransform);
+            generator(GLUVMatrix);
+            generator(GLModelViewMatrix);
+            generator(GLProjectionMatrix);
             generator(RealSense);
             generator(ColorTelemetry);
             generator(DepthTelemetry);

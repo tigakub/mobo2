@@ -23,6 +23,7 @@ namespace mobo
             projInfo = prog->getUniformInfo("project");
             cameraInfo = prog->getUniformInfo("camera");
             mvInfo = prog->getUniformInfo("modelview");
+            uvInfo = prog->getUniformInfo("uvMatrix");
         }
         return true;
     }
@@ -45,6 +46,11 @@ namespace mobo
             glUniformMatrix4fv(mvInfo.location, 1, true, (const GLfloat*) &ctx.modelviewMatrix());
             #ifdef DEBUG_OPENGL
             CHECK_OPENGL_ERROR(glUniformMatrix4fv)
+            #endif
+
+            glUniformMatrix3fv(uvInfo.location, 1, true, (const GLfloat*) &ctx.uvMatrix());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glUniformMatrix3fv)
             #endif
 
             GLIndexBufferNode* ndxNode = getInput<GLIndexBufferNode>(1);
@@ -73,6 +79,7 @@ namespace mobo
     {
         addInput(GLMeshIndexBufferNode::_type);
         addInput(Node::_type);
+        addInput(GLUVMatrix::_type);
     }
 
     bool GLDrawMesh::update(Context& iCtx)
@@ -83,6 +90,7 @@ namespace mobo
             projInfo = prog->getUniformInfo("project");
             cameraInfo = prog->getUniformInfo("camera");
             mvInfo = prog->getUniformInfo("modelview");
+            uvInfo = prog->getUniformInfo("uvMatrix");
         }
         return true;
     }
@@ -105,6 +113,11 @@ namespace mobo
             glUniformMatrix4fv(mvInfo.location, 1, true, (const GLfloat*) &ctx.modelviewMatrix());
             #ifdef DEBUG_OPENGL
             CHECK_OPENGL_ERROR(glUniformMatrix4fv)
+            #endif
+
+            glUniformMatrix3fv(uvInfo.location, 1, true, (const GLfloat*) &ctx.uvMatrix());
+            #ifdef DEBUG_OPENGL
+            CHECK_OPENGL_ERROR(glUniformMatrix3fv)
             #endif
 
             auto ndxNode = getInput<GLMeshIndexBufferNode>(1);

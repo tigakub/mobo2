@@ -6,6 +6,7 @@
 #include "Context.hpp"
 #include "GLProgram.hpp"
 #include "GLPipeline.hpp"
+#include "GLTransform.hpp"
 
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
@@ -34,7 +35,7 @@ namespace mobo
 
         protected:
             GLenum drawMode;
-            GLProgram::UniformInfo projInfo, cameraInfo, mvInfo;
+            GLProgram::UniformInfo projInfo, cameraInfo, mvInfo, uvInfo;
    };
 
    class GLDrawMesh: public GLPipeline
@@ -49,7 +50,7 @@ namespace mobo
             virtual bool retract(Context& iCtx);
         
         protected:
-            GLProgram::UniformInfo projInfo, cameraInfo, mvInfo;            
+            GLProgram::UniformInfo projInfo, cameraInfo, mvInfo, uvInfo;            
    };
 
 }

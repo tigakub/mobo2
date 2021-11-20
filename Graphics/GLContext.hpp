@@ -50,17 +50,21 @@ namespace mobo
             GLMaterial* currentMaterial() { if(materialStack.size()) return static_cast<GLMaterial*>(materialStack.back()); return nullptr; }
             GLMaterial* popMaterial() { materialStack.pop_back(); return currentMaterial(); }
 
-            void pushProjectionMatrix(const mat4<GLfloat>& iMag) { projectionMatrixStack.push_back(iMag); }
+            void pushProjectionMatrix(const mat4<GLfloat>& iMat) { projectionMatrixStack.push_back(iMat); }
             const mat4<GLfloat>& projectionMatrix() const { return projectionMatrixStack.back(); }
             const mat4<GLfloat>& popProjectionMatrix() { projectionMatrixStack.pop_back(); return projectionMatrix(); }
 
-            void pushCameraMatrix(const mat4<GLfloat>& iMag) { cameraMatrixStack.push_back(iMag); }
+            void pushCameraMatrix(const mat4<GLfloat>& iMat) { cameraMatrixStack.push_back(iMat); }
             const mat4<GLfloat>& cameraMatrix() const { return cameraMatrixStack.back(); }
             const mat4<GLfloat>& popCameraMatrix() { cameraMatrixStack.pop_back(); return cameraMatrix(); }
 
-            void pushModelviewMatrix(const mat4<GLfloat>& iMag) { modelviewMatrixStack.push_back(iMag); }
+            void pushModelviewMatrix(const mat4<GLfloat>& iMat) { modelviewMatrixStack.push_back(iMat); }
             const mat4<GLfloat>& modelviewMatrix() const { return modelviewMatrixStack.back(); }
             const mat4<GLfloat>& popModelviewMatrix() { modelviewMatrixStack.pop_back(); return modelviewMatrix(); }
+
+            void pushUVMatrix(const mat3<GLfloat>& iMat) { uvMatrixStack.push_back(iMat); }
+            const mat3<GLfloat>& uvMatrix() const { return uvMatrixStack.back(); }
+            const mat3<GLfloat>& popUVMatrix() { uvMatrixStack.pop_back(); return uvMatrix(); }
 
         protected:
             vector<SmartPtr<GLProgram>> programStack;
@@ -70,6 +74,7 @@ namespace mobo
             vector<mat4<GLfloat>> projectionMatrixStack;
             vector<mat4<GLfloat>> cameraMatrixStack;
             vector<mat4<GLfloat>> modelviewMatrixStack;
+            vector<mat3<GLfloat>> uvMatrixStack;
     };
 
 }

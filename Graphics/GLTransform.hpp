@@ -34,6 +34,57 @@ namespace mobo
         protected:
             mat4<GLfloat> matrix;
     };
+
+    class GLUVMatrix : public GLPipeline
+    {
+        DECLARE_TYPE
+
+        public:
+            GLUVMatrix();
+
+            virtual GLUVMatrix& operator=(const mat3<GLfloat>& iMat) { matrix = iMat; return *this; }
+            virtual GLUVMatrix& operator*=(const mat3<GLfloat>& iMat) { matrix *= iMat; return *this; }
+
+            virtual bool submit(Context& iCtx);
+            virtual bool retract(Context& iCtx);
+
+        protected:
+            mat3<GLfloat> matrix;
+    };
+
+    class GLModelViewMatrix : public GLPipeline
+    {
+        DECLARE_TYPE
+
+        public:
+            GLModelViewMatrix();
+
+            virtual GLModelViewMatrix& operator=(const mat4<GLfloat>& iMat) { matrix = iMat; return *this; }
+            virtual GLModelViewMatrix& operator*=(const mat4<GLfloat>& iMat) { matrix *= iMat; return *this; }
+
+            virtual bool submit(Context& iCtx);
+            virtual bool retract(Context& iCtx);
+
+        protected:
+            mat4<GLfloat> matrix;
+    };
+
+    class GLProjectionMatrix : public GLPipeline
+    {
+        DECLARE_TYPE
+
+        public:
+            GLProjectionMatrix();
+
+            virtual GLProjectionMatrix& operator=(const mat4<GLfloat>& iMat) { matrix = iMat; return *this; }
+            virtual GLProjectionMatrix& operator*=(const mat4<GLfloat>& iMat) { matrix *= iMat; return *this; }
+
+            virtual bool submit(Context& iCtx);
+            virtual bool retract(Context& iCtx);
+
+        protected:
+            mat4<GLfloat> matrix;
+    };
     
 }
 

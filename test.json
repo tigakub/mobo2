@@ -3,65 +3,84 @@
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"7c380ca6-8964-4b16-aead-77297143d8c9"
+			"75d5c485-8c6a-4cc1-8bb2-a3d13f7eeac0"
 		],
-		"nodeId" : "9fdc46cc-0620-4127-9886-1ea18d419d3e",
+		"nodeId" : "1b94e8b3-5788-465f-883f-2cf0518a797a",
 		"type" : "GLPipeline"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"0ea73899-4071-4c94-ae06-7940a439a203",
-			"85594fa1-f908-475c-987a-2439ed68c1a1",
-			"939ab200-2074-4e69-bda3-00af8fb04b9e"
+			"0be14a18-934d-4005-9cd6-85a13e348592",
+			"92761e49-a8a5-43fa-88e3-5e1c7fc02938",
+			"05d6b631-87b1-42df-b3c3-ae58bb85e20d",
+			null
 		],
-		"nodeId" : "7c380ca6-8964-4b16-aead-77297143d8c9",
+		"nodeId" : "75d5c485-8c6a-4cc1-8bb2-a3d13f7eeac0",
 		"type" : "GLDrawMesh"
 	},
 	{
 		"dinputs" : 
 		[
-			"2700572a-2c73-4ed3-a194-575c3e7e68c9"
+			"e07cdbb0-abeb-4c21-b671-20932dc9e7f4"
 		],
 		"inputs" : 
 		[
-			"65356694-b352-4c4b-bd56-580909aa1111"
+			"45a49425-8a7a-406e-a846-1ce352113244"
 		],
-		"nodeId" : "0ea73899-4071-4c94-ae06-7940a439a203",
+		"nodeId" : "38c7fdf9-d9d7-471c-85ce-82606b171c85",
 		"type" : "GLTransform"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"4c92aeec-0bcf-4dd9-ad8f-6b025b28ffbc"
+			"8ad2d478-23a2-471b-a286-2926b6dade67"
 		],
-		"nodeId" : "2700572a-2c73-4ed3-a194-575c3e7e68c9",
+		"nodeId" : "e07cdbb0-abeb-4c21-b671-20932dc9e7f4",
 		"type" : "GLCamera"
+	},
+	{
+		"dinputs" : [],
+		"inputs" : 
+		[
+			null
+		],
+		"nodeId" : "8ad2d478-23a2-471b-a286-2926b6dade67",
+		"type" : "GLTransform"
+	},
+	{
+		"dinputs" : [],
+		"inputs" : 
+		[
+			"38c7fdf9-d9d7-471c-85ce-82606b171c85"
+		],
+		"nodeId" : "0be14a18-934d-4005-9cd6-85a13e348592",
+		"type" : "GLUVMatrix"
 	},
 	{
 		"dinputs" : 
 		[
-			"117dc4df-b691-4e6c-9127-814d063e1abe"
+			"92c651d4-4845-4ad2-baa2-cb61dd4d6c47"
 		],
 		"inputs" : 
 		[
-			"0e8cd0b3-1d2b-4656-81de-c2fb2c159e59"
+			"81608ded-0ccb-4b3b-8912-82f6a8bbb656"
 		],
-		"nodeId" : "65356694-b352-4c4b-bd56-580909aa1111",
+		"nodeId" : "45a49425-8a7a-406e-a846-1ce352113244",
 		"type" : "GLMaterial"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"3be0e2be-773c-419c-b0d1-51886a23dc7b",
-			"f887dc0f-0ddf-4072-8c8b-c8720f17aaf5",
+			"b74a22ab-ef6b-4836-8e35-7c073f8e9a57",
+			"86f0e7d9-0140-4463-b7b7-6586f6658818",
 			null,
-			"8b78926a-3603-47e0-aee6-46d0c2132f56"
+			"a296a275-5592-446c-bcca-2a3f47d73a5e"
 		],
-		"nodeId" : "0e8cd0b3-1d2b-4656-81de-c2fb2c159e59",
+		"nodeId" : "81608ded-0ccb-4b3b-8912-82f6a8bbb656",
 		"type" : "GLGeometry"
 	},
 	{
@@ -70,49 +89,64 @@
 		[
 			null
 		],
-		"nodeId" : "845ccf0f-5b49-4ee2-a1e7-ff75277692db",
+		"nodeId" : "58b81c23-1462-4d0f-8899-b2d161f3c1d6",
 		"type" : "GLPipelineStart"
-	},
-	{
-		"dinputs" : [],
-		"inputs" : [],
-		"nodeId" : "488516ac-4b90-4945-b2e4-6c93aa847ae4",
-		"type" : "StringNode",
-		"value" : "\n        #version 330 core\n\n        layout(location = 0) in vec4 iVtxPos;\n        layout(location = 1) in vec2 iVtxUV;\n\n        uniform mat4 project;\n        uniform mat4 camera;\n        uniform mat4 modelview;\n\n        out vec2 fVtxUV;\n\n        void main() {\n            gl_Position = project * camera * modelview * iVtxPos;\n            fVtxUV = iVtxUV;\n        }\n    "
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"488516ac-4b90-4945-b2e4-6c93aa847ae4"
+			"05d6b631-87b1-42df-b3c3-ae58bb85e20d"
 		],
-		"nodeId" : "de10a586-9249-443a-ba82-67cc6b60ebe9",
+		"nodeId" : "581472d6-10bf-42de-b07f-7eec470dd4ce",
+		"type" : "DepthTelemetry"
+	},
+	{
+		"dinputs" : [],
+		"inputs" : 
+		[
+			"581472d6-10bf-42de-b07f-7eec470dd4ce"
+		],
+		"nodeId" : "92761e49-a8a5-43fa-88e3-5e1c7fc02938",
+		"type" : "GLMeshIndexBufferNode"
+	},
+	{
+		"dinputs" : [],
+		"inputs" : 
+		[
+			"c428d8ee-96ee-44c9-a65b-ead38f898fa2"
+		],
+		"nodeId" : "2df28c05-f136-4190-b068-4c6a942d2b5b",
 		"type" : "GLVertexShader"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"b12d3f84-e4b2-4eae-89be-bc11eb6c9bad"
+			"58b81c23-1462-4d0f-8899-b2d161f3c1d6",
+			"2df28c05-f136-4190-b068-4c6a942d2b5b",
+			"6aa4cc40-2405-4d4a-b096-5541cf7b9f24"
 		],
-		"nodeId" : "a8f7c2bc-821e-4f4a-bce1-984b579c020b",
-		"type" : "GLFragmentShader"
-	},
-	{
-		"dinputs" : [],
-		"inputs" : 
-		[
-			"845ccf0f-5b49-4ee2-a1e7-ff75277692db",
-			"de10a586-9249-443a-ba82-67cc6b60ebe9",
-			"a8f7c2bc-821e-4f4a-bce1-984b579c020b"
-		],
-		"nodeId" : "3be0e2be-773c-419c-b0d1-51886a23dc7b",
+		"nodeId" : "b74a22ab-ef6b-4836-8e35-7c073f8e9a57",
 		"type" : "GLProgram"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : [],
-		"nodeId" : "b12d3f84-e4b2-4eae-89be-bc11eb6c9bad",
+		"nodeId" : "05d6b631-87b1-42df-b3c3-ae58bb85e20d",
+		"type" : "RealSense"
+	},
+	{
+		"dinputs" : [],
+		"inputs" : [],
+		"nodeId" : "c428d8ee-96ee-44c9-a65b-ead38f898fa2",
+		"type" : "StringNode",
+		"value" : "\n        #version 330 core\n\n        layout(location = 0) in vec4 iVtxPos;\n        layout(location = 1) in vec2 iVtxUV;\n\n        uniform mat4 project;\n        uniform mat4 camera;\n        uniform mat4 modelview;\n        uniform mat3 uvMatrix;\n\n        out vec2 fVtxUV;\n\n        void main() {\n            gl_Position = project * camera * modelview * iVtxPos;\n            vec3 iuv;\n            iuv.xy = iVtxUV;\n            iuv.z = 1.0;\n            vec3 ouv = uvMatrix * iuv;\n            fVtxUV = ouv.xy;\n        }\n    "
+	},
+	{
+		"dinputs" : [],
+		"inputs" : [],
+		"nodeId" : "9189df5d-93a4-425a-91b9-bb523d9f2ac9",
 		"type" : "StringNode",
 		"value" : "\n        #version 330 core\n\n        uniform sampler2D tex;\n\n        in vec2 fVtxUV;\n        \n        out vec4 oColor;\n\n        void main() {\n            oColor = texture(tex, fVtxUV);\n        }\n    "
 	},
@@ -120,69 +154,45 @@
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"939ab200-2074-4e69-bda3-00af8fb04b9e"
+			"9189df5d-93a4-425a-91b9-bb523d9f2ac9"
 		],
-		"nodeId" : "0e90cc29-b2b3-4f89-9f3f-4f622c423843",
-		"type" : "ColorTelemetry"
-	},
-	{
-		"dinputs" : [],
-		"inputs" : [],
-		"nodeId" : "939ab200-2074-4e69-bda3-00af8fb04b9e",
-		"type" : "RealSense"
+		"nodeId" : "6aa4cc40-2405-4d4a-b096-5541cf7b9f24",
+		"type" : "GLFragmentShader"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"e65a04d4-fd2b-4d5c-8e7d-edbdcbacd79f"
+			"5564e209-c78b-4daf-94ff-a308614183a6"
 		],
-		"nodeId" : "85594fa1-f908-475c-987a-2439ed68c1a1",
-		"type" : "GLMeshIndexBufferNode"
-	},
-	{
-		"dinputs" : [],
-		"inputs" : 
-		[
-			null
-		],
-		"nodeId" : "4c92aeec-0bcf-4dd9-ad8f-6b025b28ffbc",
-		"type" : "GLTransform"
-	},
-	{
-		"dinputs" : [],
-		"inputs" : 
-		[
-			"0e90cc29-b2b3-4f89-9f3f-4f622c423843"
-		],
-		"nodeId" : "117dc4df-b691-4e6c-9127-814d063e1abe",
+		"nodeId" : "92c651d4-4845-4ad2-baa2-cb61dd4d6c47",
 		"type" : "GL2DTexture"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"939ab200-2074-4e69-bda3-00af8fb04b9e"
+			"581472d6-10bf-42de-b07f-7eec470dd4ce"
 		],
-		"nodeId" : "e65a04d4-fd2b-4d5c-8e7d-edbdcbacd79f",
-		"type" : "DepthTelemetry"
-	},
-	{
-		"dinputs" : [],
-		"inputs" : 
-		[
-			"e65a04d4-fd2b-4d5c-8e7d-edbdcbacd79f"
-		],
-		"nodeId" : "f887dc0f-0ddf-4072-8c8b-c8720f17aaf5",
+		"nodeId" : "86f0e7d9-0140-4463-b7b7-6586f6658818",
 		"type" : "GLMeshVtxBufferNode"
 	},
 	{
 		"dinputs" : [],
 		"inputs" : 
 		[
-			"e65a04d4-fd2b-4d5c-8e7d-edbdcbacd79f"
+			"05d6b631-87b1-42df-b3c3-ae58bb85e20d"
 		],
-		"nodeId" : "8b78926a-3603-47e0-aee6-46d0c2132f56",
+		"nodeId" : "5564e209-c78b-4daf-94ff-a308614183a6",
+		"type" : "ColorTelemetry"
+	},
+	{
+		"dinputs" : [],
+		"inputs" : 
+		[
+			"581472d6-10bf-42de-b07f-7eec470dd4ce"
+		],
+		"nodeId" : "a296a275-5592-446c-bcca-2a3f47d73a5e",
 		"type" : "GLMeshUVBufferNode"
 	}
 ]

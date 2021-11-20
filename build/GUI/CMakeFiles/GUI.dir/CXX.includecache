@@ -183,6 +183,8 @@ GLProgram.hpp
 ../Graphics/GLProgram.hpp
 GLPipeline.hpp
 ../Graphics/GLPipeline.hpp
+GLTransform.hpp
+../Graphics/GLTransform.hpp
 GL/freeglut.h
 -
 GL/gl.h
