@@ -165,6 +165,18 @@ namespace mobo
         public:
             typedef struct Segment
             {
+                Segment()
+                : offset(0), count(0) { }
+                
+                Segment(const Segment& iSeg)
+                : offset(iSeg.offset), count(iSeg.count) { }
+
+                Segment& operator=(const Segment& iSeg) {
+                    offset = iSeg.offset;
+                    count = iSeg.count;
+                    return *this;
+                }
+
                 size_t offset;
                 size_t count;
             } Segment;

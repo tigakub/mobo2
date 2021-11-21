@@ -22,8 +22,8 @@ namespace mobo
             size_t height = frameNode->getHeight();
             //cout << getClassName() << "::update, width: " << width << ", height: " << height << endl;
             if(width && height) {
-                GLfloat widthRecip = 1.0 / GLfloat(width-1);
-                GLfloat heightRecip = 1.0 / GLfloat(height-1);
+                //GLfloat widthRecip = 1.0 / GLfloat(width-1);
+                //GLfloat heightRecip = 1.0 / GLfloat(height-1);
                 resizeIfNeeded(width * height);
                 auto src = static_cast<vec4<GLfloat>*>(frameSource->rawMap());
                 auto ptr = static_cast<pnt4<GLfloat>*>(rawMap());
@@ -91,19 +91,17 @@ namespace mobo
             if(width && height) {
                 stripCount = height - 1;
                 stripIndexCount = width << 1;
+                size_t n = 0;
                 resizeIfNeeded(stripCount * stripIndexCount);
                 auto ptr = static_cast<GLuint*>(rawMap());
-                size_t n = 0;
                 for(GLuint j = 0; j < stripCount; j++) {
                     GLuint ro0 = j * width;
                     GLuint ro1 = ro0 + width;
                     //cout << "Strip " << j << " (";
-                    for(GLuint i = 0; i < width; i++) {
-                        //if(i) cout << ", ";
-                        ptr[n++] = ro0 + i;
-                        //cout << ptr[n-1];
-                        ptr[n++] = ro1 + i;
-                        //cout << ", " << ptr[n-1];
+                    GLuint i = width;
+                    while(i--) {
+                        ptr[n++] = ro0++;
+                        ptr[n++] = ro1++;
                     }
                     //cout << ")" << endl;
                 }

@@ -199,26 +199,6 @@ namespace mobo
                         case GL_SAMPLER_2D:
                         case GL_SAMPLER_2D_RECT:
                             uInfo.generateSampler();
-                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                            #ifdef DEBUG_OPENGL
-                            CHECK_OPENGL_ERROR(glSamplerParameterf)
-                            #endif
-                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                            #ifdef DEBUG_OPENGL
-                            CHECK_OPENGL_ERROR(glSamplerParameterf)
-                            #endif
-                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                            #ifdef DEBUG_OPENGL
-                            CHECK_OPENGL_ERROR(glSamplerParameterf)
-                            #endif
-                            glSamplerParameteri(uInfo.sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                            #ifdef DEBUG_OPENGL
-                            CHECK_OPENGL_ERROR(glSamplerParameterf)
-                            #endif
-                            glSamplerParameterf(uInfo.sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
-                            #ifdef DEBUG_OPENGL
-                            CHECK_OPENGL_ERROR(glSamplerParameterf)
-                                #endif
                             break;
                     }
                 }

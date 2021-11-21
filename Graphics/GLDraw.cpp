@@ -124,7 +124,12 @@ namespace mobo
             auto segmentationSource = getInput<RealSense>(2);
             if(ndxNode && segmentationSource) {
                 ndxNode->bind(GL_ELEMENT_ARRAY_BUFFER);
-                for(auto segment : segmentationSource->getMeshSegmentation()) {
+                const vector<MeshSegmentation::Segment>& segs = segmentationSource->getMeshSegmentation();
+                /*
+                if(segs.size()) {
+                    auto segment = segs.front();
+                */
+                for(auto segment : segs) {
                     size_t offset = segment.offset * sizeof(GLuint);
                     glDrawElements(GL_TRIANGLE_STRIP, segment.count, GL_UNSIGNED_INT, (const GLvoid*) offset);
                     #ifdef DEBUG_OPENGL
@@ -132,23 +137,6 @@ namespace mobo
                     #endif
                 }
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-                /*
-                size_t stripCount = ndxNode->getStripCount();
-                size_t stripIndexCount = ndxNode->getStripIndexCount();
-                size_t stripIndexByteCount = stripIndexCount * sizeof(GLuint);
-                if(stripCount && stripIndexCount) {
-                    ndxNode->bind(GL_ELEMENT_ARRAY_BUFFER);
-                    size_t offset = 0;
-                    for(size_t q = 0; q < stripCount; q++) {
-                        glDrawElements(GL_TRIANGLE_STRIP, stripIndexCount, GL_UNSIGNED_INT, (const GLvoid*) offset);
-                        #ifdef DEBUG_OPENGL
-                        CHECK_OPENGL_ERROR(glDrawElements)
-                        #endif
-                        offset += stripIndexByteCount;
-                    }
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-                }
-                */
             }
         }
         return true;

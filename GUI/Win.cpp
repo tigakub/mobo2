@@ -63,11 +63,13 @@ namespace mobo
         uniform sampler2D tex;
 
         in vec2 fVtxUV;
-        
         out vec4 oColor;
 
         void main() {
-            oColor = texture(tex, fVtxUV);
+            vec4 clamped;
+            if(fVtxUV.s >= 0.0 && fVtxUV.s <= 1.0 && fVtxUV.t >= 0.0 && fVtxUV.t <= 1.0) clamped = texture(tex, fVtxUV);
+            else clamped = vec4(0.0, 0.0, 0.0, 1.0);
+            oColor = clamped;
         }
     )");
 
@@ -110,7 +112,10 @@ namespace mobo
         out vec4 oColor;
 
         void main() {
-            oColor = texture(tex, fVtxUV) * fVtxClr;
+            vec4 clamped;
+            if(fVtxUV.s >= 0.0 && fVtxUV.s <= 1.0 && fVtxUV.t >= 0.0 && fVtxUV.t <= 1.0) clamped = texture(tex, fVtxUV) * fVtxClr;
+            else clamped = vec4(0.0, 0.0, 0.0, 1.0);
+            oColor = clamped;
         }
     )");
 

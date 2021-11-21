@@ -109,7 +109,7 @@ namespace mobo
                             streamsAvailable = true;
                             break;
                         case RS2_STREAM_DEPTH:
-                            pipelineCfg.enable_stream(RS2_STREAM_DEPTH);
+                            pipelineCfg.enable_stream(RS2_STREAM_DEPTH, profile.stream_index(), RS2_FORMAT_Z16, 30);
                             streamsAvailable = true;
                             break;
                         case RS2_STREAM_GYRO:
@@ -158,6 +158,20 @@ namespace mobo
         }
     }
 
+    #define USE_NATIVE_DEPTH true
+
+    #if USE_NATIVE_DEPTH
+    bool depthInRange(uint16_t iDepth)
+    {
+        return 0 < iDepth;
+    }
+    #else
+    bool depthInRange(float iDepth)
+    {
+        return 0.0 < iDepth;
+    }
+    #endif
+
     void RealSense::resumePipeline()
     {
         if(!alive) {
@@ -202,117 +216,82 @@ namespace mobo
 
                                     if(depthWidth && depthHeight) {
                                         depthBuffer.resizeIfNeeded(depthWidth * depthHeight);
-                                        
-                                        
-                                        const uint16_t* depthData = static_cast<const uint16_t*>(depthFrame.get_data());
-                                        
-                                        size_t stripCount = depthHeight - 1;
-                                        size_t stripIndexCount = depthWidth << 1;
-                                        size_t n = 0;
-                                        segmentation.clear();
-                                        bool inSegment = false;
-                                        Segment segment;
-                                        for(size_t j = 0; j < stripCount; j++) {
-                                            size_t ro0 = j * depthWidth;
-                                            size_t ro1 = ro0 + depthWidth;
-                                            for(size_t i = 0; i < depthWidth; i++) {
-                                                // cout << "ro0: " << depthData[ro0 + i] << ", ro1: " << depthData[ro1 + i] << endl;
-                                                if(!inSegment) {
-                                                    segment.offset = n;
-                                                    segment.count = 0;
-                                                    if(0 < depthData[ro0 + i]) {
-                                                        segment.count++;
-                                                        if(0 < depthData[ro1 + i]) {
-                                                            segment.count++;
-                                                            inSegment = true;
-                                                        }
-                                                    }
-                                                } else {
-                                                    if(0 < depthData[ro0 + i]) {
-                                                        segment.count++;
-                                                        if(0 < depthData[ro1 + i]) {
-                                                            segment.count++;
-                                                        } else {
-                                                            if(segment.count > 2) {
-                                                                segmentation.push_back(segment);
-                                                                inSegment = false;
-                                                            }
-                                                        }
-                                                    } else {
-                                                        if(segment.count > 2) {
-                                                            segmentation.push_back(segment);
-                                                            inSegment = false;
-                                                        }
-                                                    }
-                                                }
-                                                n += 2;
-                                            }
-                                            if(inSegment) {
-                                                if(segment.count > 2) {
-                                                    segmentation.push_back(segment);
-                                                    inSegment = false;
-                                                }
-                                            }
-                                        }
-                                        
 
                                         auto p = pointcloud.calculate(depthFrame);
-                                        auto src = static_cast<const vec3<float>*>(p.get_data());
+                                        auto src = (const vec3<float>*) p.get_vertices();
                                         auto dst = static_cast<pnt4<float>*>(depthBuffer.rawMap());
-                                        size_t i = depthBuffer.size();
+                                        size_t i = p.size();
                                         while(i--) {
                                             dst[i] = src[i];
                                         }
-                                        /*
+                                        
+                                        size_t hCrop = 0;
+                                        size_t vCrop = 0;
+
                                         size_t stripCount = depthHeight - 1;
                                         size_t stripIndexCount = depthWidth << 1;
-                                        size_t n = 0;
                                         segmentation.clear();
                                         bool inSegment = false;
                                         Segment segment;
-                                        for(size_t j = 0; j < stripCount; j++) {
-                                            size_t ro0 = j * depthWidth;
+                                        size_t n;
+
+                                        #if USE_NATIVE_DEPTH
+                                        const uint16_t* depthData = static_cast<const uint16_t*>(depthFrame.get_data());
+                                        #endif
+
+                                        for(size_t j = vCrop; j < stripCount-(vCrop << 1); j++) {
+                                            size_t ro0 = j * depthWidth + hCrop;
                                             size_t ro1 = ro0 + depthWidth;
-                                            for(size_t i = 0; i < depthWidth; i++) {
+                                            i = depthWidth - (hCrop << 1);
+                                            n = j * stripIndexCount + (hCrop << 1);
+                                            while(i--) {
+                                                #if USE_NATIVE_DEPTH
                                                 // cout << "ro0: " << depthData[ro0 + i] << ", ro1: " << depthData[ro1 + i] << endl;
-                                                if(!inSegment) {
-                                                    segment.offset = n;
-                                                    segment.count = 0;
-                                                    if(src[ro0+i][2] > 0.1) {
+                                                uint16_t depthValue0 = depthData[ro0];
+                                                uint16_t depthValue1 = depthData[ro1];
+                                                #else
+                                                float depthValue0 = dst[ro0][2];
+                                                float depthValue1 = dst[ro1][2];
+                                                #endif
+                                                if(depthInRange(depthValue0)) {
+                                                    segment.count++;
+                                                    if(depthInRange(depthValue1)) {
                                                         segment.count++;
-                                                        if(src[ro1+i][2] > 0.1) {
-                                                            segment.count++;
+                                                        if(!inSegment) {
+                                                            segment.offset = n;
+                                                            segment.count = 2;
                                                             inSegment = true;
                                                         }
-                                                    }
-                                                } else {
-                                                    if(src[ro0+i][2] > 0.1) {
-                                                        segment.count++;
-                                                        if(src[ro1+i][2] > 0.1) {
-                                                            segment.count++;
-                                                        } else {
-                                                            if(segment.count > 2) {
-                                                                segmentation.push_back(segment);
-                                                                inSegment = false;
-                                                            }
-                                                        }
                                                     } else {
-                                                        if(segment.count > 2) {
-                                                            segmentation.push_back(segment);
+                                                        if(inSegment) {
+                                                            if(segment.count > 4) {
+                                                                segment.count &= (~1);
+                                                                segmentation.push_back(segment);
+                                                            }
                                                             inSegment = false;
                                                         }
                                                     }
+                                                } else {
+                                                    if(inSegment) {
+                                                        if(segment.count > 4) {
+                                                            segment.count &= (~1);
+                                                            segmentation.push_back(segment);
+                                                        }
+                                                        inSegment = false;
+                                                    }
                                                 }
+                                                ro0++;
+                                                ro1++;
                                                 n += 2;
                                             }
                                             if(inSegment) {
-                                                if(segment.count > 2) {
+                                                if(segment.count > 4) {
+                                                    segment.count &= (~1);
                                                     segmentation.push_back(segment);
-                                                    inSegment = false;
                                                 }
+                                                inSegment = false;
                                             }
                                         }
-                                        */
 
                                         /*
                                         cout << "[";
@@ -346,8 +325,10 @@ namespace mobo
                                 }
                             }
                             telemLock.unlock();
-                            auto elapsed = steady_clock::now() - startTime;
-                            this_thread::sleep_for(microseconds(33333) - elapsed);
+                            auto sleepTime = microseconds(33333) - (steady_clock::now() - startTime);
+                            if(sleepTime > microseconds(0)) {
+                                this_thread::sleep_for(sleepTime);
+                            }
                         }
                         return nullptr;
                     }

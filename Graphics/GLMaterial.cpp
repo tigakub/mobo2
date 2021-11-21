@@ -62,6 +62,33 @@ namespace mobo
                             #ifdef DEBUG_OPENGL
                             CHECK_OPENGL_ERROR(glBindSampler)
                             #endif
+                            /*
+                            glSamplerParameteri(info.sampler, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameteri(info.sampler, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            GLfloat borderColor[] = { 0.0, 0.0, 0.0, 1.0 }; 
+                            glSamplerParameterfv(info.sampler, GL_TEXTURE_BORDER_COLOR, borderColor);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            */
+                            glSamplerParameteri(info.sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameteri(info.sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
+                            glSamplerParameterf(info.sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+                            #ifdef DEBUG_OPENGL
+                            CHECK_OPENGL_ERROR(glSamplerParameterf)
+                            #endif
                         }
                     } catch(...) {
                     }
