@@ -332,8 +332,8 @@ namespace mobo
         #if 1
         auto cameraXfm = ctx.createNodeT(GLTransform);
         (*cameraXfm) = 
-              mat4<GLfloat>(TRANSLATION, 0.0, 3.0, 3.0) // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
-            * mat4<GLfloat>(ROTATION, -0.125 * M_PI, 1.0, 0.0, 0.0)
+              mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 0.0) // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
+            //* mat4<GLfloat>(ROTATION, M_PI, 1.0, 0.0, 0.0)
             ;
         auto camera = ctx.createNodeT(GLCamera);
         camera->linkTo(0, cameraXfm);
@@ -348,8 +348,12 @@ namespace mobo
 
         auto uvm = ctx.createNodeT(GLUVMatrix);
         (*uvm)
-            = mat3<GLfloat>(TRANSLATION, 0.05, -0.14)
-            * mat3<GLfloat>(SCALING, 1.0, 1.3)
+            =
+              mat3<GLfloat>(SCALING, 0.985, 1.3)
+            * mat3<GLfloat>(TRANSLATION, 0.06, -0.104)
+            * mat3<GLfloat>(TRANSLATION, 0.5, 0.5)
+            * mat3<GLfloat>(ROTATION, -M_PI / 180.0)
+            * mat3<GLfloat>(TRANSLATION, -0.5, -0.5)
             ;
         uvm->linkTo(0, xfm);
         #else
