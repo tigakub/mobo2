@@ -172,6 +172,153 @@ namespace mobo
     }
     #endif
 
+    void RealSense::handleFrames()
+    {
+        if(framesAvailable = pipeline.poll_for_frames(&frames)) {
+            for(auto node : nodes) {
+                node->setNodeFlags(UPDATE_FLAG);
+            }
+            {
+                auto colorFrame = frames.get_color_frame();
+                colorWidth = colorFrame.get_width();
+                colorHeight = colorFrame.get_height();
+                if(colorWidth == -1) {
+                    colorWidth = 0;
+                }
+                if(colorHeight == -1) {
+                    colorHeight = 0;
+                }
+                colorBuffer.resizeIfNeeded(colorWidth * colorHeight);
+                auto src = static_cast<const vec3<uint8_t>*>(colorFrame.get_data());
+                auto dst = static_cast<pnt4<uint8_t>*>(colorBuffer.rawMap());
+                size_t i = colorBuffer.size();
+                while(i--) {
+                    dst[i][0] = src[i][0];
+                    dst[i][1] = src[i][1];
+                    dst[i][2] = src[i][2];
+                    dst[i][3] = 255;
+                }
+                colorBuffer.unmap();
+            }
+            {
+                auto depthFrame = frames.get_depth_frame();
+                depthWidth = depthFrame.get_width();
+                depthHeight = depthFrame.get_height();
+
+                if(depthWidth && depthHeight) {
+                    depthBuffer.resizeIfNeeded(depthWidth * depthHeight);
+
+                    auto p = pointcloud.calculate(depthFrame);
+                    auto src = (const vec3<float>*) p.get_vertices();
+                    auto dst = static_cast<pnt4<float>*>(depthBuffer.rawMap());
+                    size_t i = p.size();
+                    while(i--) {
+                        if(src[i][2] != 0.0) {
+                            dst[i] = src[i];
+                        }
+                    }
+                    
+                    size_t hCrop = 0;
+                    size_t vCrop = 0;
+
+                    size_t stripCount = depthHeight - 1;
+                    size_t stripIndexCount = depthWidth << 1;
+                    segmentation.clear();
+                    bool inSegment = false;
+                    Segment segment;
+                    size_t n;
+
+                    #if USE_NATIVE_DEPTH
+                    const uint16_t* depthData = static_cast<const uint16_t*>(depthFrame.get_data());
+                    #endif
+
+                    for(size_t j = vCrop; j < stripCount-(vCrop << 1); j++) {
+                        size_t ro0 = j * depthWidth + hCrop;
+                        size_t ro1 = ro0 + depthWidth;
+                        i = depthWidth - (hCrop << 1);
+                        n = j * stripIndexCount + (hCrop << 1);
+                        while(i--) {
+                            #if USE_NATIVE_DEPTH
+                            // cout << "ro0: " << depthData[ro0 + i] << ", ro1: " << depthData[ro1 + i] << endl;
+                            uint16_t depthValue0 = depthData[ro0];
+                            uint16_t depthValue1 = depthData[ro1];
+                            #else
+                            float depthValue0 = dst[ro0][2];
+                            float depthValue1 = dst[ro1][2];
+                            #endif
+                            if(depthInRange(depthValue0)) {
+                                segment.count++;
+                                if(depthInRange(depthValue1)) {
+                                    segment.count++;
+                                    if(!inSegment) {
+                                        segment.offset = n;
+                                        segment.count = 2;
+                                        inSegment = true;
+                                    }
+                                } else {
+                                    if(inSegment) {
+                                        if(segment.count > 4) {
+                                            segment.count &= (~1);
+                                            segmentation.push_back(segment);
+                                        }
+                                        inSegment = false;
+                                    }
+                                }
+                            } else {
+                                if(inSegment) {
+                                    if(segment.count > 4) {
+                                        segment.count &= (~1);
+                                        segmentation.push_back(segment);
+                                    }
+                                    inSegment = false;
+                                }
+                            }
+                            ro0++;
+                            ro1++;
+                            n += 2;
+                        }
+                        if(inSegment) {
+                            if(segment.count > 4) {
+                                segment.count &= (~1);
+                                segmentation.push_back(segment);
+                            }
+                            inSegment = false;
+                        }
+                    }
+
+                    /*
+                    cout << "[";
+                    for(i = 0; i < depthBuffer.size(); i++) {
+                        cout << (i ? ", " : "") << dst[i];
+                    }
+                    cout << "]" << endl;
+                    */
+                    depthBuffer.unmap();
+                }
+            }
+            bool gyro = false;
+            bool accel = false;
+            for(auto frame : frames) {
+                if(frame.is<rs2::motion_frame>()) {
+                    rs2::motion_frame motionFrame = frame.as<rs2::motion_frame>();
+                    rs2::motion_stream_profile profile = motionFrame.get_profile().as<rs2::motion_stream_profile>();
+                    if(profile.stream_type() == RS2_STREAM_GYRO) {
+                        gyro = true;
+                        rs2_vector v = motionFrame.get_motion_data();
+                        gyroData = vec3<float>(v.x, v.y, v.z);
+                    }
+                    if(profile.stream_type() == RS2_STREAM_ACCEL) {
+                        accel = true;
+                        rs2_vector v = motionFrame.get_motion_data();
+                        accelData = vec3<float>(v.x, v.y, v.z);
+                    }
+                    if(gyro && accel) {
+                    }
+                }
+            }
+        }
+    }
+
     void RealSense::resumePipeline()
     {
         if(!alive) {
@@ -183,147 +330,7 @@ namespace mobo
                         while(alive) {
                             telemLock.lock();
                             auto startTime = steady_clock::now();
-                            if(framesAvailable = pipeline.poll_for_frames(&frames)) {
-                                for(auto node : nodes) {
-                                    node->setNodeFlags(UPDATE_FLAG);
-                                }
-                                {
-                                    auto colorFrame = frames.get_color_frame();
-                                    colorWidth = colorFrame.get_width();
-                                    colorHeight = colorFrame.get_height();
-                                    if(colorWidth == -1) {
-                                        colorWidth = 0;
-                                    }
-                                    if(colorHeight == -1) {
-                                        colorHeight = 0;
-                                    }
-                                    colorBuffer.resizeIfNeeded(colorWidth * colorHeight);
-                                    auto src = static_cast<const vec3<uint8_t>*>(colorFrame.get_data());
-                                    auto dst = static_cast<pnt4<uint8_t>*>(colorBuffer.rawMap());
-                                    size_t i = colorBuffer.size();
-                                    while(i--) {
-                                        dst[i][0] = src[i][0];
-                                        dst[i][1] = src[i][1];
-                                        dst[i][2] = src[i][2];
-                                        dst[i][3] = 255;
-                                    }
-                                    colorBuffer.unmap();
-                                }
-                                {
-                                    auto depthFrame = frames.get_depth_frame();
-                                    depthWidth = depthFrame.get_width();
-                                    depthHeight = depthFrame.get_height();
-
-                                    if(depthWidth && depthHeight) {
-                                        depthBuffer.resizeIfNeeded(depthWidth * depthHeight);
-
-                                        auto p = pointcloud.calculate(depthFrame);
-                                        auto src = (const vec3<float>*) p.get_vertices();
-                                        auto dst = static_cast<pnt4<float>*>(depthBuffer.rawMap());
-                                        size_t i = p.size();
-                                        while(i--) {
-                                            dst[i] = src[i];
-                                        }
-                                        
-                                        size_t hCrop = 0;
-                                        size_t vCrop = 0;
-
-                                        size_t stripCount = depthHeight - 1;
-                                        size_t stripIndexCount = depthWidth << 1;
-                                        segmentation.clear();
-                                        bool inSegment = false;
-                                        Segment segment;
-                                        size_t n;
-
-                                        #if USE_NATIVE_DEPTH
-                                        const uint16_t* depthData = static_cast<const uint16_t*>(depthFrame.get_data());
-                                        #endif
-
-                                        for(size_t j = vCrop; j < stripCount-(vCrop << 1); j++) {
-                                            size_t ro0 = j * depthWidth + hCrop;
-                                            size_t ro1 = ro0 + depthWidth;
-                                            i = depthWidth - (hCrop << 1);
-                                            n = j * stripIndexCount + (hCrop << 1);
-                                            while(i--) {
-                                                #if USE_NATIVE_DEPTH
-                                                // cout << "ro0: " << depthData[ro0 + i] << ", ro1: " << depthData[ro1 + i] << endl;
-                                                uint16_t depthValue0 = depthData[ro0];
-                                                uint16_t depthValue1 = depthData[ro1];
-                                                #else
-                                                float depthValue0 = dst[ro0][2];
-                                                float depthValue1 = dst[ro1][2];
-                                                #endif
-                                                if(depthInRange(depthValue0)) {
-                                                    segment.count++;
-                                                    if(depthInRange(depthValue1)) {
-                                                        segment.count++;
-                                                        if(!inSegment) {
-                                                            segment.offset = n;
-                                                            segment.count = 2;
-                                                            inSegment = true;
-                                                        }
-                                                    } else {
-                                                        if(inSegment) {
-                                                            if(segment.count > 4) {
-                                                                segment.count &= (~1);
-                                                                segmentation.push_back(segment);
-                                                            }
-                                                            inSegment = false;
-                                                        }
-                                                    }
-                                                } else {
-                                                    if(inSegment) {
-                                                        if(segment.count > 4) {
-                                                            segment.count &= (~1);
-                                                            segmentation.push_back(segment);
-                                                        }
-                                                        inSegment = false;
-                                                    }
-                                                }
-                                                ro0++;
-                                                ro1++;
-                                                n += 2;
-                                            }
-                                            if(inSegment) {
-                                                if(segment.count > 4) {
-                                                    segment.count &= (~1);
-                                                    segmentation.push_back(segment);
-                                                }
-                                                inSegment = false;
-                                            }
-                                        }
-
-                                        /*
-                                        cout << "[";
-                                        for(i = 0; i < depthBuffer.size(); i++) {
-                                            cout << (i ? ", " : "") << dst[i];
-                                        }
-                                        cout << "]" << endl;
-                                        */
-                                        depthBuffer.unmap();
-                                    }
-                                }
-                                bool gyro = false;
-                                bool accel = false;
-                                for(auto frame : frames) {
-                                    if(frame.is<rs2::motion_frame>()) {
-                                        rs2::motion_frame motionFrame = frame.as<rs2::motion_frame>();
-                                        rs2::motion_stream_profile profile = motionFrame.get_profile().as<rs2::motion_stream_profile>();
-                                        if(profile.stream_type() == RS2_STREAM_GYRO) {
-                                            gyro = true;
-                                            rs2_vector v = motionFrame.get_motion_data();
-                                            gyroData = vec3<float>(v.x, v.y, v.z);
-                                        }
-                                        if(profile.stream_type() == RS2_STREAM_ACCEL) {
-                                            accel = true;
-                                            rs2_vector v = motionFrame.get_motion_data();
-                                            accelData = vec3<float>(v.x, v.y, v.z);
-                                        }
-                                        if(gyro && accel) {
-                                        }
-                                    }
-                                }
-                            }
+                            handleFrames();
                             telemLock.unlock();
                             auto sleepTime = microseconds(33333) - (steady_clock::now() - startTime);
                             if(sleepTime > microseconds(0)) {

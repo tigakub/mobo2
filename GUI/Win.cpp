@@ -332,8 +332,8 @@ namespace mobo
         #if 1
         auto cameraXfm = ctx.createNodeT(GLTransform);
         (*cameraXfm) = 
-              mat4<GLfloat>(TRANSLATION, 0.0, 0.0, 0.0) // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
-            //* mat4<GLfloat>(ROTATION, M_PI, 1.0, 0.0, 0.0)
+              mat4<GLfloat>(TRANSLATION, 0.0, 2.0, 2.0) // * mat4<GLfloat>(ROTATION, 0.0, 0.0, 1.0, 0.0);
+            * mat4<GLfloat>(ROTATION, -0.125 * M_PI, 1.0, 0.0, 0.0)
             ;
         auto camera = ctx.createNodeT(GLCamera);
         camera->linkTo(0, cameraXfm);

@@ -29,6 +29,8 @@ namespace mobo
             static void resumePipeline();
             static void devicesChangedCallback(rs2::event_information&);
 
+            static void handleFrames();
+
             static rs2::pointcloud pointcloud;
             static rs2::device_list deviceList;
             static rs2::pipeline pipeline;
